@@ -78,6 +78,28 @@ def set_types(entries, mime_types, static_mime_types):
     return entries
 
 
+def count_requests(entries_data):
+    for entry_group_name in entries_data['entries']:
+        entries_data['entries'][entry_group_name]['group_static_requests_count'] = len(
+            entries_data['entries'][entry_group_name]['static'])
+        entries_data['entries'][entry_group_name]['group_non_static_requests_count'] = len(
+            entries_data['entries'][entry_group_name]['non-static'])
+        entries_data['entries'][entry_group_name]['group_full_requests_count'] = len(
+            entries_data['entries'][entry_group_name]['static']) + len(
+            entries_data['entries'][entry_group_name]['non-static'])
+    summary_static_requests_count = 0
+    summary_non_static_requests_count = 0
+    summary_full_requests_count = 0
+    for entry_group_name in entries_data['entries']:
+        summary_static_requests_count += entries_data['entries'][entry_group_name]['group_static_requests_count']
+        summary_non_static_requests_count += entries_data['entries'][entry_group_name]['group_non_static_requests_count']
+        summary_full_requests_count += entries_data['entries'][entry_group_name]['group_full_requests_count']
+    entries_data['summary_static_requests_count'] = summary_static_requests_count
+    entries_data['summary_non_static_requests_count'] = summary_non_static_requests_count
+    entries_data['summary_full_requests_count'] = summary_full_requests_count
+    return entries_data
+
+
 def set_times_in_entries(entries_data):
     for entry_group_name in entries_data['entries']:
         group_start_epoch = 0
@@ -150,15 +172,14 @@ def set_times_in_entries(entries_data):
     entries_data['minutes_on_one_iteration_non_static'] = entries_data['non_static_time_millisec'] / MILLISEC_IN_MUNUTE
     entries_data['throughput_in_minute_non_static'] = MILLISEC_IN_MUNUTE / \
         entries_data['non_static_time_millisec']
-
     return entries_data
 
 
 def write_entries_data(entries_data: dict, filename: str):
     with open(f'{filename}-groups-summary.csv', mode='w', encoding='UTF-8') as file:
-        file.write(f'group_number,entry_group_name,group_total_time_millisec,group_static_time_millisec,group_non_static_time_millisec,group_start_datetime,group_end_datetime,group_time_difference_millisec,group_think_time\n')
+        file.write(f'group_number,entry_group_name,group_total_time_millisec,group_static_time_millisec,group_non_static_time_millisec,group_start_datetime,group_end_datetime,group_time_difference_millisec,group_think_time,static_requests_count,summary_non_static_requests_count,summary_full_requests_count\n')
         file.write(
-            f"0,summary,{entries_data['total_time_millisec']},{entries_data['static_time_millisec']},{entries_data['non_static_time_millisec']},0,0,0,{entries_data['total_time_with_think_time']}\n")
+            f"0,summary,{entries_data['total_time_millisec']},{entries_data['static_time_millisec']},{entries_data['non_static_time_millisec']},0,0,0,{entries_data['total_time_with_think_time']},{entries_data['summary_static_requests_count']},{entries_data['summary_non_static_requests_count']},{entries_data['summary_full_requests_count']}\n")
         for entry_group_name in entries_data['entries']:
             group_number = entries_data['entries'][entry_group_name]['group_number']
             group_total_time_millisec = entries_data['entries'][entry_group_name]['group_total_time_millisec']
@@ -170,7 +191,10 @@ def write_entries_data(entries_data: dict, filename: str):
             group_time_difference_millisec = entries_data['entries'][
                 entry_group_name]['group_time_difference_millisec']
             group_think_time = entries_data['entries'][entry_group_name]['group_think_time_millisec']
-            file.write(f'{group_number},{entry_group_name},{group_total_time_millisec},{group_static_time_millisec},{group_non_static_time_millisec},{group_start_datetime},{group_end_datetime},{group_time_difference_millisec},{group_think_time}\n')
+            group_static_requests_count = entries_data['entries'][entry_group_name]['group_static_requests_count']
+            group_non_static_requests_count = entries_data['entries'][entry_group_name]['group_non_static_requests_count']
+            group_full_requests_count = entries_data['entries'][entry_group_name]['group_full_requests_count']
+            file.write(f'{group_number},{entry_group_name},{group_total_time_millisec},{group_static_time_millisec},{group_non_static_time_millisec},{group_start_datetime},{group_end_datetime},{group_time_difference_millisec},{group_think_time},{group_static_requests_count},{group_non_static_requests_count},{group_full_requests_count}\n')
 
     with open(f'{filename}-results.json', mode='w', encoding='UTF-8') as file:
         entries_copy = copy.deepcopy(entries_data)
@@ -192,6 +216,7 @@ def main():
         entries_by_comment = grouping_by_comment(entries, static_mime_types)
         entries_data = set_types(
             entries_by_comment, mime_types, static_mime_types)
+        entries_data = count_requests(entries_data)
         entries_data = set_times_in_entries(entries_data)
         write_entries_data(entries_data, filename)
 
