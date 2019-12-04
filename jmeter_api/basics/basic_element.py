@@ -1,10 +1,9 @@
 from xml.etree.ElementTree import Element, SubElement, Comment, tostring
-from abc import ABC, abstractmethod, abstractproperty
 from settings import logging, env
 
 
 class BasicElement():
-    def __init__(self, name: str, comments: str, is_enable: bool):
+    def __init__(self, name: str = 'BasicElement', comments: str = '', is_enable: bool = True):
         logging.debug(f'{type(self).__name__} | Init started...')
         self.name = name
         self.comments = comments
@@ -59,10 +58,10 @@ class BasicElementXML(BasicElement):
         top.set('testclass', 'Arguments')
         top.set('testname', self.name)
         top.set('enabled', self.is_enable)
-        
+
         collection_prop = SubElement(top, 'collectionProp')
         collection_prop.set('name', "Arguments.arguments")
-        
+
         string_prop = SubElement(top, 'stringProp')
         string_prop.set('name', "TestPlan.comments")
         string_prop.text = self.comments
