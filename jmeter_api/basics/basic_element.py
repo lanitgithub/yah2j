@@ -1,8 +1,6 @@
 from xml.etree.ElementTree import Element, SubElement, Comment, tostring
-from settings import logging
-from settings import env
-import abc
 from abc import ABC, abstractmethod, abstractproperty
+from settings import logging, env
 
 
 class BasicElement():
@@ -11,12 +9,8 @@ class BasicElement():
         self.name = name
         self.comments = comments
         self.is_enable = is_enable
-        logging.debug(f'{type(self).__name__} | Init complited')
 
-        
-        pass
-
-    @abstractproperty
+    @property
     def name(self):
         return self._name
 
@@ -24,7 +18,7 @@ class BasicElement():
     def name(self, value):
         self._name = value
 
-    @abstractproperty
+    @property
     def comments(self):
         return self._comments
 
@@ -32,7 +26,7 @@ class BasicElement():
     def comments(self, value):
         self._comments = value
 
-    @abstractproperty
+    @property
     def is_enable(self):
         return self._is_enable
 
@@ -44,11 +38,32 @@ class BasicElement():
         else:
             self._is_enable = str(value).lower()
 
+    def render_element(self) -> str:
+        logging.debug(f'{type(self).__name__} | Render started...')
+        return ''
+
 
 class BasicElementJ2(BasicElement):
     def render_element(self) -> str:
-        logging.debug(f'{type(self).__name__} | Render started...')
+        super().render_element()
         template = env.get_template(f'{type(self).__name__}.j2')
         render_data: str = template.render(element=self)
-        logging.debug(f'{type(self).__name__} | Render complited')
         return render_data
+
+
+class BasicElementXML(BasicElement):
+    def render_element(self) -> str:
+        super().render_element()
+        top = Element('Arguments')
+        top.set('guiclass', 'ArgumentsPanel')
+        top.set('testclass', 'Arguments')
+        top.set('testname', self.name)
+        top.set('enabled', self.is_enable)
+        
+        collection_prop = SubElement(top, 'collectionProp')
+        collection_prop.set('name', "Arguments.arguments")
+        
+        string_prop = SubElement(top, 'stringProp')
+        string_prop.set('name', "TestPlan.comments")
+        string_prop.text = self.comments
+        return tostring(top).decode('UTF-8')
