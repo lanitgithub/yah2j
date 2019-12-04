@@ -1,4 +1,4 @@
-from jmeter_api.basics.basic_element import BasicElementJ2, BasicElementXML, BasicElement
+from jmeter_api.basics.element.elements import BasicElementJ2, BasicElementXML, BasicElement
 import xmltodict
 import pytest
 

@@ -12,7 +12,7 @@ logging.basicConfig(
 
 env = Environment(
     loader=FileSystemLoader([
-        'jmeter_api/basics'
+        'jmeter_api/basics/element'
         ]),
     autoescape=select_autoescape(['html', 'xml', 'j2'])
 )

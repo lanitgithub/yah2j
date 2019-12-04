@@ -1,4 +1,4 @@
-from jmeter_api.basics.basic_element import BasicElement
+from jmeter_api.basics.element.elements import BasicElement
 from enum import Enum
 
 
