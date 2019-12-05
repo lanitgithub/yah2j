@@ -1,14 +1,19 @@
 import os
 import xml.etree.ElementTree as ET
 
-
-
 class ConstantTimer:
+    """
+    Constant timer class.
+    (Capslock means arguments)
 
+    Let you create constant timer instance with name and delay in milliseconds.
+    ConstantTimer(name: str, delay: str) creates instance with name NAME and delay DELAY in milliseconds
+    set_delay(delay: str) sets time delay in milliseconds. Default value is 300 ms
+    """
     const_timer_template = 'constant_timer.xml'
-    path = os.path.join('templates', const_timer_template)
-    CONST_TIMER_PATH = os.path.abspath(path)
-    print(CONST_TIMER_PATH)
+    path = os.getcwd().split('\\')[:-2]
+    path = '\\'.join(path)
+    CONST_TIMER_PATH = os.path.join(path, 'templates', const_timer_template)
 
     def __init__(self,
                  name='Test Plan',
@@ -23,12 +28,15 @@ class ConstantTimer:
                             f'str.')
         self._name = name
         self._delay = delay
-        print(ConstantTimer.CONST_TIMER_PATH)
-        self._tree = ET.parse(ConstantTimer.CONST_TIMER_PATH)
-        # try:
-        # #     #
-        # except Exception:
-        # #     raise ValueError(f'Failed to read template from \'{ConstantTimer.path}\'')
+
+        try:
+            self._tree = ET.parse(ConstantTimer.CONST_TIMER_PATH)
+        except Exception:
+            raise ValueError(f'Failed to read template from \'{ConstantTimer.path}\'')
+        # set timer name
+        root = self._tree.getroot()
+        for element in root.iter('ConstantTimer'):
+            element.set('testname', self._name)
 
     def __repr__(self):
         return f'Constant timer: {self._name}, delay: {self._delay}'
@@ -49,35 +57,32 @@ class ConstantTimer:
     def delay(self, value):
         self._delay = value
 
-
-    def add_var(self, name: str, value: str):
+    def set_delay(self, delay='300'):
 
         try:
-            name = str(name)
-            value = str(value)
-        except:
-            logging.error('Can\'t convert arguments into string.')
-            raise ValueError(f'NAME and VALUE args should be either strings or '
+            delay = int(delay)
+            delay = str(delay)
+        except ValueError:
+            raise ValueError(f'DELAY arg should be either strings or '
                             f'data types that could be converted to strings. '
-                            f'Data type given  NAME = {type(name).__name__}, VALUE = '
-                            f'{type(value).__name__}')
+                            f'Data type given  DELAY = {type(delay).__name__}')
         tree = self._tree
         root = tree.getroot()
-        for i in root.iter('collectionProp'):
-            temp = ET.SubElement(i, 'elementProp')
-            temp.set('name', name)
-            temp.set('elementType', 'Argument')
-        elements = []
-        attrs = ['Argument.name', 'Argument.value', 'Argument.metadata']
-        texts = [name, value, '=']
-        for j in range(3):
-            elements.append(ET.SubElement(temp, 'stringProp'))
-        for element, attr, text in zip(elements, attrs, texts):
-            element.set('name', attr)
-            element.text = text
+        for element in root.iter('stringProp'):
+            element.text = delay
+        #self._tree = tree
 
     def render(self) -> None:
+        """
+        Will be changed!
+        So far that way
+        :return: None
+        """
         self._tree.write(f'{self._name}.jmx')
 
+
 if __name__ == '__main__':
-    t = ConstantTimer()
+    t = ConstantTimer('MyTimer')
+    t.set_delay('1500')
+    t.render()
+
