@@ -1,25 +1,25 @@
 import os
 import xml.etree.ElementTree as ET
 
-class UniformRandTimer:
+
+class ConstThroughputTimer:
     """
-    Uniform random timer class.
+    Constant throughput timer class.
     (Capslock means arguments)
 
-    Let you create uniform timer instance with name, constant offset delay and random delay in milliseconds.
-    UniformRandTimer(name: str, rand_delay: str, offset_delay: str) creates instance with name NAME,
-    OFFSET_DELAY and RAND_DELAY in milliseconds
-    set_delays(offset_delay: str, rand_delay: str) sets time delays in milliseconds. Default value is 300 ms
+    Let you create constant throughput timer instance with name and intensity.
+    ConstantTimer(name: str, delay: str) creates instance with name NAME and delay DELAY in milliseconds
+    set_delay(delay: str) sets time delay in milliseconds. Default value is 300 ms
     """
-    unifrand_timer_template = 'uniform_random_timer.xml'
-    path = os.getcwd().split(os.path.sep)[:-2]
-    path = os.path.sep.join(path)
+    thr_timer_template = 'constant_throughput_timer.xml'
+    path = os.getcwd().split('\\')[:-2]
+    path = '\\'.join(path)
     UNIFRAND_TIMER_PATH = os.path.join(path, 'templates', unifrand_timer_template)
 
     def __init__(self,
                  name='Uniform Random Timer',
-                 offset_delay='0',
-                 rand_delay='100'
+                 rand_delay='100',
+                 offset_delay='0'
                  ):
         if not isinstance(name, str):
             raise TypeError(f'Failed to create uniform random timer due to wrong type '
@@ -40,16 +40,13 @@ class UniformRandTimer:
         try:
             self._tree = ET.parse(UniformRandTimer.UNIFRAND_TIMER_PATH)
         except Exception:
-            raise ValueError(f'Failed to read template from \'{UniformRandTimer.UNIFRAND_TIMER_PATH}\'')
+            raise ValueError(f'Failed to read template from \'{ConstantTimer.path}\'')
         root = self._tree.getroot()
         for element in root.iter('UniformRandomTimer'):
             element.set('testname', self._name)
 
-        self.set_delays(offset_delay, rand_delay)
-
     def __repr__(self):
-        return f'Uniform constant timer: {self._name}, offset: {self._offset_delay}, ' \
-            f'random delay: {self._rand_delay}'
+        return f'Constant timer: {self._name}, delay: {self._delay}'
 
     @property
     def name(self):
@@ -60,25 +57,15 @@ class UniformRandTimer:
         self._name = value
 
     @property
-    def offset_delay(self):
-        return self._offset_delay
+    def delay(self):
+        return self._delay
 
-    @property
-    def rand_delay(self):
-        return self._rand_delay
+    @delay.setter
+    def delay(self, value):
+        self._delay = value
 
-    @offset_delay.setter
-    def offset_delay(self, value):
-        self._offset_delay = value
+    def set_delays(self, offset_delay='100', rand_delay='0'):
 
-    @rand_delay.setter
-    def rand_delay(self, value):
-        self._rand_delay = value
-
-    def set_delays(self, offset_delay='0', rand_delay='100'):
-
-        self._offset_delay = offset_delay
-        self._rand_delay = rand_delay
         try:
             offset_delay = float(offset_delay)
             offset_delay = str(offset_delay)
@@ -116,13 +103,12 @@ class UniformRandTimer:
         So far that way
         :return: None
         """
-        #self._tree.write(f'{self._name}.jmx')
-        return ET.tostring(self._tree.getroot(), encoding='utf8', method='xml').decode('utf8')
+        self._tree.write(f'{self._name}.jmx')
 
 
 if __name__ == '__main__':
     t = UniformRandTimer('MyTimer')
-    t.set_delays('1000', '1000')
     t.set_comment('Test Comment')
-    print(t)
+    t.set_delays('1000', '0')
+    t.render()
 

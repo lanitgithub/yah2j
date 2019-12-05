@@ -40,7 +40,7 @@ class ConstantTimer:
 
         # set time delay from __init__()
         for element in root.iter('stringProp'):
-            element.text =
+            element.text = delay
 
     def __repr__(self):
         return f'Constant timer: {self._name}, delay: {self._delay}'
@@ -74,7 +74,7 @@ class ConstantTimer:
         root = tree.getroot()
         for element in root.iter('stringProp'):
             element.text = delay
-        #self._tree = tree
+        # self._tree = tree
 
     def render(self) -> None:
         """
@@ -82,11 +82,12 @@ class ConstantTimer:
         So far that way
         :return: None
         """
-        self._tree.write(f'{self._name}.jmx')
+        #self._tree.write(f'{self._name}.jmx')
+        return ET.tostring(self._tree.getroot(), encoding='utf8', method='xml').decode('utf8')
 
 
 if __name__ == '__main__':
     t = ConstantTimer('Hello timer')
     t.set_delay('1500')
-    print(t)
+    print(t.render())
 
