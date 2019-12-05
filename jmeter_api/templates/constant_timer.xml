@@ -1,0 +1,3 @@
+<ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+    <stringProp name="ConstantTimer.delay">300</stringProp>
+</ConstantTimer>
