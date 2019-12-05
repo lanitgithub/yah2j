@@ -3,7 +3,7 @@ import xml.etree.ElementTree as ET
 
 class ConstantTimer:
     """
-    Constant timer class.
+    Constant timer class. (Without comment section. Will be later!)
     (Capslock means arguments)
 
     Let you create constant timer instance with name and delay in milliseconds.
@@ -16,7 +16,7 @@ class ConstantTimer:
     CONST_TIMER_PATH = os.path.join(path, 'templates', const_timer_template)
 
     def __init__(self,
-                 name='Test Plan',
+                 name='Constant Timer',
                  delay='300'):
         if not isinstance(name, str):
             raise TypeError(f'Failed to create constant timer due to wrong type '
@@ -37,6 +37,10 @@ class ConstantTimer:
         root = self._tree.getroot()
         for element in root.iter('ConstantTimer'):
             element.set('testname', self._name)
+
+        # set time delay from __init__()
+        for element in root.iter('stringProp'):
+            element.text =
 
     def __repr__(self):
         return f'Constant timer: {self._name}, delay: {self._delay}'
@@ -82,7 +86,7 @@ class ConstantTimer:
 
 
 if __name__ == '__main__':
-    t = ConstantTimer('MyTimer')
+    t = ConstantTimer('Hello timer')
     t.set_delay('1500')
-    t.render()
+    print(t)
 
