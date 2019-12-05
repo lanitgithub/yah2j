@@ -11,8 +11,8 @@ class ConstantTimer:
     set_delay(delay: str) sets time delay in milliseconds. Default value is 300 ms
     """
     const_timer_template = 'constant_timer.xml'
-    path = os.getcwd().split('\\')[:-2]
-    path = '\\'.join(path)
+    path = os.getcwd().split(os.path.sep)[:-2]
+    path = os.path.sep.join(path)
     CONST_TIMER_PATH = os.path.join(path, 'templates', const_timer_template)
 
     def __init__(self,

@@ -12,8 +12,8 @@ class UniformRandTimer:
     set_delays(offset_delay: str, rand_delay: str) sets time delays in milliseconds. Default value is 300 ms
     """
     unifrand_timer_template = 'uniform_random_timer.xml'
-    path = os.getcwd().split('\\')[:-2]
-    path = '\\'.join(path)
+    path = os.getcwd().split(os.path.sep)[:-2]
+    path = os.path.sep.join(path)
     UNIFRAND_TIMER_PATH = os.path.join(path, 'templates', unifrand_timer_template)
 
     def __init__(self,
