@@ -7,9 +7,9 @@ class BasicTimer(BasicElement):
     def __init__(self,
                  name: str = 'BasicElement',
                  comments: str = '',
-                 is_enable: bool = True
+                 is_enabled: bool = True
                  ):
-        super(BasicElement, self).__init__(name, comments, is_enable)
+        super(BasicElement, self).__init__(name, comments, is_enabled)
 
     def render(self):
         logging.info(f'{type(self).__name__} | Render started...')

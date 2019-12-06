@@ -1,23 +1,27 @@
 from xml.etree import ElementTree
 from jmeter_api.basics.timer.elements import BasicTimer
 
+
 class ConstantTimer(BasicTimer):
     """
     Constant timer class.
-    (Capslock means arguments)
 
-    Lets you create constant timer instance with name and delay in milliseconds.
-    ConstantTimer(name: str, delay: int) creates instance with name NAME and delay DELAY in milliseconds
-    set_delay(delay: int) sets time delay in milliseconds. Default value is 300 ms
+    Lets you create constant timer instance with name, comment and delay in milliseconds.
+
+    Arguments:
+
+    name (str): set timer name
+    comments (str): adds comment
+    delay (int): set time delay in milliseconds, default is 300 ms
+    is_enabled (bool): if set to False disable element in jmeter, default is True
     """
-
     def __init__(self,
                  name: str ='Constant Timer',
                  delay: int = 300,
                  comments: str = '',
                  is_enabled: bool = True
                  ):
-        super(BasicTimer, self).__init__(name=name, comments=comments, is_enabled=is_enabled)
+        super(BasicTimer, self).__init__(name, comments, is_enabled)
         self.delay = delay
 
     @property
@@ -28,46 +32,24 @@ class ConstantTimer(BasicTimer):
     def delay(self, value):
         if not isinstance(value, int):
             raise TypeError(f'DELAY should be int. {type(value).__name__} was given')
-        self._delay = value
+        self._delay = str(value)
 
     def __repr__(self):
-        return f'Constant timer: {self._name}, delay: {self._delay}'
-
-    def set_delay(self, delay='300'):
-
-        try:
-            delay = int(delay)
-            delay = str(delay)
-        except ValueError:
-            raise ValueError(f'DELAY arg should be either strings or '
-                            f'data types that could be converted to strings. '
-                            f'Data type given  DELAY = {type(delay).__name__}')
-        tree = self._tree
-        root = tree.getroot()
-        for element in root.iter('stringProp'):
-            element.text = delay
-        # self._tree = tree
+        return f'Constant timer: {self.name}, delay: {self.delay}'
 
     def render_element(self) -> None:
         """
-        Will be changed!
-        So far that way
-        :return: None
+        Set all parameters in xml and convert it to the string.
+        :return: xml in string format
         """
-        root = super(BasicTimer, self).render_element()
+        tree = super(BasicTimer, self).render_element()
+        root = tree.getroot()
 
         for element in root.iter('ConstantTimer'):
             element.set('testname', self.name)
+            element.set('enabled', self.is_enable)
 
-        # set time delay from __init__()
-        for element in root.iter('stringProp'):
-            element.text = delay
-        #self._tree.write(f'{self._name}.jmx')
-        return ElementTree.tostring(self._tree.getroot(), encoding='utf8', method='xml').decode('utf8')
-
-
-if __name__ == '__main__':
-    t = ConstantTimer('Hello timer')
-    t.set_delay('1500')
-    print(t.render())
-
+        temp = [self.comments, self.delay]
+        for element, t in zip(root.iter('stringProp'), temp):
+            element.text = t
+        return ElementTree.tostring(root, encoding='utf8', method='xml').decode('utf8')

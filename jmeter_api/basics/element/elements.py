@@ -5,7 +5,7 @@ import xml
 import os
 
 
-class BasicElement():
+class BasicElement:
     def __init__(self, name: str = 'BasicElement', comments: str = '', is_enable: bool = True):
         logging.debug(f'{type(self).__name__} | Init started...')
         self.name = name
@@ -40,11 +40,11 @@ class BasicElement():
         else:
             self._is_enable = str(value).lower()
 
-    def get_template(self) -> Element:
+    def get_template(self) -> xml.etree.ElementTree:
         element_path = os.path.dirname(inspect.getfile(self.__class__))
-        template_path = os.path.join(element_path, 'template.xml.xml')
+        template_path = os.path.join(element_path, 'template.xml')
         template_as_element_tree = xml.etree.ElementTree.parse(
-            template_path).getroot()
+            template_path)
         return template_as_element_tree
 
     def render_element(self) -> Element:
