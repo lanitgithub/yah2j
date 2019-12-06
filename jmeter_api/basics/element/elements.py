@@ -1,5 +1,5 @@
 from xml.etree.ElementTree import Element, ElementTree, tostring
-from jmeter_api.basics.utils import Render
+from jmeter_api.basics.utils import Renderable
 from settings import logging
 
 
@@ -43,7 +43,7 @@ class BasicElement:
             self._is_enable = str(value).lower()
 
 
-class BasicElementXML(BasicElement, Render):
+class BasicElementXML(BasicElement, Renderable):
     def render_element(self) -> str:
         xml_tree: ElementTree = super().render_element()
         root = xml_tree.getroot()

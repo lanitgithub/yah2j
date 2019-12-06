@@ -7,7 +7,7 @@ import xml
 import os
 
 
-class Render(ABC):
+class Renderable(ABC):
     def get_template(self) -> ElementTree:
         element_path = os.path.dirname(inspect.getfile(self.__class__))
         template_path = os.path.join(element_path, 'template.xml')
