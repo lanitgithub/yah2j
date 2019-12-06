@@ -1,5 +1,8 @@
-from xml.etree.ElementTree import Element, SubElement, Comment, tostring
-from settings import logging, env
+from xml.etree.ElementTree import Element, tostring
+from settings import logging
+import inspect
+import xml
+import os
 
 
 class BasicElement():
@@ -37,32 +40,26 @@ class BasicElement():
         else:
             self._is_enable = str(value).lower()
 
-    def render_element(self) -> str:
+    def get_template(self) -> Element:
+        element_path = os.path.dirname(inspect.getfile(self.__class__))
+        template_path = os.path.join(element_path, 'template.xml')
+        template_as_element_tree = xml.etree.ElementTree.parse(
+            template_path).getroot()
+        return template_as_element_tree
+
+    def render_element(self) -> Element:
         logging.debug(f'{type(self).__name__} | Render started...')
-        return ''
-
-
-class BasicElementJ2(BasicElement):
-    def render_element(self) -> str:
-        super().render_element()
-        template = env.get_template(f'{type(self).__name__}.j2')
-        render_data: str = template.render(element=self)
-        return render_data
+        return self.get_template()
 
 
 class BasicElementXML(BasicElement):
     def render_element(self) -> str:
-        super().render_element()
-        top = Element('Arguments')
-        top.set('guiclass', 'ArgumentsPanel')
-        top.set('testclass', 'Arguments')
-        top.set('testname', self.name)
-        top.set('enabled', self.is_enable)
+        root = super().render_element()
 
-        collection_prop = SubElement(top, 'collectionProp')
-        collection_prop.set('name', "Arguments.arguments")
+        root.set('enabled', self.is_enable)
+        root.set('testname', self.name)
 
-        string_prop = SubElement(top, 'stringProp')
-        string_prop.set('name', "TestPlan.comments")
+        string_prop: Element = root.find('stringProp')
         string_prop.text = self.comments
-        return tostring(top).decode('UTF-8')
+
+        return tostring(root, encoding='utf8', method='xml').decode('utf8')
