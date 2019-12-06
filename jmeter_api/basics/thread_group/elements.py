@@ -12,18 +12,18 @@ class ThreadGroupAction(Enum):
 
 class BasicThreadGroup(BasicElement):
     def __init__(self,
-                 name: str = 'BasicElement',
+                 name: str = 'BasicThreadGroup',
                  comments: str = '',
                  is_enable: bool = True,
-                 num_threads: int = -1,
+                 num_threads: int = 1,
                  ramp_time: int = 0,
                  on_sample_error: ThreadGroupAction = ThreadGroupAction.CONTINUE):
         self.num_threads = num_threads
         self.ramp_time = ramp_time
         self.on_sample_error = on_sample_error
-        super(BasicElement, self).__init__(name=name,
-                                           comments=comments,
-                                           is_enable=is_enable)
+        super().__init__(name=name,
+                         comments=comments,
+                         is_enable=is_enable)
 
     @property
     def num_threads(self):
