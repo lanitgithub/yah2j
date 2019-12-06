@@ -1,0 +1,13 @@
+<CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
+  <stringProp name="TestPlan.comments">qweasd</stringProp>
+  <stringProp name="delimiter">,</stringProp>
+  <stringProp name="fileEncoding"></stringProp>
+  <stringProp name="filename"></stringProp>
+  <boolProp name="ignoreFirstLine">false</boolProp>
+  <boolProp name="quotedData">false</boolProp>
+  <boolProp name="recycle">true</boolProp>
+  <stringProp name="shareMode">shareMode.all</stringProp>
+  <boolProp name="stopThread">false</boolProp>
+  <stringProp name="variableNames"></stringProp>
+</CSVDataSet>
+<hashTree/>
