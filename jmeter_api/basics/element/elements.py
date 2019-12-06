@@ -1,4 +1,4 @@
-from xml.etree.ElementTree import Element, tostring
+from xml.etree.ElementTree import Element, ElementTree, tostring
 from settings import logging
 import inspect
 import xml
@@ -40,7 +40,7 @@ class BasicElement:
         else:
             self._is_enable = str(value).lower()
 
-    def get_template(self) -> xml.etree.ElementTree:
+    def get_template(self) -> Element:
         element_path = os.path.dirname(inspect.getfile(self.__class__))
         template_path = os.path.join(element_path, 'template.xml')
         template_as_element_tree = xml.etree.ElementTree.parse(
