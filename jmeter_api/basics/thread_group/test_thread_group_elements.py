@@ -1,5 +1,4 @@
 from jmeter_api.basics.thread_group.elements import BasicThreadGroup, ThreadGroupAction
-import xmltodict
 import pytest
 
 
