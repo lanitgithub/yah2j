@@ -12,7 +12,7 @@ class ConstThroughputTimer(Timer):
     ConstantTimer(name: str, delay: str) creates instance with name NAME and delay DELAY in milliseconds
     set_delay(delay: str) sets time delay in milliseconds. Default value is 300 ms
     """
-    thr_timer_template = 'constant_throughput_timer.xml'
+    thr_timer_template = 'template.xml.xml'
     path = os.getcwd().split('\\')[:-2]
     path = '\\'.join(path)
     UNIFRAND_TIMER_PATH = os.path.join(path, 'templates', unifrand_timer_template)
@@ -45,7 +45,7 @@ class ConstThroughputTimer(Timer):
         try:
             self._tree = ET.parse(UniformRandTimer.UNIFRAND_TIMER_PATH)
         except Exception:
-            raise ValueError(f'Failed to read template from \'{ConstantTimer.path}\'')
+            raise ValueError(f'Failed to read template.xml from \'{ConstantTimer.path}\'')
         root = self._tree.getroot()
         for element in root.iter('UniformRandomTimer'):
             element.set('testname', self._name)

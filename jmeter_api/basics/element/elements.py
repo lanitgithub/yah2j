@@ -42,7 +42,7 @@ class BasicElement():
 
     def get_template(self) -> Element:
         element_path = os.path.dirname(inspect.getfile(self.__class__))
-        template_path = os.path.join(element_path, 'template.xml')
+        template_path = os.path.join(element_path, 'template.xml.xml')
         template_as_element_tree = xml.etree.ElementTree.parse(
             template_path).getroot()
         return template_as_element_tree
@@ -50,7 +50,6 @@ class BasicElement():
     def render_element(self) -> Element:
         logging.debug(f'{type(self).__name__} | Render started...')
         return self.get_template()
-
 
 class BasicElementXML(BasicElement):
     def render_element(self) -> str:
