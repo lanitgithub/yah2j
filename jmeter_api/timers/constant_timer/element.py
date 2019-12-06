@@ -1,7 +1,8 @@
 import os
 import xml.etree.ElementTree as ET
+from jmeter_api.basics.timer.elements import Timer
 
-class ConstantTimer:
+class ConstantTimer(Timer):
     """
     Constant timer class. (Without comment section. Will be later!)
     (Capslock means arguments)
@@ -18,6 +19,9 @@ class ConstantTimer:
     def __init__(self,
                  name='Constant Timer',
                  delay='300'):
+
+
+
         if not isinstance(name, str):
             raise TypeError(f'Failed to create constant timer due to wrong type '
                           f'of NAME argument.{type(name)} was given, Should be '

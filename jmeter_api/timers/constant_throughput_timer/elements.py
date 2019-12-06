@@ -1,8 +1,9 @@
-import os
+from jmeter_api.basics.timer.elements import Timer
 import xml.etree.ElementTree as ET
+import os
 
 
-class ConstThroughputTimer:
+class ConstThroughputTimer(Timer):
     """
     Constant throughput timer class.
     (Capslock means arguments)
@@ -21,6 +22,10 @@ class ConstThroughputTimer:
                  rand_delay='100',
                  offset_delay='0'
                  ):
+        self.const_delay = cons_delay
+
+
+
         if not isinstance(name, str):
             raise TypeError(f'Failed to create uniform random timer due to wrong type '
                           f'of NAME argument.{type(name)} was given, Should be '
@@ -49,20 +54,12 @@ class ConstThroughputTimer:
         return f'Constant timer: {self._name}, delay: {self._delay}'
 
     @property
-    def name(self):
-        return self._name
+    def const_delay(self):
+        return self._const_delay
 
-    @name.setter
-    def name(self, value):
-        self._name = value
-
-    @property
-    def delay(self):
-        return self._delay
-
-    @delay.setter
-    def delay(self, value):
-        self._delay = value
+    @const_delay.setter
+    def const_delay(self, value):
+        self._const_delay = value
 
     def set_delays(self, offset_delay='100', rand_delay='0'):
 
