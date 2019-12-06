@@ -1,4 +1,3 @@
-from jinja2 import Environment, FileSystemLoader, select_autoescape
 import logging
 
 logging.basicConfig(
@@ -9,10 +8,3 @@ logging.basicConfig(
         # logging.FileHandler('fileName.log'),
         logging.StreamHandler()
     ])
-
-env = Environment(
-    loader=FileSystemLoader([
-        'jmeter_api/basics/element'
-        ]),
-    autoescape=select_autoescape(['html', 'xml', 'j2'])
-)
