@@ -1,5 +1,6 @@
 from jmeter_api.basics.config.elements import BasicConfig
-from jmeter_api.basics.utils import FileEncoding, Render
+from jmeter_api.basics.utils import FileEncoding, Renderable
+from xml.etree.ElementTree import Element, ElementTree, tostring
 from settings import logging
 from typing import List
 from enum import Enum
@@ -150,3 +151,12 @@ class CsvDataSetConfig(BasicConfig):
                 f'share_mode must be ShareMode. is_enable {type(value)} = {value}')
         else:
             self._share_mode = value
+
+
+class CsvDataSetConfigXML(CsvDataSetConfig, Renderable):
+    def render_element(self):
+        xml_tree: ElementTree = super().render_element()
+        root = xml_tree.getroot()
+        document = tostring(root, encoding='utf8', method='xml').decode(
+            'utf8') + '<hashTree></hashTree>'
+        return document
