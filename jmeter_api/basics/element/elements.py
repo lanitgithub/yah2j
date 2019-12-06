@@ -1,4 +1,5 @@
 from xml.etree.ElementTree import Element, ElementTree, tostring
+from jmeter_api.basics.utils import Render
 from settings import logging
 import inspect
 import xml
@@ -40,20 +41,11 @@ class BasicElement:
         else:
             self._is_enable = str(value).lower()
 
-    def get_template(self) -> Element:
-        element_path = os.path.dirname(inspect.getfile(self.__class__))
-        template_path = os.path.join(element_path, 'template.xml')
-        template_as_element_tree = xml.etree.ElementTree.parse(
-            template_path)
-        return template_as_element_tree
 
-    def render_element(self) -> Element:
-        logging.debug(f'{type(self).__name__} | Render started...')
-        return self.get_template()
-
-class BasicElementXML(BasicElement):
+class BasicElementXML(BasicElement, Render):
     def render_element(self) -> str:
-        root = super().render_element()
+        xml_tree: ElementTree = super().render_element()
+        root = xml_tree.getroot()
 
         root.set('enabled', self.is_enable)
         root.set('testname', self.name)
