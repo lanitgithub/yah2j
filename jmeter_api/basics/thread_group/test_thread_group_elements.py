@@ -41,6 +41,7 @@ def test_basic_thread_group_parameter_ramp_time_check():
     with pytest.raises(TypeError, match=r".*must be int*"):
         BasicThreadGroup(ramp_time='25')
 
+
 def test_basic_thread_group_parameter_ramp_time_check2():
     with pytest.raises(TypeError, match=r".*must be int*"):
         BasicThreadGroup(ramp_time='random chars')
