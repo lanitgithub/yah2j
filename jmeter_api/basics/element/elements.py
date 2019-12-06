@@ -19,7 +19,11 @@ class BasicElement:
 
     @name.setter
     def name(self, value):
-        self._name = value
+        if not isinstance(value, str):
+            raise TypeError(
+                f'is_enable must be str. name {type(value)} = {value}')
+        else:
+            self._name = value
 
     @property
     def comments(self):
