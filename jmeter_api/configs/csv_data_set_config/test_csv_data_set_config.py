@@ -191,3 +191,10 @@ class TestCsvDataSetConfigXML:
         rendered_doc = element.render_element()
         parsed_doc = xmltodict.parse(rendered_doc)
         assert parsed_doc['Arguments']['@testname'] == 'DefaultName'
+
+    def test_render_header_contain(self):
+        element = CsvDataSetConfigXML(file_path='main.py',
+                                      variable_names=['var1', 'var2'],)
+        rendered_doc = element.render_element()
+        is_contain = 'xml version' in rendered_doc
+        assert is_contain is False

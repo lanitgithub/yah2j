@@ -48,3 +48,11 @@ class TestBasicElementXML:
         rendered_doc = element.render_element()
         parsed_doc = xmltodict.parse(rendered_doc)
         assert parsed_doc['Arguments']['@enabled'] == 'true'
+
+    def test_render_header_contain(self):
+        element = BasicElementXML(name='DefaultwtjName',
+                                  comments='Random Comment!',
+                                  is_enable=True)
+        rendered_doc = element.render_element()
+        is_contain = 'xml version' in rendered_doc
+        assert is_contain is False
