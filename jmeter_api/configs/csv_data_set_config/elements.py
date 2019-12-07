@@ -154,9 +154,36 @@ class CsvDataSetConfig(BasicConfig):
 
 
 class CsvDataSetConfigXML(CsvDataSetConfig, Renderable):
-    def render_element(self):
+    def render_element(self) -> str:
         xml_tree: ElementTree = super().render_element()
         root = xml_tree.getroot()
-        document = tostring(root).decode(
-            'utf8') + '<hashTree></hashTree>'
+
+        root.set('enabled', self.is_enable)
+        root.set('testname', self.name)
+
+        for element in root.getiterator():
+            try:
+                if element.attrib['name'] == 'TestPlan.comments':
+                    element.text = self.comments
+                elif element.attrib['name'] == 'delimiter':
+                    element.text = self.delimiter
+                elif element.attrib['name'] == 'fileEncoding':
+                    element.text = self.file_encoding.value
+                elif element.attrib['name'] == 'filename':
+                    element.text = self.file_path
+                elif element.attrib['name'] == 'ignoreFirstLine':
+                    element.text = self.ignore_first_line
+                elif element.attrib['name'] == 'quotedData':
+                    element.text = self.quoted_data
+                elif element.attrib['name'] == 'recycle':
+                    element.text = self.recycle
+                elif element.attrib['name'] == 'shareMode':
+                    element.text = self.share_mode.value
+                elif element.attrib['name'] == 'stopThread':
+                    element.text = self.stop_thread
+                elif element.attrib['name'] == 'variableNames':
+                    element.text = self.variable_names
+            except KeyError:
+                continue
+        document = tostring(root).decode('utf8') + '<hashTree></hashTree>'
         return document
