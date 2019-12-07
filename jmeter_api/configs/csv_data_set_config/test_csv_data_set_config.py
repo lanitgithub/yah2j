@@ -138,59 +138,65 @@ class TestCsvDataSetConfig:
 class TestCsvDataSetConfigXML:
     def test_render_delimiter(self):
         element = CsvDataSetConfigXML(file_path='main.py',
-                                      variable_names=['var1', 'var2'],)
-        rendered_doc = element.render_element()
+                                      variable_names=['var1', 'var2'],
+                                      delimiter='|')
+        rendered_doc = element.render_element().replace('<hashTree></hashTree>', '')
         parsed_doc = xmltodict.parse(rendered_doc)
-        assert parsed_doc['Arguments']['@testname'] == 'DefaultName'
+        assert parsed_doc['CSVDataSet']['stringProp'][1]['#text'] == '|'
 
     def test_render_file_encoding(self):
         element = CsvDataSetConfigXML(file_path='main.py',
-                                      variable_names=['var1', 'var2'],)
-        rendered_doc = element.render_element()
+                                      variable_names=['var1', 'var2'],
+                                      file_encoding=FileEncoding.UTF16)
+        rendered_doc = element.render_element().replace('<hashTree></hashTree>', '')
         parsed_doc = xmltodict.parse(rendered_doc)
-        assert parsed_doc['Arguments']['@testname'] == 'DefaultName'
+        assert parsed_doc['CSVDataSet']['stringProp'][2]['#text'] == 'UTF-16'
 
     def test_render_file_path(self):
         element = CsvDataSetConfigXML(file_path='main.py',
                                       variable_names=['var1', 'var2'],)
-        rendered_doc = element.render_element()
+        rendered_doc = element.render_element().replace('<hashTree></hashTree>', '')
         parsed_doc = xmltodict.parse(rendered_doc)
-        assert parsed_doc['Arguments']['@testname'] == 'DefaultName'
+        assert parsed_doc['CSVDataSet']['stringProp'][3]['#text'] == 'main.py'
 
     def test_render_ignore_first_line(self):
         element = CsvDataSetConfigXML(file_path='main.py',
-                                      variable_names=['var1', 'var2'],)
-        rendered_doc = element.render_element()
+                                      variable_names=['var1', 'var2'],
+                                      ignore_first_line=True)
+        rendered_doc = element.render_element().replace('<hashTree></hashTree>', '')
         parsed_doc = xmltodict.parse(rendered_doc)
-        assert parsed_doc['Arguments']['@testname'] == 'DefaultName'
+        assert parsed_doc['CSVDataSet']['boolProp'][0]['#text'] == 'true'
 
     def test_render_recycle(self):
         element = CsvDataSetConfigXML(file_path='main.py',
-                                      variable_names=['var1', 'var2'],)
-        rendered_doc = element.render_element()
+                                      variable_names=['var1', 'var2'],
+                                      recycle=True)
+        rendered_doc = element.render_element().replace('<hashTree></hashTree>', '')
         parsed_doc = xmltodict.parse(rendered_doc)
-        assert parsed_doc['Arguments']['@testname'] == 'DefaultName'
+        assert parsed_doc['CSVDataSet']['boolProp'][2]['#text'] == 'true'
 
     def test_render_shared_mode(self):
         element = CsvDataSetConfigXML(file_path='main.py',
-                                      variable_names=['var1', 'var2'],)
-        rendered_doc = element.render_element()
+                                      variable_names=['var1', 'var2'],
+                                      share_mode=ShareMode.GROUP)
+        rendered_doc = element.render_element().replace('<hashTree></hashTree>', '')
         parsed_doc = xmltodict.parse(rendered_doc)
-        assert parsed_doc['Arguments']['@testname'] == 'DefaultName'
+        assert parsed_doc['CSVDataSet']['stringProp'][4]['#text'] == 'shareMode.group'
 
     def test_render_stop_thread(self):
         element = CsvDataSetConfigXML(file_path='main.py',
-                                      variable_names=['var1', 'var2'],)
-        rendered_doc = element.render_element()
+                                      variable_names=['var1', 'var2'],
+                                      stop_thread=True)
+        rendered_doc = element.render_element().replace('<hashTree></hashTree>', '')
         parsed_doc = xmltodict.parse(rendered_doc)
-        assert parsed_doc['Arguments']['@testname'] == 'DefaultName'
+        assert parsed_doc['CSVDataSet']['boolProp'][3]['#text'] == 'true'
 
     def test_render_variable_names(self):
         element = CsvDataSetConfigXML(file_path='main.py',
-                                      variable_names=['var1', 'var2'],)
-        rendered_doc = element.render_element()
+                                      variable_names=['var1', 'var2', 'var3', 'var4'],)
+        rendered_doc = element.render_element().replace('<hashTree></hashTree>', '')
         parsed_doc = xmltodict.parse(rendered_doc)
-        assert parsed_doc['Arguments']['@testname'] == 'DefaultName'
+        assert parsed_doc['CSVDataSet']['stringProp'][5]['#text'] == 'var1,var2,var3,var4'
 
     def test_render_header_contain(self):
         element = CsvDataSetConfigXML(file_path='main.py',
@@ -198,3 +204,9 @@ class TestCsvDataSetConfigXML:
         rendered_doc = element.render_element()
         is_contain = 'xml version' in rendered_doc
         assert is_contain is False
+
+    def test_render_hashtree_contain(self):
+        element = CsvDataSetConfigXML(file_path='main.py',
+                                      variable_names=['var1', 'var2'],)
+        rendered_doc = element.render_element()
+        assert '<hashTree></hashTree>' in rendered_doc
