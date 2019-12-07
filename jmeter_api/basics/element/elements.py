@@ -1,5 +1,5 @@
 from xml.etree.ElementTree import Element, ElementTree, tostring
-from jmeter_api.basics.utils import Render
+from jmeter_api.basics.utils import Renderable
 from settings import logging
 
 
@@ -16,7 +16,11 @@ class BasicElement:
 
     @name.setter
     def name(self, value):
-        self._name = value
+        if not isinstance(value, str):
+            raise TypeError(
+                f'is_enable must be str. name {type(value)} = {value}')
+        else:
+            self._name = value
 
     @property
     def comments(self):
@@ -39,7 +43,7 @@ class BasicElement:
             self._is_enable = str(value).lower()
 
 
-class BasicElementXML(BasicElement, Render):
+class BasicElementXML(BasicElement, Renderable):
     def render_element(self) -> str:
         xml_tree: ElementTree = super().render_element()
         root = xml_tree.getroot()
@@ -50,4 +54,4 @@ class BasicElementXML(BasicElement, Render):
         string_prop: Element = root.find('stringProp')
         string_prop.text = self.comments
 
-        return tostring(root, encoding='utf8', method='xml').decode('utf8')
+        return tostring(root).decode('utf8')
