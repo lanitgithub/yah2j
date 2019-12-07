@@ -157,6 +157,6 @@ class CsvDataSetConfigXML(CsvDataSetConfig, Renderable):
     def render_element(self):
         xml_tree: ElementTree = super().render_element()
         root = xml_tree.getroot()
-        document = tostring(root, encoding='utf8', method='xml').decode(
+        document = tostring(root).decode(
             'utf8') + '<hashTree></hashTree>'
         return document
