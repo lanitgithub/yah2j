@@ -57,4 +57,4 @@ class BasicElementXML(BasicElement, Renderable):
         string_prop: Element = root.find('stringProp')
         string_prop.text = self.comments
 
-        return tostring(root, encoding='utf8', method='xml').decode('utf8')
+        return tostring(root).decode('utf8')
