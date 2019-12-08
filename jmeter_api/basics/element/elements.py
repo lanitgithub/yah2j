@@ -47,11 +47,12 @@ class BasicElementXML(BasicElement, Renderable):
     def render_element(self) -> str:
         xml_tree: ElementTree = super().render_element()
         root = xml_tree.getroot()
+        element_root = root.find('Arguments')
 
-        root.set('enabled', self.is_enable)
-        root.set('testname', self.name)
+        element_root.set('enabled', self.is_enable)
+        element_root.set('testname', self.name)
 
-        string_prop: Element = root.find('stringProp')
+        string_prop: Element = element_root.find('stringProp')
         string_prop.text = self.comments
 
-        return tostring(root).decode('utf8')
+        return tostring(element_root).decode('utf8')
