@@ -157,11 +157,12 @@ class CsvDataSetConfigXML(CsvDataSetConfig, Renderable):
     def render_element(self) -> str:
         xml_tree: ElementTree = super().render_element()
         root = xml_tree.getroot()
+        element_root = root.find('CSVDataSet')
 
-        root.set('enabled', self.is_enable)
-        root.set('testname', self.name)
+        element_root.set('enabled', self.is_enable)
+        element_root.set('testname', self.name)
 
-        for element in root.getiterator():
+        for element in list(element_root):
             try:
                 if element.attrib['name'] == 'TestPlan.comments':
                     element.text = self.comments
@@ -185,5 +186,7 @@ class CsvDataSetConfigXML(CsvDataSetConfig, Renderable):
                     element.text = self.variable_names
             except KeyError:
                 continue
-        document = tostring(root).decode('utf8') + '<hashTree></hashTree>'
-        return document
+        xml_data = ''
+        for element in list(root):
+            xml_data += tostring(element).decode('utf8')
+        return xml_data
