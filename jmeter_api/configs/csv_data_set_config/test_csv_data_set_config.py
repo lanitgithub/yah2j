@@ -140,7 +140,7 @@ class TestCsvDataSetConfigXML:
         element = CsvDataSetConfigXML(file_path='main.py',
                                       variable_names=['var1', 'var2'],
                                       delimiter='|')
-        rendered_doc = element.render_element().replace('<hashTree></hashTree>', '')
+        rendered_doc = element.render_element().replace('\n  <hashTree />\n', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         assert parsed_doc['CSVDataSet']['stringProp'][1]['#text'] == '|'
 
@@ -148,14 +148,14 @@ class TestCsvDataSetConfigXML:
         element = CsvDataSetConfigXML(file_path='main.py',
                                       variable_names=['var1', 'var2'],
                                       file_encoding=FileEncoding.UTF16)
-        rendered_doc = element.render_element().replace('<hashTree></hashTree>', '')
+        rendered_doc = element.render_element().replace('\n  <hashTree />\n', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         assert parsed_doc['CSVDataSet']['stringProp'][2]['#text'] == 'UTF-16'
 
     def test_render_file_path(self):
         element = CsvDataSetConfigXML(file_path='main.py',
                                       variable_names=['var1', 'var2'],)
-        rendered_doc = element.render_element().replace('<hashTree></hashTree>', '')
+        rendered_doc = element.render_element().replace('\n  <hashTree />\n', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         assert parsed_doc['CSVDataSet']['stringProp'][3]['#text'] == 'main.py'
 
@@ -163,7 +163,7 @@ class TestCsvDataSetConfigXML:
         element = CsvDataSetConfigXML(file_path='main.py',
                                       variable_names=['var1', 'var2'],
                                       ignore_first_line=True)
-        rendered_doc = element.render_element().replace('<hashTree></hashTree>', '')
+        rendered_doc = element.render_element().replace('\n  <hashTree />\n', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         assert parsed_doc['CSVDataSet']['boolProp'][0]['#text'] == 'true'
 
@@ -171,7 +171,7 @@ class TestCsvDataSetConfigXML:
         element = CsvDataSetConfigXML(file_path='main.py',
                                       variable_names=['var1', 'var2'],
                                       recycle=True)
-        rendered_doc = element.render_element().replace('<hashTree></hashTree>', '')
+        rendered_doc = element.render_element().replace('\n  <hashTree />\n', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         assert parsed_doc['CSVDataSet']['boolProp'][2]['#text'] == 'true'
 
@@ -179,7 +179,7 @@ class TestCsvDataSetConfigXML:
         element = CsvDataSetConfigXML(file_path='main.py',
                                       variable_names=['var1', 'var2'],
                                       share_mode=ShareMode.GROUP)
-        rendered_doc = element.render_element().replace('<hashTree></hashTree>', '')
+        rendered_doc = element.render_element().replace('\n  <hashTree />\n', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         assert parsed_doc['CSVDataSet']['stringProp'][4]['#text'] == 'shareMode.group'
 
@@ -187,14 +187,14 @@ class TestCsvDataSetConfigXML:
         element = CsvDataSetConfigXML(file_path='main.py',
                                       variable_names=['var1', 'var2'],
                                       stop_thread=True)
-        rendered_doc = element.render_element().replace('<hashTree></hashTree>', '')
+        rendered_doc = element.render_element().replace('\n  <hashTree />\n', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         assert parsed_doc['CSVDataSet']['boolProp'][3]['#text'] == 'true'
 
     def test_render_variable_names(self):
         element = CsvDataSetConfigXML(file_path='main.py',
                                       variable_names=['var1', 'var2', 'var3', 'var4'],)
-        rendered_doc = element.render_element().replace('<hashTree></hashTree>', '')
+        rendered_doc = element.render_element().replace('\n  <hashTree />\n', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         assert parsed_doc['CSVDataSet']['stringProp'][5]['#text'] == 'var1,var2,var3,var4'
 
@@ -209,4 +209,4 @@ class TestCsvDataSetConfigXML:
         element = CsvDataSetConfigXML(file_path='main.py',
                                       variable_names=['var1', 'var2'],)
         rendered_doc = element.render_element()
-        assert '<hashTree></hashTree>' in rendered_doc
+        assert '<hashTree />' in rendered_doc

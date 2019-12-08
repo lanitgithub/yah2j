@@ -21,6 +21,19 @@ class Renderable(ABC):
         return self.get_template()
 
 
+class IncludesElements(ABC):
+    elements = []
+
+    @abstractmethod
+    def add_element(self):
+        pass
+
+    @abstractmethod
+    def render_element(self) -> ElementTree:
+        logging.debug(f'{type(self).__name__} | Render started...')
+        return self.get_template()
+
+
 class FileEncoding(Enum):
     UTF8 = 'UTF-8'
     UTF16 = 'UTF-16'
