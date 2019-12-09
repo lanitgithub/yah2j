@@ -18,9 +18,8 @@ class BasicElement:
     def name(self, value):
         if not isinstance(value, str):
             raise TypeError(
-                f'is_enable must be str. name {type(value)} = {value}')
-        else:
-            self._name = value
+                f'arg: name must be str. name {type(value)} = {value}')
+        self._name = value
 
     @property
     def comments(self):
@@ -28,6 +27,9 @@ class BasicElement:
 
     @comments.setter
     def comments(self, value):
+        if not isinstance(value, str):
+            raise TypeError(
+                f'arg: comments must be str. comments {type(value)} = {value}')
         self._comments = value
 
     @property
@@ -38,7 +40,7 @@ class BasicElement:
     def is_enable(self, value):
         if not isinstance(value, bool):
             raise TypeError(
-                f'is_enable must be bool. is_enable {type(value)} = {value}')
+                f'arg: is_enable must be bool. is_enable {type(value)} = {value}')
         else:
             self._is_enable = str(value).lower()
 
