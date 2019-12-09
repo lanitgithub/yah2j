@@ -1,4 +1,5 @@
 from jmeter_api.basics.element.elements import BasicElement
+from jmeter_api.basics.utils import IncludesElements
 from enum import Enum
 
 
@@ -10,7 +11,7 @@ class ThreadGroupAction(Enum):
     STOP_TEST_NOW = 'stoptestnow'
 
 
-class BasicThreadGroup(BasicElement):
+class BasicThreadGroup(BasicElement, IncludesElements):
     def __init__(self,
                  name: str = 'BasicThreadGroup',
                  comments: str = '',

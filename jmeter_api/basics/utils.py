@@ -2,6 +2,7 @@ from xml.etree.ElementTree import Element, ElementTree, tostring, fromstring
 from abc import ABC, abstractmethod
 from settings import logging
 from enum import Enum
+from typing import List
 import inspect
 import xml
 import os
@@ -23,18 +24,22 @@ class Renderable(ABC):
         return self.get_template()
 
 
-class IncludesElements(ABC):
-    elements = []
+class IncludesElements:
+    _elements: List[Renderable] = []
 
-    @abstractmethod
-    def add_element(self):
-        pass
+    def add_element(self, new_element: Renderable):
+        self._elements.append(new_element)
+        
+    def get_count_of_elements(self) -> int:
+        return len(self._elements)
 
-    @abstractmethod
-    def render_element(self) -> ElementTree:
-        logging.debug(f'{type(self).__name__} | Render started...')
-
-        return self.get_template()
+    def render_inner_elements(self) -> str:
+        logging.debug(
+            f'{type(self).__name__} | Render inner elements started...')
+        xml_data = ''
+        for element in self._elements:
+            xml_data += element.render_element()
+        return xml_data
 
 
 class FileEncoding(Enum):
