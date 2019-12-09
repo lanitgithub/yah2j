@@ -1,6 +1,4 @@
-<template>
-    <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables2" enabled="true">
-        <collectionProp name="Arguments.arguments"/>
-        <stringProp name="TestPlan.comments">RandomComment</stringProp>
-    </Arguments>
-</template>
+<Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables2" enabled="true">
+    <collectionProp name="Arguments.arguments"/>
+    <stringProp name="TestPlan.comments">RandomComment</stringProp>
+</Arguments>

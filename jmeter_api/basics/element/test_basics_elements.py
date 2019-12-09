@@ -1,5 +1,5 @@
 from jmeter_api.basics.element.elements import BasicElementXML, BasicElement
-from jmeter_api.basics.utils import tag_wraper
+from jmeter_api.basics.utils import tag_wrapper
 import xmltodict
 import pytest
 
@@ -33,13 +33,13 @@ class TestBasicElementXML:
     def test_render_name(self):
         element = BasicElementXML(name='DefaultName')
         rendered_doc = element.render_element()
-        parsed_doc = xmltodict.parse(tag_wraper(rendered_doc))
+        parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc, 'test_results'))
         assert parsed_doc['test_results']['Arguments']['@testname'] == 'DefaultName'
 
     def test_render_comments(self):
         element = BasicElementXML(comments='My |\\][[] Element Comment')
         rendered_doc = element.render_element()
-        parsed_doc = xmltodict.parse(tag_wraper(rendered_doc))
+        parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc, 'test_results'))
         assert parsed_doc['test_results']['Arguments']['stringProp']['#text'] == 'My |\\][[] Element Comment'
 
     def test_render_enable(self):
@@ -47,7 +47,7 @@ class TestBasicElementXML:
                                   comments='Random Comment!',
                                   is_enable=True)
         rendered_doc = element.render_element()
-        parsed_doc = xmltodict.parse(tag_wraper(rendered_doc))
+        parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc, 'test_results'))
         assert parsed_doc['test_results']['Arguments']['@enabled'] == 'true'
 
     def test_render_header_contain(self):
@@ -55,6 +55,5 @@ class TestBasicElementXML:
                                   comments='Random Comment!',
                                   is_enable=True)
         rendered_doc = element.render_element()
-        is_contain = 'xml version' in tag_wraper(rendered_doc)
+        is_contain = 'xml version' in tag_wrapper(rendered_doc, 'test_results')
         assert is_contain is False
-        
