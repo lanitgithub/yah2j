@@ -1,5 +1,4 @@
 from xml.etree.ElementTree import Element, ElementTree, tostring, fromstring
-from jmeter_api.basics.element.elements import BasicElement
 from abc import ABC, abstractmethod
 from settings import logging
 from enum import Enum
