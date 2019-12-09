@@ -1,0 +1,4 @@
+<UniformRandomTimer guiclass="UniformRandomTimerGui" testclass="UniformRandomTimer" testname="Uniform Random Timer" enabled="true">
+    <stringProp name="ConstantTimer.delay">0</stringProp>
+    <stringProp name="RandomTimer.range">100.0</stringProp>
+</UniformRandomTimer>
