@@ -24,3 +24,4 @@ class TestHTTPCacheManager:
                                              use_cache_control=True,
                                              max_number_of_elements_in_cache=9)
             assert cache_manager.clear_cache_each_iteration == 'true'
+            

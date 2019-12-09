@@ -19,24 +19,24 @@ class HTTPCacheManager(BasicConfig):
         super().__init__(name=name, comments=comments, is_enable=is_enable)
 
     @property
-    def clear_cache_each_iteration(self):
+    def clear_each_iteration(self):
         return self.clear_each_iteration
 
-    @clear_cache_each_iteration.setter
-    def clear_cache_each_iteration(self, value):
+    @clear_each_iteration.setter
+    def clear_each_iteration(self, value):
         if not isinstance(value, bool):
             raise TypeError(
                 f'clear_cache_each_iteration must be bool. \
                     clear_cache_each_iteration {type(value)} = {value}')
         else:
-            self.clear_each_iteration = value
+            self.clear_each_iteration = str(value).lower()
 
     @property
-    def use_cache_control(self):
+    def use_expires(self):
         return self.use_expires
 
-    @use_cache_control.setter
-    def use_cache_control(self, value):
+    @use_expires.setter
+    def use_expires(self, value):
         if not isinstance(value, bool):
             raise TypeError(
                 f'use_cache_control must be bool. use_cache_control {type(value)} = {value}')
@@ -44,11 +44,11 @@ class HTTPCacheManager(BasicConfig):
             self.use_expires = str(value).lower()
 
     @property
-    def max_number_of_elements_in_cache(self):
+    def max_size(self):
         return self.max_size
 
-    @max_number_of_elements_in_cache.setter
-    def max_number_of_elements_in_cache(self, value):
+    @max_size.setter
+    def max_size(self, value):
         if not isinstance(value, int):
             raise TypeError(
                 f'max_number_of_elements_in_cache must be int. \
