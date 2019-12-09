@@ -39,3 +39,7 @@ class FileEncoding(Enum):
     UTF16 = 'UTF-16'
     ISO8859 = 'ISO-8859-15'
     ANCII = 'US-ASCII'
+
+
+def tag_wraper(element_text: str) -> str:
+    return f"<test_results>{element_text}</test_results>"
