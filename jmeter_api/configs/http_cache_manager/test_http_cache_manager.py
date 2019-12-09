@@ -7,21 +7,15 @@ import pytest
 class TestHTTPCacheManager:
     class TestClearCacheEachIteration:
         def test_clear_cache_each_iteration_check(self):
-            print('qweasd!!')
             with pytest.raises(TypeError, match=r".*must be bool.*"):
-                HTTPCacheManager(clear_cache_each_iteration="False",
-                                 use_cache_control=True,
-                                 max_number_of_elements_in_cache=9)
+                HTTPCacheManager(clear_each_iteration="False")
 
         def test_clear_cache_each_iteration_check2(self):
             with pytest.raises(TypeError, match=r".*must be bool.*"):
-                HTTPCacheManager(clear_cache_each_iteration='False',
-                                 use_cache_control=True,
-                                 max_number_of_elements_in_cache=9)
-
+                HTTPCacheManager(clear_each_iteration="123465")
+                
         def test_positive(self):
-            cache_manager = HTTPCacheManager(clear_cache_each_iteration='False',
-                                             use_cache_control=True,
-                                             max_number_of_elements_in_cache=9)
-            assert cache_manager.clear_cache_each_iteration == 'true'
+            cache_manager = HTTPCacheManager(clear_each_iteration=True)
+            assert cache_manager.clear_each_iteration == 'true'
             
+        
