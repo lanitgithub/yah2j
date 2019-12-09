@@ -29,7 +29,8 @@ class TestCsvDataSetConfig:
 
     class TestVariableNames:
         def test_type_check(self):
-            with pytest.raises(TypeError, match=r".*file_encoding must be List[str]*"):
+
+            with pytest.raises(TypeError, match=r".*variable_names must be List[str]*"):
                 CsvDataSetConfig(file_path='main.py', variable_names={
                     'randkey': 'randvalue'})
 

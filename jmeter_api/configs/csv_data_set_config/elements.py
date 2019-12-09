@@ -57,7 +57,8 @@ class CsvDataSetConfig(BasicConfig):
     def variable_names(self, value):
         if not isinstance(value, list):
             raise TypeError(
-                f'file_encoding must be List[str]. variable_names {type(value)} = {value}')
+                f'variable_names must be List[str]. variable_names {type(value)} = {value}')
+
         else:
             for element in value:
                 if not isinstance(element, str):
@@ -88,7 +89,8 @@ class CsvDataSetConfig(BasicConfig):
     def ignore_first_line(self, value):
         if not isinstance(value, bool):
             raise TypeError(
-                f'ignore_first_line must be bool. is_enable {type(value)} = {value}')
+                f'ignore_first_line must be bool. ignore_first_line {type(value)} = {value}')
+
         else:
             self._ignore_first_line = str(value).lower()
 
@@ -100,7 +102,7 @@ class CsvDataSetConfig(BasicConfig):
     def delimiter(self, value):
         if not isinstance(value, str):
             raise TypeError(
-                f'delimiter must be str. is_enable {type(value)} = {value}')
+                        f'delimiter must be str. delimiter {type(value)} = {value}')
         else:
             self._delimiter = value
 
@@ -112,7 +114,7 @@ class CsvDataSetConfig(BasicConfig):
     def quoted_data(self, value):
         if not isinstance(value, bool):
             raise TypeError(
-                f'quoted_data must be bool. is_enable {type(value)} = {value}')
+                f'quoted_data must be bool. quoted_data {type(value)} = {value}')
         else:
             self._quoted_data = str(value).lower()
 
@@ -124,7 +126,7 @@ class CsvDataSetConfig(BasicConfig):
     def recycle(self, value):
         if not isinstance(value, bool):
             raise TypeError(
-                f'recycle must be bool. is_enable {type(value)} = {value}')
+                f'recycle must be bool. recycle {type(value)} = {value}')
         else:
             self._recycle = str(value).lower()
 
@@ -132,11 +134,11 @@ class CsvDataSetConfig(BasicConfig):
     def stop_thread(self):
         return self._stop_thread
 
-    @recycle.setter
+    @stop_thread.setter
     def stop_thread(self, value):
         if not isinstance(value, bool):
             raise TypeError(
-                f'stop_thread must be bool. is_enable {type(value)} = {value}')
+                f'stop_thread must be bool. stop_thread {type(value)} = {value}')
         else:
             self._stop_thread = str(value).lower()
 
@@ -148,7 +150,7 @@ class CsvDataSetConfig(BasicConfig):
     def share_mode(self, value):
         if not isinstance(value, ShareMode):
             raise TypeError(
-                f'share_mode must be ShareMode. is_enable {type(value)} = {value}')
+                f'share_mode must be ShareMode. share_mode {type(value)} = {value}')
         else:
             self._share_mode = value
 

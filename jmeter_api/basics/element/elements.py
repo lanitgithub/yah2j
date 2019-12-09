@@ -19,9 +19,6 @@ class BasicElement:
 
     @name.setter
     def name(self, value):
-        if not isinstance(value, str):
-            raise TypeError(
-                f'arg: name must be str. name {type(value)} = {value}')
         self._name = value
 
     @property
