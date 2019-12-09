@@ -1,6 +1,7 @@
 from xml.etree import ElementTree
 from jmeter_api.basics.timer.elements import BasicTimer
 from jmeter_api.basics.utils import Renderable
+import xmltodict
 
 class ConstantTimer(BasicTimer):
     """
@@ -53,4 +54,4 @@ class ConstantTimerXML(ConstantTimer, Renderable):
         temp = [self.comments, self.delay]
         for element, t in zip(root.iter('stringProp'), temp):
             element.text = t
-        return ElementTree.tostring(root, encoding='utf8', method='xml', xml_declaration=None).decode('utf8')
+        return ElementTree.tostring(root).decode('utf8')
