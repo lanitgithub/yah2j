@@ -1,6 +1,6 @@
 from xml.etree import ElementTree
 from jmeter_api.basics.timer.elements import BasicTimer
-
+from jmeter_api.basics.utils import Renderable
 
 class ConstantTimer(BasicTimer):
     """
@@ -30,21 +30,22 @@ class ConstantTimer(BasicTimer):
 
     @delay.setter
     def delay(self, value):
-        if not isinstance(value, int):
-            raise TypeError(f'DELAY should be int. {type(value).__name__} was given')
+        if not isinstance(value, int) or value < 0:
+            raise TypeError(f'arg: delay should be positive int. {type(value).__name__} was given')
         self._delay = str(value)
 
     def __repr__(self):
         return f'Constant timer: {self.name}, delay: {self.delay}'
 
-    def render_element(self) -> None:
+
+class ConstantTimerXML(ConstantTimer, Renderable):
+    def render_element(self) -> str:
         """
         Set all parameters in xml and convert it to the string.
         :return: xml in string format
         """
-        tree = super(BasicTimer, self).render_element()
-        root = tree.getroot()
-
+        xml_tree: ElementTree = super().render_element()
+        root = xml_tree.getroot()
         for element in root.iter('ConstantTimer'):
             element.set('testname', self.name)
             element.set('enabled', self.is_enable)
@@ -52,4 +53,4 @@ class ConstantTimer(BasicTimer):
         temp = [self.comments, self.delay]
         for element, t in zip(root.iter('stringProp'), temp):
             element.text = t
-        return ElementTree.tostring(root, encoding='utf8', method='xml').decode('utf8')
+        return ElementTree.tostring(root, encoding='utf8', method='xml', xml_declaration=None).decode('utf8')
