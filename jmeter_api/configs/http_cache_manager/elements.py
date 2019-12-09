@@ -7,54 +7,54 @@ from jmeter_api.configs.csv_data_set_config.elements import CsvDataSetConfig
 
 class HTTPCacheManager(BasicConfig):
     def __init__(self,
-                 clear_cache_each_iteration: bool = False,
+                 clear_each_iteration: bool = False,
                  use_cache_control: bool = True,
-                 max_number_of_elements_in_cache: int = 0,
-                 name: str = 'HTTP Cache Manager',
+                 elements_in_cache: int = 300,
+                 name: str = 'HTTP_Cache_Manager',
                  comments: str = '',
                  is_enable: bool = True):
-        self.clear_each_iteration = clear_cache_each_iteration
-        self.use_expires = use_cache_control
-        self.max_size = max_number_of_elements_in_cache
+        self.clear_each_iteration = clear_each_iteration
+        self.use_cache_control = use_cache_control
+        self.max_size = elements_in_cache
         super().__init__(name=name, comments=comments, is_enable=is_enable)
 
     @property
     def clear_each_iteration(self):
-        return self.clear_each_iteration
+        return self._clear_each_iteration
 
     @clear_each_iteration.setter
     def clear_each_iteration(self, value):
         if not isinstance(value, bool):
             raise TypeError(
-                f'clear_cache_each_iteration must be bool. \
-                    clear_cache_each_iteration {type(value)} = {value}')
+                f'clear_each_iteration must be bool. \
+                    clear_each_iteration {type(value)} = {value}')
         else:
-            self.clear_each_iteration = str(value).lower()
+            self._clear_each_iteration = str(value).lower()
 
     @property
-    def use_expires(self):
-        return self.use_expires
+    def use_cache_control(self):
+        return self._use_cache_control
 
-    @use_expires.setter
-    def use_expires(self, value):
+    @use_cache_control.setter
+    def use_cache_control(self, value):
         if not isinstance(value, bool):
             raise TypeError(
                 f'use_cache_control must be bool. use_cache_control {type(value)} = {value}')
         else:
-            self.use_expires = str(value).lower()
+            self._use_cache_control = str(value).lower()
 
     @property
-    def max_size(self):
-        return self.max_size
+    def elements_in_cache(self):
+        return self._max_size
 
-    @max_size.setter
-    def max_size(self, value):
+    @elements_in_cache.setter
+    def elements_in_cache(self, value):
         if not isinstance(value, int):
             raise TypeError(
-                f'max_number_of_elements_in_cache must be int. \
-                max_number_of_elements_in_cache {type(value)} = {value}')
+                f'elements_in_cache must be int. \
+                elements_in_cache {type(value)} = {value}')
         else:
-            self.max_size = value
+            self._elements_in_cache = value
 
 
 class HTTPCacheManagerXML(HTTPCacheManager, Renderable):
