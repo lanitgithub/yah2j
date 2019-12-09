@@ -1,7 +1,7 @@
 from xml.etree import ElementTree
 from jmeter_api.basics.timer.elements import BasicTimer
 from jmeter_api.basics.utils import Renderable
-import xmltodict
+
 
 class ConstantTimer(BasicTimer):
     """
