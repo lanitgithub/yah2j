@@ -9,13 +9,13 @@ class HTTPCacheManager(BasicConfig):
     def __init__(self,
                  clear_each_iteration: bool = False,
                  use_cache_control: bool = True,
-                 elements_in_cache: int = 300,
+                 max_elements_in_cache: int = 300,
                  name: str = 'HTTP_Cache_Manager',
                  comments: str = '',
                  is_enable: bool = True):
         self.clear_each_iteration = clear_each_iteration
         self.use_cache_control = use_cache_control
-        self.max_size = elements_in_cache
+        self.max_elements_in_cache = max_elements_in_cache
         super().__init__(name=name, comments=comments, is_enable=is_enable)
 
     @property
@@ -44,17 +44,17 @@ class HTTPCacheManager(BasicConfig):
             self._use_cache_control = str(value).lower()
 
     @property
-    def elements_in_cache(self):
-        return self._max_size
+    def max_elements_in_cache(self):
+        return self._max_elements_in_cache
 
-    @elements_in_cache.setter
-    def elements_in_cache(self, value):
+    @max_elements_in_cache.setter
+    def max_elements_in_cache(self, value):
         if not isinstance(value, int):
             raise TypeError(
-                f'elements_in_cache must be int. \
-                elements_in_cache {type(value)} = {value}')
+                f'max_elements_in_cache must be int. \
+                max_elements_in_cache {type(value)} = {value}')
         else:
-            self._elements_in_cache = value
+            self._max_elements_in_cache = value
 
 
 class HTTPCacheManagerXML(HTTPCacheManager, Renderable):
