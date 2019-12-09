@@ -5,8 +5,6 @@ import pytest
 
 
 class TestHTTPCacheManager:
-    def minimal_positive(self):
-        HTTPCacheManager()
 
     class TestClearCacheEachIteration:
         def test_check(self):
