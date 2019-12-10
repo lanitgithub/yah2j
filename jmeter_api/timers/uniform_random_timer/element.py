@@ -37,7 +37,7 @@ class UniformRandTimer(BasicTimer):
             raise TypeError(f'Failed to create uniform random timer due to wrong type '
                             f'of OFFSET_DELAY argument. {type(value).__name__} was given, Should be positive'
                             f'str.')
-        self._offset_delay = str(value)
+        self._offset_delay = value
 
     @property
     def rand_delay(self):
@@ -49,7 +49,7 @@ class UniformRandTimer(BasicTimer):
             raise TypeError(f'Failed to create uniform random timer due to wrong type '
                             f'of RAND_DELAY argument. {type(value).__name__} was given, Should be positive'
                             f'float or int.')
-        self._rand_delay = str(value)
+        self._rand_delay = value
 
     def __repr__(self):
         return f'Uniform constant timer: {self.name}, offset: {self.offset_delay}, ' \
@@ -65,7 +65,7 @@ class UniformRandTimerXML(UniformRandTimer, Renderable):
         xml_tree: Optional[Element] = super().render_element()
         element_root = xml_tree.find('UniformRandomTimer')
         
-        element_root.set('enabled', self.is_enable)
+        element_root.set('enabled', str(self.is_enabled).lower())
         element_root.set('testname', self.name)
 
         for element in list(element_root):
@@ -73,9 +73,9 @@ class UniformRandTimerXML(UniformRandTimer, Renderable):
                 if element.attrib['name'] == 'TestPlan.comments':
                     element.text = self.comments
                 elif element.attrib['name'] == 'RandomTimer.range':
-                    element.text = self.rand_delay
+                    element.text = str(self.rand_delay)
                 elif element.attrib['name'] == 'ConstantTimer.delay':
-                    element.text = self.offset_delay
+                    element.text = str(self.offset_delay)
             except KeyError:
                 continue
         xml_data = ''
