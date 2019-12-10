@@ -1,8 +1,8 @@
 from jmeter_api.basics.post_processor.elements import BasicPostProcessor
 from jmeter_api.basics.element.elements import Renderable
-from xml.etree.ElementTree import ElementTree, Element, SubElement, tostring
+from xml.etree.ElementTree import Element, SubElement, tostring
 from enum import Enum
-from typing import List, Optional
+from typing import Optional
 import logging
 import re
 
@@ -153,7 +153,7 @@ class RegExpPostXML(RegExpPost, Renderable):
                     element.text = str(self.match_no)
 
                 if flag:
-                    if self.scope in [Scope.MAIN.value, Scope.MAIN_AND_SUB.value]:
+                    if self.scope in [Scope.MAIN_AND_SUB.value, Scope.SUB.value]:
                         scope_elem = SubElement(element_root, 'stringProp')
                         scope_elem.set('name', 'Sample.scope')
                         scope_elem.text = self.scope
@@ -175,7 +175,4 @@ class RegExpPostXML(RegExpPost, Renderable):
         xml_data = ''
         for element in list(xml_tree):
             xml_data += tostring(element).decode('utf8')
-        return xml_data
-
-t = RegExpPostXML(name='Test', regexp='\w').render_element()
-print(t)
+        return xml_data.replace('><', '>\n<') # replace for beter readability
