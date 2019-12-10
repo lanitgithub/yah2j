@@ -68,7 +68,7 @@ class HttpRequestXML(HttpRequest, Renderable):
         xml_tree: ElementTree = super().render_element()
         root = xml_tree.find('HTTPSamplerProxy')
 
-        root.set('enabled', self.is_enable)
+        root.set('enabled', str(self.is_enabled).lower())
         root.set('testname', self.name)
         for element in list(root):
             try:

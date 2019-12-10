@@ -60,7 +60,7 @@ class HTTPCacheManagerXML(HTTPCacheManager, Renderable):
         xml_tree: Optional[Element] = super().render_element()
         element_root = xml_tree.find('CacheManager')
 
-        element_root.set('enabled', self.is_enable)
+        element_root.set('enabled', str(self.is_enabled).lower())
         element_root.set('testname', self.name)
 
         for element in list(element_root):
