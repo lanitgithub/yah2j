@@ -1,8 +1,7 @@
-from xml.etree import ElementTree
+from xml.etree.ElementTree import Element, ElementTree, tostring
 from jmeter_api.basics.timer.elements import BasicTimer
 from jmeter_api.basics.utils import Renderable
 import xmltodict
-import dicttoxml
 
 
 class UniformRandTimer(BasicTimer):
@@ -62,20 +61,23 @@ class UniformRandTimerXML(UniformRandTimer, Renderable):
         Set all parameters in xml and convert it to the string.
         :return: xml in string format
         """
-        xml_tree: ElementTree = super().render_element()
-        root = xml_tree.getroot()
-        for element in root.iter('UniformRandomTimer'):
-            element.set('testname', self.name)
-            element.set('enabled', self.is_enable)
+        xml_tree: Optional[Element] = super().render_element()
+        element_root = xml_tree.find('UniformRandomTimer')
+        
+        element_root.set('enabled', self.is_enable)
+        element_root.set('testname', self.name)
 
-        temp = [self.offset_delay, self.rand_delay, self.comments]
-        for element, t in zip(root.iter('stringProp'), temp):
-            element.text = t
+        for element in list(element_root):
+            try:
+                if element.attrib['name'] == 'TestPlan.comments':
+                    element.text = self.comments
+                elif element.attrib['name'] == 'RandomTimer.range':
+                    element.text = self.rand_delay
+                elif element.attrib['name'] == 'ConstantTimer.delay':
+                    element.text = self.offset_delay
+            except KeyError:
+                continue
         xml_data = ''
-
-        for element in list(root):
-            xml_data += ElementTree.tostring(element).decode('utf8')
+        for element in list(xml_tree):
+            xml_data += tostring(element).decode('utf8')
         return xml_data
-
-t = UniformRandTimerXML()
-print(t.render_element())
