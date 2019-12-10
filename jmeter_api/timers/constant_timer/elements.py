@@ -51,7 +51,7 @@ class ConstantTimerXML(ConstantTimer, Renderable):
         xml_tree: Optional[Element] = super().render_element()
         element_root = xml_tree.find('ConstantTimer')
         element_root.set('testname', self.name)
-        element_root.set('enabled', self.is_enable)
+        element_root.set('enabled', str(self.is_enabled).lower())
         for element in list(element_root):
             try:
                 if element.attrib['name'] == 'TestPlan.comments':

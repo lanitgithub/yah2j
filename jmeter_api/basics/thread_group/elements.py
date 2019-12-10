@@ -15,7 +15,7 @@ class BasicThreadGroup(BasicElement, IncludesElements):
     def __init__(self,
                  name: str = 'BasicThreadGroup',
                  comments: str = '',
-                 is_enable: bool = True,
+                 is_enabled: bool = True,
                  num_threads: int = 1,
                  ramp_time: int = 0,
                  on_sample_error: ThreadGroupAction = ThreadGroupAction.CONTINUE):
@@ -24,7 +24,7 @@ class BasicThreadGroup(BasicElement, IncludesElements):
         self.on_sample_error = on_sample_error
         super().__init__(name=name,
                          comments=comments,
-                         is_enable=is_enable)
+                         is_enabled=is_enabled)
 
     @property
     def num_threads(self):
