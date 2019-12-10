@@ -1,4 +1,5 @@
 from jmeter_api.timers.uniform_random_timer.element import UniformRandTimer, UniformRandTimerXML
+from jmeter_api.basics.utils import tag_wrapper
 import xmltodict
 import pytest
 
@@ -28,31 +29,30 @@ class TestUniformRandTimer:
             UniformRandTimer(rand_delay=-1)
         # rand_delay type check (wrong data type input)
         with pytest.raises(TypeError, match=r".*Failed to create uniform random timer due to wrong type "
-                                                r"of RAND_DELAY argument.*"):
+                           r"of RAND_DELAY argument.*"):
             UniformRandTimer(rand_delay='123')
 
 
-class TestConstantTimerXML:
+class TestUniformRandTimerXML:
     def test_render(self):
         element = UniformRandTimerXML(name='My timer',
                                       comments='My comments',
                                       offset_delay=123,
                                       rand_delay=321,
                                       is_enabled=False)
-        rendered_doc = element.render_element().replace('<hashTree />', '')
-        parsed_doc = xmltodict.parse(rendered_doc)
-        assert parsed_doc['UniformRandomTimer']['@testname'] == 'My timer'
-        assert parsed_doc['UniformRandomTimer']['@enabled'] == 'false'
-        assert parsed_doc['UniformRandomTimer']['stringProp'][0]['#text'] == '123'
-        assert parsed_doc['UniformRandomTimer']['stringProp'][1]['#text'] == '321'
-        assert parsed_doc['UniformRandomTimer']['stringProp'][2]['#text'] == 'My comments'
-
+        rendered_doc = element.render_element()
+        parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc, 'test_results'))
+        assert parsed_doc['test_results']['UniformRandomTimer']['@testname'] == 'My timer'
+        assert parsed_doc['test_results']['UniformRandomTimer']['@enabled'] == 'false'
+        assert parsed_doc['test_results']['UniformRandomTimer']['stringProp'][0]['#text'] == '123'
+        assert parsed_doc['test_results']['UniformRandomTimer']['stringProp'][1]['#text'] == '321'
+        assert parsed_doc['test_results']['UniformRandomTimer']['stringProp'][2]['#text'] == 'My comments'
 
     def test_render_hashtree_contain(self):
         element = UniformRandTimerXML(name='My timer',
-                                   comments='My comments',
-                                   offset_delay=123,
+                                      comments='My comments',
+                                      offset_delay=123,
                                       rand_delay=321,
-                                   is_enabled=False)
+                                      is_enabled=False)
         rendered_doc = element.render_element()
         assert '<hashTree />' in rendered_doc
