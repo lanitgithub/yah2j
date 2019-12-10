@@ -81,5 +81,3 @@ class ConstThroughputTimerXML(ConstThroughputTimer, Renderable):
         for element in list(root):
             xml_data += tostring(element).decode('utf8')
         return xml_data
-
-ConstThroughputTimer(name=123)
