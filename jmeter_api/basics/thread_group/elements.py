@@ -42,7 +42,7 @@ class BasicThreadGroup(BasicElement, IncludesElements):
             raise ValueError(
                 f'num_threads must be more than 0. num_threads {type(value)} = {value}')
         else:
-            self._num_threads = value
+            self._num_threads = str(value)
 
     @property
     def ramp_time(self):
@@ -54,7 +54,7 @@ class BasicThreadGroup(BasicElement, IncludesElements):
             raise TypeError(
                 f'ramp_time must be int. ramp_time {type(value)} = {value}')
         else:
-            self._ramp_time = value
+            self._ramp_time = str(value)
 
     @property
     def on_sample_error(self):
