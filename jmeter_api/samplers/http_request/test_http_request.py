@@ -7,22 +7,22 @@ class TestHttpRequest:
     def test_args_type_check(self):
         # name type check
         with pytest.raises(TypeError, match=r".*arg: name must be str. name*"):
-            HttpRequest(name=123)
+            HttpRequest(name=123, host='', path='')
         # comments type check
         with pytest.raises(TypeError, match=r".*arg: comments must be str. comments*"):
-            HttpRequest(comments=123)
+            HttpRequest(comments=123, host='', path='')
         # is_enabled type check
         with pytest.raises(TypeError, match=r".*arg: is_enable must be bool. is_enable*"):
-            HttpRequest(is_enabled="True")
+            HttpRequest(is_enabled="True",host='',path='')
         # host type check (non string data input)
         with pytest.raises(TypeError, match=r".*arg: host should be str.*"):
-            HttpRequest(host=-1)
+            HttpRequest(host=1, path=1)
         # path type check (non string data input)
         with pytest.raises(TypeError, match=r".*arg: path should be str.*"):
-            HttpRequest(path=-1)
+            HttpRequest(path=-1,host='')
         # method type check (non Method data input)
         with pytest.raises(TypeError, match=r".*arg: method should be Method.*"):
-            HttpRequest(method=-1)
+            HttpRequest(method=-1,host='',path='')
 
 
 class TestHttpRequestXML:
