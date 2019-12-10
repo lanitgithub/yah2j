@@ -1,6 +1,7 @@
 from jmeter_api.basics.timer.elements import BasicTimer
 from jmeter_api.basics.utils import Renderable
 from xml.etree.ElementTree import ElementTree, tostring
+from typing import Optional
 from enum import Enum
 
 
