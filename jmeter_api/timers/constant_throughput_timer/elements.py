@@ -1,7 +1,7 @@
 from xml.etree.ElementTree import Element, ElementTree, tostring
 from jmeter_api.basics.timer.elements import BasicTimer
 from jmeter_api.basics.utils import Renderable
-from typing import Optional
+from typing import Optional, Union
 from enum import Enum
 
 
@@ -34,7 +34,7 @@ class ConstThroughputTimer(BasicTimer):
         return self._targ_throughput
 
     @targ_throughput.setter
-    def targ_throughput(self, value: BasedOn):
+    def targ_throughput(self, value: Union[float, int]):
         if not isinstance(value, float) and not isinstance(value, int) or value < 0:
             raise TypeError(
                 f'arg: targ_throughput should be positive int or float. {type(value).__name__} was given')
@@ -67,7 +67,7 @@ class ConstThroughputTimerXML(ConstThroughputTimer, Renderable):
         element_root = xml_tree.find('ConstantThroughputTimer')
 
         element_root.set('testname', self.name)
-        element_root.set('enabled', self.is_enable)
+        element_root.set('enabled', str(self.is_enabled).lower())
 
         string_prop = element_root.find('stringProp')
         string_prop.text = self.comments

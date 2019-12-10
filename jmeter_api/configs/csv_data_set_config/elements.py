@@ -26,7 +26,7 @@ class CsvDataSetConfig(BasicConfig):
                  share_mode: ShareMode = ShareMode.ALL,
                  name: str = 'CsvDataSetConfig',
                  comments: str = '',
-                 is_enable: bool = True):
+                 is_enabled: bool = True):
         self.file_path = file_path
         self.delimiter = delimiter
         self.variable_names = variable_names
@@ -36,7 +36,7 @@ class CsvDataSetConfig(BasicConfig):
         self.recycle = recycle
         self.stop_thread = stop_thread
         self.share_mode = share_mode
-        super().__init__(name=name, comments=comments, is_enable=is_enable)
+        super().__init__(name=name, comments=comments, is_enabled=is_enabled)
 
     @property
     def file_path(self):
@@ -158,7 +158,7 @@ class CsvDataSetConfigXML(CsvDataSetConfig, Renderable):
         xml_tree: Optional[Element] = super().render_element()
         element_root = xml_tree.find('CSVDataSet')
 
-        element_root.set('enabled', self.is_enable)
+        element_root.set('enabled', str(self.is_enabled).lower())
         element_root.set('testname', self.name)
 
         for element in list(element_root):

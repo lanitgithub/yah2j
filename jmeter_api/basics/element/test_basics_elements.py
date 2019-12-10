@@ -8,15 +8,15 @@ class TestBasicElement:
     class TestIsEnable:
         def test_check_type(self):
             with pytest.raises(TypeError, match=r".*must be bool.*"):
-                BasicElement(is_enable='True')
+                BasicElement(is_enabled='True')
 
         def test_check_type2(self):
             with pytest.raises(TypeError, match=r".*must be bool.*"):
-                BasicElement(is_enable=847378)
+                BasicElement(is_enabled=847378)
 
         def test_positive(self):
-            element = BasicElement(is_enable=True)
-            assert element.is_enable == 'true'
+            element = BasicElement(is_enabled=True)
+            assert element.is_enabled == True
 
     class TestName:
 
@@ -45,7 +45,7 @@ class TestBasicElementXML:
     def test_render_enable(self):
         element = BasicElementXML(name='DefaultwtjName',
                                   comments='Random Comment!',
-                                  is_enable=True)
+                                  is_enabled=True)
         rendered_doc = element.render_element()
         parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc, 'test_results'))
         assert parsed_doc['test_results']['Arguments']['@enabled'] == 'true'
@@ -53,7 +53,7 @@ class TestBasicElementXML:
     def test_render_header_contain(self):
         element = BasicElementXML(name='DefaultwtjName',
                                   comments='Random Comment!',
-                                  is_enable=True)
+                                  is_enabled=True)
         rendered_doc = element.render_element()
         is_contain = 'xml version' in tag_wrapper(rendered_doc, 'test_results')
         assert is_contain is False
