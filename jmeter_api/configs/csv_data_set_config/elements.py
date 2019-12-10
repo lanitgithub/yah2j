@@ -54,7 +54,7 @@ class CsvDataSetConfig(BasicConfig):
         return self._variable_names
 
     @variable_names.setter
-    def variable_names(self, value):
+    def variable_names(self, value) -> List:
         if not isinstance(value, list):
             raise TypeError(
                 f'variable_names must be List[str]. variable_names {type(value)} = {value}')
@@ -73,7 +73,7 @@ class CsvDataSetConfig(BasicConfig):
         return self._fileEncoding
 
     @file_encoding.setter
-    def file_encoding(self, value):
+    def file_encoding(self, value) -> FileEncoding:
         if not isinstance(value, FileEncoding):
             raise TypeError(
                 f'file_encoding must be FileEncoding. file_encoding {type(value)} = {value}')
@@ -85,7 +85,7 @@ class CsvDataSetConfig(BasicConfig):
         return self._ignore_first_line
 
     @ignore_first_line.setter
-    def ignore_first_line(self, value):
+    def ignore_first_line(self, value) -> str:
         if not isinstance(value, bool):
             raise TypeError(
                 f'ignore_first_line must be bool. ignore_first_line {type(value)} = {value}')
@@ -121,7 +121,7 @@ class CsvDataSetConfig(BasicConfig):
         return self._recycle
 
     @recycle.setter
-    def recycle(self, value):
+    def recycle(self, value) -> str:
         if not isinstance(value, bool):
             raise TypeError(
                 f'recycle must be bool. recycle {type(value)} = {value}')

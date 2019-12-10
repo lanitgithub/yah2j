@@ -32,7 +32,7 @@ class UniformRandTimer(BasicTimer):
         return self._offset_delay
 
     @offset_delay.setter
-    def offset_delay(self, value):
+    def offset_delay(self, value) -> str:
         if not isinstance(value, int) or value < 0:
             raise TypeError(f'Failed to create uniform random timer due to wrong type '
                             f'of OFFSET_DELAY argument. {type(value).__name__} was given, Should be positive'
@@ -44,14 +44,14 @@ class UniformRandTimer(BasicTimer):
         return self._rand_delay
 
     @rand_delay.setter
-    def rand_delay(self, value):
+    def rand_delay(self, value) -> str:
         if not isinstance(value, float) and not isinstance(value, int) or value < 0:
             raise TypeError(f'Failed to create uniform random timer due to wrong type '
                             f'of RAND_DELAY argument. {type(value).__name__} was given, Should be positive'
                             f'float or int.')
         self._rand_delay = str(value)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f'Uniform constant timer: {self.name}, offset: {self.offset_delay}, ' \
             f'random delay: {self.rand_delay}'
 

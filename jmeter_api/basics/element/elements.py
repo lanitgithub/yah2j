@@ -41,7 +41,7 @@ class BasicElement:
         return self._is_enable
 
     @is_enable.setter
-    def is_enable(self, value):
+    def is_enable(self, value) -> str:
         if not isinstance(value, bool):
             raise TypeError(
                 f'arg: is_enable must be bool. is_enable {type(value)} = {value}')
