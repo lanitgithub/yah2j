@@ -1,0 +1,127 @@
+from jmeter_api.basics.thread_group.elements import BasicThreadGroup, ThreadGroupAction
+from jmeter_api.basics.utils import Renderable, IncludesElements
+from xml.etree.ElementTree import Element, ElementTree, tostring
+from typing import List, Optional
+from settings import logging
+from enum import Enum
+import os
+
+
+class CommonThreadGroup(BasicThreadGroup, IncludesElements):
+    def __init__(self,
+                 continue_forever: bool,
+                 loops: int = 1,
+                 is_sheduler_enable: bool = False,
+                 sheduler_duration: int = 0,
+                 sheduler_delay: int = 0,
+                 name: str = 'BasicThreadGroup',
+                 comments: str = '',
+                 is_enable: bool = True,
+                 num_threads: int = 1,
+                 ramp_time: int = 0,
+                 on_sample_error: ThreadGroupAction = ThreadGroupAction.CONTINUE,):
+        self.continue_forever = continue_forever
+        self.loops = loops
+        self.is_sheduler_enable = is_sheduler_enable
+        self.sheduler_duration = sheduler_duration
+        self.sheduler_delay = sheduler_delay
+        super().__init__(name=name, comments=comments, is_enable=is_enable,
+                         num_threads=num_threads, ramp_time=ramp_time)
+
+    @property
+    def continue_forever(self):
+        return self._continue_forever
+
+    @continue_forever.setter
+    def continue_forever(self, value: bool):
+        if not isinstance(value, bool):
+            raise TypeError(
+                f'continue_forever must be bool. continue_forever {type(value)} = {value}')
+        else:
+            self._continue_forever = str(value).lower()
+
+    @property
+    def is_sheduler_enable(self):
+        return self._is_sheduler_enable
+
+    @is_sheduler_enable.setter
+    def is_sheduler_enable(self, value: bool):
+        if not isinstance(value, bool):
+            raise TypeError(
+                f'is_sheduler_enable must be bool. is_sheduler_enable {type(value)} = {value}')
+        else:
+            self._is_sheduler_enable = str(value).lower()
+
+    @property
+    def loops(self):
+        return self._loops
+
+    @loops.setter
+    def loops(self, value: int):
+        if not isinstance(value, int) or value < 0:
+            raise TypeError(
+                f'arg: loops should be positive int. {type(value).__name__} was given')
+        self._loops = str(value)
+
+    @property
+    def sheduler_duration(self):
+        return self._loops
+
+    @sheduler_duration.setter
+    def sheduler_duration(self, value: int):
+        if not isinstance(value, int) or value < 0:
+            raise TypeError(
+                f'arg: sheduler_duration should be positive int. {type(value).__name__} was given')
+        self._loops = str(value)
+
+    @property
+    def sheduler_delay(self):
+        return self._loops
+
+    @sheduler_delay.setter
+    def sheduler_delay(self, value: int):
+        if not isinstance(value, int) or value < 0:
+            raise TypeError(
+                f'arg: sheduler_delay should be positive int. {type(value).__name__} was given')
+        self._loops = str(value)
+
+
+class CommonThreadGroupXML(CommonThreadGroup, Renderable):
+    def render_element(self) -> str:
+        xml_tree: Optional[Element] = super().render_element()
+        element_root = xml_tree.find('ThreadGroup')
+
+        element_root.set('testname', self.name)
+        element_root.set('enabled', self.is_enable)
+
+        for element in list(element_root):
+            try:
+                if element.attrib['name'] == 'TestPlan.comments':
+                    element.text = self.comments
+                elif element.attrib['name'] == 'ThreadGroup.on_sample_error':
+                    element.text = self.on_sample_error.value
+                elif element.attrib['name'] == 'ThreadGroup.num_threads':
+                    element.text = self.num_threads
+                elif element.attrib['name'] == 'ThreadGroup.ramp_time':
+                    element.text = self.ramp_time
+                elif element.attrib['name'] == 'ThreadGroup.scheduler':
+                    element.text = self.is_sheduler_enable
+                elif element.attrib['name'] == 'ThreadGroup.duration':
+                    element.text = self.sheduler_duration
+                elif element.attrib['name'] == 'ThreadGroup.delay':
+                    element.text = self.sheduler_delay
+                elif element.attrib['name'] == 'ThreadGroup.main_controller':
+                    for main_controller_element in list(element):
+                        if main_controller_element.attrib['name'] == 'LoopController.continue_forever':
+                            main_controller_element.text = self.continue_forever
+                        elif main_controller_element.attrib['name'] == 'LoopController.loops':
+                            main_controller_element.text = self.loops
+            except KeyError:
+                continue
+
+        content_root = xml_tree.find('hashTree')
+        content_root.text = self.render_inner_elements()
+        xml_data = ''
+        for element in list(xml_tree):
+            xml_data += tostring(element).decode('utf8')
+        return xml_data

@@ -8,11 +8,11 @@ import os
 
 
 class BasicElement:
-    def __init__(self, name: str = 'BasicElement', comments: str = '', is_enable: bool = True):
+    def __init__(self, name: str = 'BasicElement', comments: str = '', is_enabled: bool = True):
         logging.debug(f'{type(self).__name__} | Init started...')
         self.name = name
         self.comments = comments
-        self.is_enable = is_enable
+        self.is_enabled = is_enabled
 
     @property
     def name(self):
@@ -37,16 +37,16 @@ class BasicElement:
         self._comments = value
 
     @property
-    def is_enable(self):
-        return self._is_enable
+    def is_enabled(self):
+        return self._is_enabled
 
-    @is_enable.setter
-    def is_enable(self, value) -> str:
+    @is_enabled.setter
+    def is_enabled(self, value):
         if not isinstance(value, bool):
             raise TypeError(
                 f'arg: is_enable must be bool. is_enable {type(value)} = {value}')
         else:
-            self._is_enable = str(value).lower()
+            self._is_enabled = value
 
 
 class BasicElementXML(BasicElement, Renderable):
@@ -54,7 +54,7 @@ class BasicElementXML(BasicElement, Renderable):
         xml_tree: Optional[Element] = super().render_element()
         element_root = xml_tree.find('Arguments')
 
-        element_root.set('enabled', self.is_enable)
+        element_root.set('enabled', str(self.is_enabled).lower())
         element_root.set('testname', self.name)
 
         string_prop: Element = element_root.find('stringProp')
