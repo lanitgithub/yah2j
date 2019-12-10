@@ -2,6 +2,9 @@ from xml.etree.ElementTree import Element, ElementTree, tostring
 from jmeter_api.basics.utils import Renderable
 from typing import Optional
 from settings import logging
+import inspect
+import xml
+import os
 
 
 class BasicElement:
