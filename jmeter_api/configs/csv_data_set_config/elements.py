@@ -1,8 +1,8 @@
 from jmeter_api.basics.config.elements import BasicConfig
 from jmeter_api.basics.utils import FileEncoding, Renderable
 from xml.etree.ElementTree import Element, ElementTree, tostring
+from typing import List, Optional
 from settings import logging
-from typing import List
 from enum import Enum
 import os
 
@@ -58,7 +58,6 @@ class CsvDataSetConfig(BasicConfig):
         if not isinstance(value, list):
             raise TypeError(
                 f'variable_names must be List[str]. variable_names {type(value)} = {value}')
-
         else:
             for element in value:
                 if not isinstance(element, str):
@@ -90,7 +89,6 @@ class CsvDataSetConfig(BasicConfig):
         if not isinstance(value, bool):
             raise TypeError(
                 f'ignore_first_line must be bool. ignore_first_line {type(value)} = {value}')
-
         else:
             self._ignore_first_line = str(value).lower()
 
@@ -102,7 +100,7 @@ class CsvDataSetConfig(BasicConfig):
     def delimiter(self, value):
         if not isinstance(value, str):
             raise TypeError(
-                        f'delimiter must be str. delimiter {type(value)} = {value}')
+                f'delimiter must be str. delimiter {type(value)} = {value}')
         else:
             self._delimiter = value
 
@@ -157,9 +155,8 @@ class CsvDataSetConfig(BasicConfig):
 
 class CsvDataSetConfigXML(CsvDataSetConfig, Renderable):
     def render_element(self) -> str:
-        xml_tree: ElementTree = super().render_element()
-        root = xml_tree.getroot()
-        element_root = root.find('CSVDataSet')
+        xml_tree: Optional[Element] = super().render_element()
+        element_root = xml_tree.find('CSVDataSet')
 
         element_root.set('enabled', self.is_enable)
         element_root.set('testname', self.name)
@@ -189,6 +186,6 @@ class CsvDataSetConfigXML(CsvDataSetConfig, Renderable):
             except KeyError:
                 continue
         xml_data = ''
-        for element in list(root):
+        for element in list(xml_tree):
             xml_data += tostring(element).decode('utf8')
         return xml_data
