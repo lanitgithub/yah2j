@@ -1,4 +1,5 @@
 from jmeter_api.timers.constant_timer.elements import ConstantTimer, ConstantTimerXML
+from jmeter_api.basics.utils import tag_wrapper
 import xmltodict
 import pytest
 
@@ -25,15 +26,15 @@ class TestConstantTimer:
 class TestConstantTimerXML:
     def test_render(self):
         element = ConstantTimerXML(name='My timer',
-                                      comments='My comments',
-                                      delay=123,
+                                   comments='My comments',
+                                   delay=123,
                                    is_enabled=False)
-        rendered_doc = element.render_element().replace('\n  <hashTree />\n', '')
-        parsed_doc = xmltodict.parse(rendered_doc)
-        assert parsed_doc['template']['ConstantTimer']['@testname'] == 'My timer'
-        assert parsed_doc['template']['ConstantTimer']['@enabled'] == 'false'
-        assert parsed_doc['template']['ConstantTimer']['stringProp'][0]['#text'] == 'My comments'
-        assert parsed_doc['template']['ConstantTimer']['stringProp'][1]['#text'] == '123'
+        rendered_doc = element.render_element()
+        parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc, 'test_results'))
+        assert parsed_doc['test_results']['ConstantTimer']['@testname'] == 'My timer'
+        assert parsed_doc['test_results']['ConstantTimer']['@enabled'] == 'false'
+        assert parsed_doc['test_results']['ConstantTimer']['stringProp'][0]['#text'] == 'My comments'
+        assert parsed_doc['test_results']['ConstantTimer']['stringProp'][1]['#text'] == '123'
 
     def test_render_hashtree_contain(self):
         element = ConstantTimerXML(name='My timer',

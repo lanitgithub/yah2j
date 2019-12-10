@@ -1,111 +1,85 @@
-from jmeter_api.basics.timer.elements import Timer
-import xml.etree.ElementTree as ET
-import os
+from xml.etree.ElementTree import Element, ElementTree, tostring
+from jmeter_api.basics.timer.elements import BasicTimer
+from jmeter_api.basics.utils import Renderable
+from typing import Optional
+from enum import Enum
 
 
-class ConstThroughputTimer(Timer):
+class BasedOn(Enum):
+    THIS_THREAD_ONLY = '0'
+    ALL_ACTIVE_THREADS = '1'
+    ALL_ACTIVE_THREADS_IN_CURRENT_THREAD = '2'
+    ALL_ACTIVE_SHARED_THREADS = '3'
+    ALL_ACTIVE_SHARED_THREADS_IN_CURRENT_THREAD = '4'
+
+
+class ConstThroughputTimer(BasicTimer):
     """
     Constant throughput timer class.
     (Capslock means arguments)
-
-    Let you create constant throughput timer instance with name and intensity.
-    ConstantTimer(name: str, delay: str) creates instance with name NAME and delay DELAY in milliseconds
-    set_delay(delay: str) sets time delay in milliseconds. Default value is 300 ms
     """
-    thr_timer_template = 'template.xml.xml'
-    path = os.getcwd().split('\\')[:-2]
-    path = '\\'.join(path)
-    UNIFRAND_TIMER_PATH = os.path.join(path, 'templates', unifrand_timer_template)
 
     def __init__(self,
-                 name='Uniform Random Timer',
-                 rand_delay='100',
-                 offset_delay='0'
-                 ):
-        self.const_delay = cons_delay
-
-
-
-        if not isinstance(name, str):
-            raise TypeError(f'Failed to create uniform random timer due to wrong type '
-                          f'of NAME argument.{type(name)} was given, Should be '
-                          f'str.')
-        if not isinstance(rand_delay, str):
-            raise TypeError(f'Failed to create uniform random timer due to wrong type '
-                            f'of RAND_DELAY argument.{type(rand_delay)} was given, Should be '
-                            f'str.')
-        if not isinstance(offset_delay, str):
-            raise TypeError(f'Failed to create uniform random timer due to wrong type '
-                            f'of OFFSET_DELAY argument.{type(offset_delay)} was given, Should be '
-                            f'str.')
-        self._name = name
-        self._rand_delay = rand_delay
-        self._offset_delay = offset_delay
-
-        try:
-            self._tree = ET.parse(UniformRandTimer.UNIFRAND_TIMER_PATH)
-        except Exception:
-            raise ValueError(f'Failed to read template.xml from \'{ConstantTimer.path}\'')
-        root = self._tree.getroot()
-        for element in root.iter('UniformRandomTimer'):
-            element.set('testname', self._name)
-
-    def __repr__(self):
-        return f'Constant timer: {self._name}, delay: {self._delay}'
+                 name: str = 'Uniform Random Timer',
+                 targ_throughput: float = 0,
+                 based_on: str = 'this_thrd_only',
+                 comments='',
+                 is_enabled: bool = True):
+        super().__init__(name=name, comments=comments, is_enabled=is_enabled)
+        self.targ_throughput = targ_throughput
+        self.based_on = based_on
 
     @property
-    def const_delay(self):
-        return self._const_delay
+    def targ_throughput(self):
+        return self._targ_throughput
 
-    @const_delay.setter
-    def const_delay(self, value):
-        self._const_delay = value
+    @targ_throughput.setter
+    def targ_throughput(self, value: BasedOn):
+        if not isinstance(value, float) and not isinstance(value, int) or value < 0:
+            raise TypeError(
+                f'arg: targ_throughput should be positive int or float. {type(value).__name__} was given')
+        self._targ_throughput = str(value)
 
-    def set_delays(self, offset_delay='100', rand_delay='0'):
+    @property
+    def based_on(self):
+        return self._based_on
 
-        try:
-            offset_delay = float(offset_delay)
-            offset_delay = str(offset_delay)
-        except ValueError:
-            raise ValueError(f'OFFSET_DELAY arg should be either strings or '
-                            f'data types that could be converted to strings. '
-                            f'Data type given  DELAY = {type(offset_delay).__name__}')
-        try:
-            rand_delay = int(rand_delay)
-            rand_delay = str(rand_delay)
-        except ValueError:
-            raise ValueError(f'RAND_DELAY arg should be either strings or '
-                            f'data types that could be converted to strings. '
-                            f'Data type given  DELAY = {type(rand_delay).__name__}')
-        tree = self._tree
-        root = tree.getroot()
-        args_list = [offset_delay, rand_delay]
-        for element, arg in zip(root.iter('stringProp'), args_list):
-            element.text = arg
-        #self._tree = tree
+    @based_on.setter
+    def based_on(self, value: BasedOn):
+        if not isinstance(value, BasedOn):
+            raise TypeError(
+                f'arg: based_on should be BasedOn. {type(value).__name__} was given')
+        else:
+            self._based_on = value
 
-    def set_comment(self, comment: str):
+    def __repr__(self):
+        return f'Constant throughput timer: {self._name}, throughput: {self.targ_throughput}'
 
-        tree = self._tree
-        root = tree.getroot()
-        for element in root.iter('UniformRandomTimer'):
-            e = ET.SubElement(element, 'stringProp')
-            e.set('name', 'TestPlan.comments')
-            e.text = comment
-        #self._tree = tree
 
-    def render(self) -> None:
+class ConstThroughputTimerXML(ConstThroughputTimer, Renderable):
+    def render_element(self) -> str:
         """
-        Will be changed!
-        So far that way
-        :return: None
+        Set all parameters in xml and convert it to the string.
+        :return: xml in string format
         """
-        self._tree.write(f'{self._name}.jmx')
+        # default name and stuff setup
+        xml_tree: Optional[Element] = super().render_element()
+        element_root = xml_tree.find('ConstantThroughputTimer')
 
+        element_root.set('testname', self.name)
+        element_root.set('enabled', self.is_enable)
 
-if __name__ == '__main__':
-    t = UniformRandTimer('MyTimer')
-    t.set_comment('Test Comment')
-    t.set_delays('1000', '0')
-    t.render()
+        string_prop = element_root.find('stringProp')
+        string_prop.text = self.comments
 
+        int_prop = element_root.find('intProp')
+        int_prop.text = self.based_on.value
+
+        double_prop = element_root.find('doubleProp')
+        double_prop_value = double_prop.find('value')
+        double_prop_value.text = self.targ_throughput
+
+        xml_data = ''
+        for element in list(xml_tree):
+            xml_data += tostring(element).decode('utf8')
+        return xml_data

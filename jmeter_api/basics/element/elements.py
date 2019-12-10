@@ -1,6 +1,10 @@
 from xml.etree.ElementTree import Element, ElementTree, tostring
 from jmeter_api.basics.utils import Renderable
+from typing import Optional
 from settings import logging
+import inspect
+import xml
+import os
 
 
 class BasicElement:
@@ -47,9 +51,8 @@ class BasicElement:
 
 class BasicElementXML(BasicElement, Renderable):
     def render_element(self) -> str:
-        xml_tree: ElementTree = super().render_element()
-        root = xml_tree.getroot()
-        element_root = root.find('Arguments')
+        xml_tree: Optional[Element] = super().render_element()
+        element_root = xml_tree.find('Arguments')
 
         element_root.set('enabled', self.is_enable)
         element_root.set('testname', self.name)
