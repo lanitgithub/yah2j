@@ -15,9 +15,9 @@ class Method(Enum):
 class HttpRequest(BasicSampler):
 
     def __init__(self,
+                 host: str,
+                 path: str,
                  name: str = 'HTTP Request',
-                 host: str = '',
-                 path: str = '',
                  method: Method = Method.GET,
                  comments: str = '',
                  is_enabled: bool = True
