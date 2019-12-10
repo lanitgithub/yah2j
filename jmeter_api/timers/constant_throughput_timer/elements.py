@@ -1,6 +1,7 @@
 from jmeter_api.basics.timer.elements import BasicTimer
 from jmeter_api.basics.utils import Renderable
 from xml.etree.ElementTree import ElementTree, tostring
+from jmeter_api.configs.csv_data_set_config.elements import CsvDataSetConfigXML, ShareMode
 
 
 class ConstThroughputTimer(BasicTimer):
