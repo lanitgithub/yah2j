@@ -1,9 +1,7 @@
 from jmeter_api.basics.config.elements import BasicConfig
 from jmeter_api.basics.utils import FileEncoding, Renderable
 from xml.etree.ElementTree import Element, ElementTree, tostring
-
-from jmeter_api.configs.csv_data_set_config.elements import CsvDataSetConfig
-
+from typing import List, Optional
 
 class HTTPCacheManager(BasicConfig):
     def __init__(self,
@@ -54,14 +52,13 @@ class HTTPCacheManager(BasicConfig):
                 f'max_elements_in_cache must be int. \
                 max_elements_in_cache {type(value)} = {value}')
         else:
-            self._max_elements_in_cache = value
+            self._max_elements_in_cache = str(value)
 
 
 class HTTPCacheManagerXML(HTTPCacheManager, Renderable):
     def render_element(self) -> str:
-        xml_tree: ElementTree = super().render_element()
-        root = xml_tree.getroot()
-        element_root = root.find('CacheManager')
+        xml_tree: Optional[Element] = super().render_element()
+        element_root = xml_tree.find('CacheManager')
 
         element_root.set('enabled', self.is_enable)
         element_root.set('testname', self.name)
@@ -71,13 +68,13 @@ class HTTPCacheManagerXML(HTTPCacheManager, Renderable):
                 if element.attrib['name'] == 'clearEachIteration':
                     element.text = self.clear_each_iteration
                 elif element.attrib['name'] == 'useExpires':
-                    element.text = self.use_expires
+                    element.text = self.use_cache_control
                 elif element.attrib['name'] == 'maxSize':
-                    element.text = self.max_size
+                    element.text = self.max_elements_in_cache
             except KeyError:
                 continue
 
         xml_data = ''
-        for element in list(root):
+        for element in list(xml_tree):
             xml_data += tostring(element).decode('utf8')
         return xml_data
