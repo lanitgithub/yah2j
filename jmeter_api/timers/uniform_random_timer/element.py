@@ -28,7 +28,7 @@ class UniformRandTimer(BasicTimer):
         self.offset_delay = offset_delay
 
     @property
-    def offset_delay(self):
+    def offset_delay(self) -> int:
         return self._offset_delay
 
     @offset_delay.setter
@@ -40,7 +40,7 @@ class UniformRandTimer(BasicTimer):
         self._offset_delay = value
 
     @property
-    def rand_delay(self):
+    def rand_delay(self) -> float:
         return self._rand_delay
 
     @rand_delay.setter
@@ -51,7 +51,7 @@ class UniformRandTimer(BasicTimer):
                             f'float or int.')
         self._rand_delay = value
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f'Uniform constant timer: {self.name}, offset: {self.offset_delay}, ' \
             f'random delay: {self.rand_delay}'
 

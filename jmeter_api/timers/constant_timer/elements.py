@@ -28,7 +28,7 @@ class ConstantTimer(BasicTimer):
         self.delay = delay
 
     @property
-    def delay(self):
+    def delay(self) -> int:
         return self._delay
 
     @delay.setter
