@@ -15,18 +15,18 @@ class BasicElement:
         self.is_enabled = is_enabled
 
     @property
-    def name(self):
+    def name(self) -> str:
         return self._name
 
     @name.setter
-    def name(self, value):
+    def name(self, value) -> str:
         if not isinstance(value, str):
             raise TypeError(
                 f'arg: name must be str. name {type(value)} = {value}')
         self._name = value
 
     @property
-    def comments(self):
+    def comments(self) -> str:
         return self._comments
 
     @comments.setter
@@ -37,7 +37,7 @@ class BasicElement:
         self._comments = value
 
     @property
-    def is_enabled(self):
+    def is_enabled(self) -> bool:
         return self._is_enabled
 
     @is_enabled.setter
