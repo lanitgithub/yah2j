@@ -2,6 +2,7 @@ from jmeter_api.basics.thread_group.elements import BasicThreadGroup, ThreadGrou
 from jmeter_api.basics.utils import Renderable, IncludesElements
 from xml.etree.ElementTree import Element, ElementTree, tostring
 from typing import List, Optional
+from xml.sax.saxutils import unescape
 from settings import logging
 from enum import Enum
 import os
@@ -25,7 +26,7 @@ class CommonThreadGroup(BasicThreadGroup, IncludesElements):
         self.is_sheduler_enable = is_sheduler_enable
         self.sheduler_duration = sheduler_duration
         self.sheduler_delay = sheduler_delay
-        super().__init__(name=name, comments=comments, is_enable=is_enable,
+        super().__init__(name=name, comments=comments, is_enabled=is_enable,
                          num_threads=num_threads, ramp_time=ramp_time)
 
     @property
@@ -92,7 +93,7 @@ class CommonThreadGroupXML(CommonThreadGroup, Renderable):
         element_root = xml_tree.find('ThreadGroup')
 
         element_root.set('testname', self.name)
-        element_root.set('enabled', self.is_enable)
+        element_root.set('enabled', str(self.is_enabled).lower())
 
         for element in list(element_root):
             try:
@@ -101,21 +102,21 @@ class CommonThreadGroupXML(CommonThreadGroup, Renderable):
                 elif element.attrib['name'] == 'ThreadGroup.on_sample_error':
                     element.text = self.on_sample_error.value
                 elif element.attrib['name'] == 'ThreadGroup.num_threads':
-                    element.text = self.num_threads
+                    element.text = str(self.num_threads)
                 elif element.attrib['name'] == 'ThreadGroup.ramp_time':
-                    element.text = self.ramp_time
+                    element.text = str(self.ramp_time)
                 elif element.attrib['name'] == 'ThreadGroup.scheduler':
-                    element.text = self.is_sheduler_enable
+                    element.text = str(self.is_sheduler_enable).lower()
                 elif element.attrib['name'] == 'ThreadGroup.duration':
-                    element.text = self.sheduler_duration
+                    element.text = str(self.sheduler_duration)
                 elif element.attrib['name'] == 'ThreadGroup.delay':
-                    element.text = self.sheduler_delay
+                    element.text = str(self.sheduler_delay)
                 elif element.attrib['name'] == 'ThreadGroup.main_controller':
                     for main_controller_element in list(element):
                         if main_controller_element.attrib['name'] == 'LoopController.continue_forever':
-                            main_controller_element.text = self.continue_forever
+                            main_controller_element.text = str(self.continue_forever)
                         elif main_controller_element.attrib['name'] == 'LoopController.loops':
-                            main_controller_element.text = self.loops
+                            main_controller_element.text = str(self.loops)
             except KeyError:
                 continue
 
@@ -123,5 +124,5 @@ class CommonThreadGroupXML(CommonThreadGroup, Renderable):
         content_root.text = self.render_inner_elements()
         xml_data = ''
         for element in list(xml_tree):
-            xml_data += tostring(element).decode('utf8')
-        return xml_data
+            xml_data += tostring(element).decode('utf-8')
+        return unescape(xml_data)
