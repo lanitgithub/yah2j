@@ -50,11 +50,11 @@ class CsvDataSetConfig(BasicConfig):
             raise FileNotFoundError(f'{value} is not file')
 
     @property
-    def variable_names(self):
+    def variable_names(self) -> List[str]:
         return self._variable_names
 
     @variable_names.setter
-    def variable_names(self, value) -> List:
+    def variable_names(self, value):
         if not isinstance(value, list):
             raise TypeError(
                 f'variable_names must be List[str]. variable_names {type(value)} = {value}')
@@ -69,11 +69,11 @@ class CsvDataSetConfig(BasicConfig):
             self._variable_names = self.delimiter.join(value)
 
     @property
-    def file_encoding(self):
+    def file_encoding(self) -> FileEncoding:
         return self._fileEncoding
 
     @file_encoding.setter
-    def file_encoding(self, value) -> FileEncoding:
+    def file_encoding(self, value):
         if not isinstance(value, FileEncoding):
             raise TypeError(
                 f'file_encoding must be FileEncoding. file_encoding {type(value)} = {value}')
@@ -81,11 +81,11 @@ class CsvDataSetConfig(BasicConfig):
             self._fileEncoding = value
 
     @property
-    def ignore_first_line(self):
+    def ignore_first_line(self) -> bool:
         return self._ignore_first_line
 
     @ignore_first_line.setter
-    def ignore_first_line(self, value) -> str:
+    def ignore_first_line(self, value):
         if not isinstance(value, bool):
             raise TypeError(
                 f'ignore_first_line must be bool. ignore_first_line {type(value)} = {value}')
@@ -93,7 +93,7 @@ class CsvDataSetConfig(BasicConfig):
             self._ignore_first_line = str(value).lower()
 
     @property
-    def delimiter(self):
+    def delimiter(self) -> str:
         return self._delimiter
 
     @delimiter.setter
@@ -105,7 +105,7 @@ class CsvDataSetConfig(BasicConfig):
             self._delimiter = value
 
     @property
-    def quoted_data(self):
+    def quoted_data(self) -> bool:
         return self._quoted_data
 
     @quoted_data.setter
@@ -117,11 +117,11 @@ class CsvDataSetConfig(BasicConfig):
             self._quoted_data = str(value).lower()
 
     @property
-    def recycle(self):
+    def recycle(self) -> bool:
         return self._recycle
 
     @recycle.setter
-    def recycle(self, value) -> str:
+    def recycle(self, value):
         if not isinstance(value, bool):
             raise TypeError(
                 f'recycle must be bool. recycle {type(value)} = {value}')
@@ -129,7 +129,7 @@ class CsvDataSetConfig(BasicConfig):
             self._recycle = str(value).lower()
 
     @property
-    def stop_thread(self):
+    def stop_thread(self) -> bool:
         return self._stop_thread
 
     @stop_thread.setter
@@ -141,7 +141,7 @@ class CsvDataSetConfig(BasicConfig):
             self._stop_thread = str(value).lower()
 
     @property
-    def share_mode(self):
+    def share_mode(self) -> ShareMode:
         return self._share_mode
 
     @share_mode.setter

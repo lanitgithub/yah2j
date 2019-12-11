@@ -27,7 +27,7 @@ class BasicThreadGroup(BasicElement, IncludesElements):
                          is_enabled=is_enabled)
 
     @property
-    def num_threads(self):
+    def num_threads(self) -> int:
         return self._num_threads
 
     @num_threads.setter
@@ -45,7 +45,7 @@ class BasicThreadGroup(BasicElement, IncludesElements):
             self._num_threads = value
 
     @property
-    def ramp_time(self):
+    def ramp_time(self) -> int:
         return self._ramp_time
 
     @ramp_time.setter
@@ -57,7 +57,7 @@ class BasicThreadGroup(BasicElement, IncludesElements):
             self._ramp_time = value
 
     @property
-    def on_sample_error(self):
+    def on_sample_error(self) -> ThreadGroupAction:
         return self._on_sample_error
 
     @on_sample_error.setter

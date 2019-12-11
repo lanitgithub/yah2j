@@ -28,11 +28,11 @@ class ConstantTimer(BasicTimer):
         self.delay = delay
 
     @property
-    def delay(self):
+    def delay(self) -> int:
         return self._delay
 
     @delay.setter
-    def delay(self, value) -> str:
+    def delay(self, value):
         if not isinstance(value, int) or value < 0:
             raise TypeError(
                 f'arg: delay should be positive int. {type(value).__name__} was given')
