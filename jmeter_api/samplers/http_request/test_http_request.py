@@ -46,7 +46,6 @@ class TestHttpRequestXML:
             elif elem['@name'] == 'HTTPSampler.method':
                 assert elem['#text'] == 'POST'
 
-
     def test_render_hashtree_contain(self):
         element = HttpRequestXML(name='My http',
                                  host='localhost',
