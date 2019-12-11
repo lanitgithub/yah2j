@@ -83,5 +83,5 @@ class HttpRequestXML(HttpRequest, Renderable):
 
         xml_data = ''
         for element in list(xml_tree):
-             xml_data += tostring(element).decode('utf8')
+             xml_data += tostring(element).decode('utf-8')
         return xml_data

@@ -2,6 +2,7 @@ from jmeter_api.basics.thread_group.elements import BasicThreadGroup, ThreadGrou
 from jmeter_api.basics.utils import Renderable, IncludesElements
 from xml.etree.ElementTree import Element, ElementTree, tostring
 from typing import List, Optional
+from xml.sax.saxutils import unescape
 from settings import logging
 from enum import Enum
 import os
@@ -123,5 +124,5 @@ class CommonThreadGroupXML(CommonThreadGroup, Renderable):
         content_root.text = self.render_inner_elements()
         xml_data = ''
         for element in list(xml_tree):
-            xml_data += tostring(element).decode('utf8')
-        return xml_data
+            xml_data += tostring(element).decode('utf-8')
+        return unescape(xml_data)
