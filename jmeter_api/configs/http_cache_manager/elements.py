@@ -17,7 +17,7 @@ class HTTPCacheManager(BasicSampler):
         super().__init__(name=name, comments=comments, is_enabled=is_enabled)
 
     @property
-    def clear_each_iteration(self):
+    def clear_each_iteration(self) -> bool:
         return self._clear_each_iteration
 
     @clear_each_iteration.setter
@@ -30,7 +30,7 @@ class HTTPCacheManager(BasicSampler):
             self._clear_each_iteration = str(value).lower()
 
     @property
-    def use_cache_control(self):
+    def use_cache_control(self) -> bool:
         return self._use_cache_control
 
     @use_cache_control.setter
@@ -42,7 +42,7 @@ class HTTPCacheManager(BasicSampler):
             self._use_cache_control = str(value).lower()
 
     @property
-    def max_elements_in_cache(self):
+    def max_elements_in_cache(self) -> int:
         return self._max_elements_in_cache
 
     @max_elements_in_cache.setter
