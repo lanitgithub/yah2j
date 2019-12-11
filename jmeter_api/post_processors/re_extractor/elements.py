@@ -2,7 +2,7 @@ from jmeter_api.basics.post_processor.elements import BasicPostProcessor
 from jmeter_api.basics.element.elements import Renderable
 from xml.etree.ElementTree import Element, SubElement, tostring
 from enum import Enum
-from typing import Optional
+from typing import Union
 import logging
 import re
 
@@ -28,13 +28,13 @@ class RegExpPost(BasicPostProcessor):
 
     def __init__(self,
                  name: str = 'Regular Expression Extractor',
-                 scope=Scope.MAIN,
+                 scope: Union[str, Scope] = Scope.MAIN,
                  field_to_check: Field = Field.BODY,
                  var_name: str = '',
                  regexp: str = '',
-                 template: int = 1,
-                 match_no: int = 1,
-                 default_val: str = '', # todo if EMPTY add tag <boolProp name="RegexExtractor.default_empty_value">true</boolProp>
+                 template: int = None,
+                 match_no: int = None,
+                 default_val: str = '',
                  comments: str = '',
                  is_enabled: bool = True
                  ):
@@ -55,7 +55,6 @@ class RegExpPost(BasicPostProcessor):
     def scope(self, value):
         if not isinstance(value, str) and not isinstance(value, Scope):
             raise TypeError(f'arg: scope should be str or Scope. {type(value).__name__} was given')
-        # todo add tag Scope.variable
         if isinstance(value, str):
             self._scope = value
         elif isinstance(value, Scope):
@@ -93,7 +92,7 @@ class RegExpPost(BasicPostProcessor):
             re.compile(value)
         except re.error as error:
             print(error)
-            raise Exception('Error during reg exp compilation.')
+            raise ValueError('Invalid regular expression.')
         self._regexp = value
 
     @property
@@ -102,8 +101,10 @@ class RegExpPost(BasicPostProcessor):
 
     @template.setter
     def template(self, value):
-        if not isinstance(value, int) or value < 1:
-            raise TypeError(f'arg: template should be int. {type(value).__name__} was given')
+        if value is not None and not isinstance(value, int):
+            raise TypeError(f'arg: template should be int or None. {type(value).__name__} was given')
+        if value is not None and value < 1:
+            raise ValueError(f'arg: template should be greater or equal than 1.')
         self._template = value
 
     @property
@@ -112,8 +113,10 @@ class RegExpPost(BasicPostProcessor):
 
     @match_no.setter
     def match_no(self, value):
-        if not isinstance(value, int) or value < 0:
+        if value is not None and not isinstance(value, int):
             raise TypeError(f'arg: match_no should be int. {type(value).__name__} was given')
+        if value is not None and value < 0:
+            raise ValueError(f'arg: match_no should be greater than 0.')
         self._match_no = value
 
     @property
@@ -146,11 +149,17 @@ class RegExpPostXML(RegExpPost, Renderable):
                 elif element.attrib['name'] == 'RegexExtractor.regex':
                     element.text = self.regexp
                 elif element.attrib['name'] == 'RegexExtractor.template':
-                    element.text = str(self.template)
+                    if self.template is None:
+                        element.text = ''
+                    else:
+                        element.text = str(self.template)
                 elif element.attrib['name'] == 'RegexExtractor.default':
                     element.text = self.default_val
                 elif element.attrib['name'] == 'RegexExtractor.match_number':
-                    element.text = str(self.match_no)
+                    if self.match_no is None:
+                        element.text = ''
+                    else:
+                        element.text = str(self.match_no)
 
                 if flag:
                     if self.scope in [Scope.MAIN_AND_SUB.value, Scope.SUB.value]:
@@ -175,4 +184,4 @@ class RegExpPostXML(RegExpPost, Renderable):
         xml_data = ''
         for element in list(xml_tree):
             xml_data += tostring(element).decode('utf8')
-        return xml_data.replace('><', '>\n<') # replace for beter readability
+        return xml_data.replace('><', '>\n<') # replace for better readability
