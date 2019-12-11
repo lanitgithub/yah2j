@@ -29,7 +29,7 @@ class IncludesElements:
 
     def add_element(self, new_element: Renderable):
         self._elements.append(new_element)
-        
+
     def get_count_of_elements(self) -> int:
         return len(self._elements)
 

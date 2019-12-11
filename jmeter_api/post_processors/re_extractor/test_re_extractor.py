@@ -132,3 +132,13 @@ class TestRegExpPostXML:
         element = RegExpPostXML()
         rendered_doc = tag_wrapper(element.render_element(), 'result')
         assert '<hashTree />' in rendered_doc
+
+
+class TestBraces:
+
+    def test_braces(self) -> str:
+        test_list = ["&lt;", "&gt;"]
+        element = RegExpPostXML()
+        element_xml = element.render_element()
+        for e in test_list:
+            assert e not in element_xml

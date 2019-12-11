@@ -4,6 +4,7 @@ import xmltodict
 import pytest
 import re
 
+
 class TestUtils:
     def test_tag_wrapper(self):
         wrapped_data = tag_wrapper('<a>testdata</a>', 'test_wrapper')
