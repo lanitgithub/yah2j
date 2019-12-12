@@ -53,7 +53,7 @@ class BasicElementXML(BasicElement, Renderable):
     root_element_name = 'Arguments'
 
     def render_element(self) -> str:
-        element_root = super().render_element()
+        element_root, xml_tree = super().render_element()
         string_prop: Element = element_root.find('stringProp')
         string_prop.text = self.comments
         return tostring(element_root).decode('utf8')
