@@ -31,11 +31,13 @@ class Renderable(ABC):
         return (element_root, xml_tree)
 
 
-class IncludesElements:
+class IncludesElements(ABC):
     _elements: List[Renderable] = []
-
+    
+    @abstractmethod
     def add_element(self, new_element: Renderable):
-        self._elements.append(new_element)
+        if not isinstance(new_element, Renderable):
+            raise TypeError('new_element must be Renderable. new_element {type(value)} = {value}')
 
     def get_count_of_elements(self) -> int:
         return len(self._elements)
