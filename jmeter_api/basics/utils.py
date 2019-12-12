@@ -28,7 +28,7 @@ class Renderable(ABC):
         element_root.set('enabled', str(self.is_enabled).lower())
         element_root.set('testname', self.name)
         element_root.set('element_type', str(type(self).__name__))
-        return element_root
+        return (element_root, xml_tree)
 
 
 class IncludesElements:
