@@ -50,14 +50,10 @@ class BasicElement:
 
 
 class BasicElementXML(BasicElement, Renderable):
+    root_element_name = 'Arguments'
+
     def render_element(self) -> str:
-        xml_tree: Optional[Element] = super().render_element()
-        element_root = xml_tree.find('Arguments')
-
-        element_root.set('enabled', str(self.is_enabled).lower())
-        element_root.set('testname', self.name)
-
+        element_root, xml_tree = super().render_element()
         string_prop: Element = element_root.find('stringProp')
         string_prop.text = self.comments
-
         return tostring(element_root).decode('utf8')

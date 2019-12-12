@@ -50,6 +50,14 @@ class TestBasicElementXML:
         parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc, 'test_results'))
         assert parsed_doc['test_results']['Arguments']['@enabled'] == 'true'
 
+    def test_render_element_type(self):
+        element = BasicElementXML(name='DefaultwtjName',
+                                  comments='Random Comment!',
+                                  is_enabled=True)
+        rendered_doc = element.render_element()
+        parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc, 'test_results'))
+        assert parsed_doc['test_results']['Arguments']['@element_type'] == 'BasicElementXML'
+
     def test_render_header_contain(self):
         element = BasicElementXML(name='DefaultwtjName',
                                   comments='Random Comment!',

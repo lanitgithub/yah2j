@@ -57,17 +57,15 @@ class ConstThroughputTimer(BasicTimer):
 
 
 class ConstThroughputTimerXML(ConstThroughputTimer, Renderable):
+    root_element_name = 'ConstantThroughputTimer'
+    
     def render_element(self) -> str:
         """
         Set all parameters in xml and convert it to the string.
         :return: xml in string format
         """
         # default name and stuff setup
-        xml_tree: Optional[Element] = super().render_element()
-        element_root = xml_tree.find('ConstantThroughputTimer')
-
-        element_root.set('testname', self.name)
-        element_root.set('enabled', str(self.is_enabled).lower())
+        element_root, xml_tree = super().render_element()
 
         string_prop = element_root.find('stringProp')
         string_prop.text = self.comments

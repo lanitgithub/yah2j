@@ -154,12 +154,10 @@ class CsvDataSetConfig(BasicConfig):
 
 
 class CsvDataSetConfigXML(CsvDataSetConfig, Renderable):
+    root_element_name = 'CSVDataSet'
+    
     def render_element(self) -> str:
-        xml_tree: Optional[Element] = super().render_element()
-        element_root = xml_tree.find('CSVDataSet')
-
-        element_root.set('enabled', str(self.is_enabled).lower())
-        element_root.set('testname', self.name)
+        element_root, xml_tree = super().render_element()
 
         for element in list(element_root):
             try:

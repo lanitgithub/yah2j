@@ -43,15 +43,14 @@ class ConstantTimer(BasicTimer):
 
 
 class ConstantTimerXML(ConstantTimer, Renderable):
+    root_element_name = 'ConstantTimer'
+    
     def render_element(self) -> str:
         """
         Set all parameters in xml and convert it to the string.
         :return: xml in string format
         """
-        xml_tree: Optional[Element] = super().render_element()
-        element_root = xml_tree.find('ConstantTimer')
-        element_root.set('testname', self.name)
-        element_root.set('enabled', str(self.is_enabled).lower())
+        element_root, xml_tree = super().render_element()
         for element in list(element_root):
             try:
                 if element.attrib['name'] == 'TestPlan.comments':
