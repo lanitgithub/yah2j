@@ -28,7 +28,14 @@ class Renderable(ABC):
         element_root.set('enabled', str(self.is_enabled).lower())
         element_root.set('testname', self.name)
         element_root.set('element_type', str(type(self).__name__))
-        return (element_root, xml_tree)
+        for element in list(element_root):
+            try:
+                if element.attrib['name'] == 'TestPlan.comments':
+                    element.text = self.comments
+                    break
+            except Exception:
+                logging.error('Unable to add comment')
+        return element_root, xml_tree
 
 
 class IncludesElements:
