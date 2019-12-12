@@ -56,12 +56,10 @@ class HTTPCacheManager(BasicSampler):
 
 
 class HTTPCacheManagerXML(HTTPCacheManager, Renderable):
+    root_element_name = 'CacheManager'
+    
     def render_element(self) -> str:
-        xml_tree: Optional[Element] = super().render_element()
-        element_root = xml_tree.find('CacheManager')
-
-        element_root.set('enabled', str(self.is_enabled).lower())
-        element_root.set('testname', self.name)
+        element_root, xml_tree = super().render_element()
 
         for element in list(element_root):
             try:

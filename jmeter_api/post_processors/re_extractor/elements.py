@@ -2,7 +2,7 @@ from jmeter_api.basics.post_processor.elements import BasicPostProcessor
 from jmeter_api.basics.element.elements import Renderable
 from xml.etree.ElementTree import Element, SubElement, tostring
 from enum import Enum
-from typing import Union
+from typing import Union, Optional
 import logging
 import re
 
@@ -131,12 +131,10 @@ class RegExpPost(BasicPostProcessor):
 
 
 class RegExpPostXML(RegExpPost, Renderable):
+    root_element_name = 'RegexExtractor'
+    
     def render_element(self) -> str:
-        xml_tree: Optional[Element] = super().render_element()
-        element_root = xml_tree.find('RegexExtractor')
-
-        element_root.set('enabled', str(self.is_enabled).lower())
-        element_root.set('testname', self.name)
+        element_root, xml_tree = super().render_element()
         flag = True
         for element in list(element_root):
             try:
