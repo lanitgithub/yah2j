@@ -4,6 +4,7 @@ import xmltodict
 import pytest
 import re
 
+
 class TestUtils:
     def test_tag_wrapper(self):
         wrapped_data = tag_wrapper('<a>testdata</a>', 'test_wrapper')
@@ -17,7 +18,7 @@ class TestUtils:
         for element in elements_list:
             inc_elements.add_element(element)
         assert inc_elements.get_count_of_elements() == 3
-        
+
     def test_includes_elements_test_render(self):
         elements_list = [BasicElementXML('element_name'), BasicElementXML(
             'element_name'), BasicElementXML('element_name')]
@@ -26,3 +27,13 @@ class TestUtils:
             inc_elements.add_element(element)
         xml_data = inc_elements.render_inner_elements()
         assert len(re.findall('element_name', xml_data)) == 3
+
+    def test_check_forbidden_symbols(self):
+        elements_list = [BasicElementXML('element_name'), BasicElementXML(
+            'element_name'), BasicElementXML('element_name')]
+        inc_elements = IncludesElements()
+        for element in elements_list:
+            inc_elements.add_element(element)
+        xml_data = inc_elements.render_inner_elements()
+        assert "&lt;" not in xml_data
+        assert "&gt;" not in xml_data
