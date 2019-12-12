@@ -1,4 +1,5 @@
-from jmeter_api.basics.element.elements import BasicElementXML
+from jmeter_api.configs.http_cache_manager.elements import HTTPCacheManagerXML
+from jmeter_api.thread_groups.common_thread_group.elements import CommonThreadGroupXML
 from jmeter_api.basics.utils import tag_wrapper, IncludesElements
 import xmltodict
 import pytest
@@ -12,28 +13,28 @@ class TestUtils:
         assert parsed_data['test_wrapper']['a'] == 'testdata'
 
     def test_includes_elements_get_size(self):
-        elements_list = [BasicElementXML('elem1'), BasicElementXML(
-            'elem2'), BasicElementXML('elem3')]
-        inc_elements = IncludesElements()
+        thread_group = CommonThreadGroupXML(True)
+        elements_list = [HTTPCacheManagerXML(
+        ), HTTPCacheManagerXML(), HTTPCacheManagerXML()]
         for element in elements_list:
-            inc_elements.add_element(element)
-        assert inc_elements.get_count_of_elements() == 3
+            thread_group.add_element(element)
+        assert thread_group.get_count_of_elements() == 3
 
     def test_includes_elements_test_render(self):
-        elements_list = [BasicElementXML('element_name'), BasicElementXML(
-            'element_name'), BasicElementXML('element_name')]
-        inc_elements = IncludesElements()
+        thread_group = CommonThreadGroupXML(True)
+        elements_list = [HTTPCacheManagerXML(
+        ), HTTPCacheManagerXML(), HTTPCacheManagerXML()]
         for element in elements_list:
-            inc_elements.add_element(element)
-        xml_data = inc_elements.render_inner_elements()
-        assert len(re.findall('element_name', xml_data)) == 3
+            thread_group.add_element(element)
+        xml_data = thread_group.render_inner_elements()
+        assert len(re.findall('element_type', xml_data)) == 3
 
     def test_check_forbidden_symbols(self):
-        elements_list = [BasicElementXML('element_name'), BasicElementXML(
-            'element_name'), BasicElementXML('element_name')]
-        inc_elements = IncludesElements()
+        thread_group = CommonThreadGroupXML(True)
+        elements_list = [HTTPCacheManagerXML(
+        ), HTTPCacheManagerXML(), HTTPCacheManagerXML()]
         for element in elements_list:
-            inc_elements.add_element(element)
-        xml_data = inc_elements.render_inner_elements()
+            thread_group.add_element(element)
+        xml_data = thread_group.render_inner_elements()
         assert "&lt;" not in xml_data
         assert "&gt;" not in xml_data
