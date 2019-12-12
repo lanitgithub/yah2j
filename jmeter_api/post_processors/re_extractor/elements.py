@@ -2,7 +2,7 @@ from jmeter_api.basics.post_processor.elements import BasicPostProcessor
 from jmeter_api.basics.element.elements import Renderable
 from xml.etree.ElementTree import Element, SubElement, tostring
 from enum import Enum
-from typing import Union
+from typing import Union, Optional
 import logging
 import re
 
