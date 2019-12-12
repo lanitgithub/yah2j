@@ -75,7 +75,7 @@ class HttpRequest(BasicSampler):
                  source_address: str = '',
                  proxy_scheme: str = '',
                  proxy_host: str = '',
-                 proxy_port: str = '',
+                 proxy_port: Union[int, None] = None,
                  proxy_username: str = '',
                  proxy_password: str = '',
                  comments: str = '',
@@ -336,8 +336,10 @@ class HttpRequest(BasicSampler):
 
     @proxy_port.setter
     def proxy_port(self, value):
-        if not isinstance(value, str):
-            raise TypeError(f'arg: proxy_port should be str. {type(value).__name__} was given')
+        if value is not None and not isinstance(value, int):
+            raise TypeError(f'arg: proxy_port should be int or None. {type(value).__name__} was given')
+        if value is not None and value < 0:
+            raise ValueError(f'arg: proxy_port should be positive.')
         self._proxy_port = value
 
     @property
@@ -388,7 +390,7 @@ class HttpRequestXML(HttpRequest, Renderable):
                     else:
                         element.text = ''
 
-                elif element.attrib['name'] == 'HTTPSampler.content_encoding':
+                elif element.attrib['name'] == 'HTTPSampler.contentEncoding':
                     element.text = self.content_encoding
                 elif element.attrib['name'] == 'HTTPSampler.follow_redirects':
                     element.text = str(not self.auto_redirect).lower()
@@ -398,12 +400,91 @@ class HttpRequestXML(HttpRequest, Renderable):
                     element.text = str(self.keep_alive).lower()
                 elif element.attrib['name'] == 'HTTPSampler.DO_MULTIPART_POST':
                     element.text = str(self.do_multipart_post).lower()
+                elif element.attrib['name'] == 'HTTPSampler.connect_timeout':
+                    if self.connect_timeout is not None:
+                        element.text = str(self.connect_timeout)
+                    else:
+                        element.text = ''
+                elif element.attrib['name'] == 'HTTPSampler.response_timeout':
+                    if self.response_timeout is not None:
+                        element.text = str(self.response_timeout)
+                    else:
+                        element.text = ''
+                elif element.attrib['name'] == 'HTTPSampler.embedded_url_re':
+                    element.text = self.url_must_match
+
+                # add tags
 
                 if self.browser_comp_headers:
                     element = SubElement(element_root, 'boolProp')
                     element.set('name', 'HTTPSampler.BROWSER_COMPATIBLE_MULTIPART')
                     element.text = str(self.browser_comp_headers).lower()
                     self.browser_comp_headers = not self.browser_comp_headers
+                if self.implementation.value:
+                    element = SubElement(element_root, 'stringProp')
+                    element.set('name', 'HTTPSampler.implementation')
+                    element.text = self.implementation.value
+                    self.implementation = Implement.NONE
+                if self.retrieve_all_emb_resources:
+                    element = SubElement(element_root, 'boolProp')
+                    element.set('name', 'HTTPSampler.image_parser')
+                    element.text = str(self.retrieve_all_emb_resources).lower()
+                    self.retrieve_all_emb_resources = not self.retrieve_all_emb_resources
+                if self.parallel_downloads:
+                    element = SubElement(element_root, 'boolProp')
+                    element.set('name', 'HTTPSampler.concurrentDwn')
+                    element.text = str(self.parallel_downloads).lower()
+                    self.parallel_downloads = not self.parallel_downloads
+                    if self.parallel_downloads_no is not None and self.parallel_downloads_no != 6:
+                        element = SubElement(element_root, 'stringProp')
+                        element.set('name', 'HTTPSampler.concurrentPool')
+                        element.text = str(self.parallel_downloads_no)
+                # HTTPSampler.ipSourceType
+                if self.source_type.value:
+                    element = SubElement(element_root, 'intProp')
+                    element.set('name', 'HTTPSampler.ipSourceType')
+                    element.text = self.source_type.value
+                    self.source_type = Source.HOSTNAME
+                # "HTTPSampler.ipSource"
+                if self.source_address:
+                    element = SubElement(element_root, 'stringProp')
+                    element.set('name', 'HTTPSampler.ipSource')
+                    element.text = self.source_address
+                    self.source_address = ''
+                # proxyScheme
+                if self.proxy_scheme:
+                    element = SubElement(element_root, 'stringProp')
+                    element.set('name', 'HTTPSampler.proxyScheme')
+                    element.text = self.proxy_scheme
+                    self.proxy_scheme = ''
+                if self.proxy_host:
+                    element = SubElement(element_root, 'stringProp')
+                    element.set('name', 'HTTPSampler.proxyHost')
+                    element.text = self.proxy_host
+                    self.proxy_host = ''
+
+                if self.proxy_port:
+                    element = SubElement(element_root, 'stringProp')
+                    element.set('name', 'HTTPSampler.proxyPort')
+                    element.text = str(self.proxy_port)
+                    self.proxy_port = 0
+                elif self.proxy_port is None:
+                    element = SubElement(element_root, 'stringProp')
+                    element.set('name', 'HTTPSampler.proxyPort')
+                    element.text = ''
+                    self.proxy_port = 0
+
+                if self.proxy_username:
+                    element = SubElement(element_root, 'stringProp')
+                    element.set('name', 'HTTPSampler.proxyUser')
+                    element.text = str(self.proxy_username)
+                    self.proxy_username = ''
+
+                if self.proxy_password:
+                    element = SubElement(element_root, 'stringProp')
+                    element.set('name', 'HTTPSampler.proxyPass')
+                    element.text = self.proxy_password
+                    self.proxy_password = ''
 
             except KeyError:
                 logging.error('Unable to set xml parameters')
@@ -413,10 +494,34 @@ class HttpRequestXML(HttpRequest, Renderable):
         return xml_data.replace('><', '>\n<')
 
 
-s = HttpRequestXML(host='www.google.com', comments='123', method=Method.POST)
-with open('c:\\xml\\http_req.jmx') as file:
-    data = file.readlines()
-    data[27] = s.render_element()
-
-with open('c:\\xml\\http_req_py.jmx', 'w') as file:
-    file.writelines(data)
+# s = HttpRequestXML(host='www.google.com',
+#                    comments='123',
+#                    method=Method.POST,
+#                    path='/search',
+#                    protocol=Protocol.FTP,
+#                    port=443,
+#                    content_encoding='utf-8',
+#                    keep_alive=False,
+#                    do_multipart_post=True,
+#                    browser_comp_headers=True,
+#                    implementation=Implement.JAVA,
+#                    connect_timeout=123,
+#                    response_timeout=321,
+#                    retrieve_all_emb_resources=True,
+#                    parallel_downloads=True,
+#                    parallel_downloads_no=3,
+#                    url_must_match='test match',
+#                    source_type=Source.HOSTNAME,
+#                    source_address='test hostname',
+#                    proxy_scheme='My scheme',
+#                    proxy_host='Proxy host',
+#                    proxy_port=445,
+#                    proxy_username='User',
+#                    proxy_password='Pass'
+#                    )
+# with open('c:\\xml\\http_req.jmx') as file:
+#     data = file.readlines()
+#     data[27] = s.render_element()
+#
+# with open('c:\\xml\\http_req_py.jmx', 'w') as file:
+#     file.writelines(data)
