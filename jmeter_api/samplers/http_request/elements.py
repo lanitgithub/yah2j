@@ -59,18 +59,17 @@ class HttpRequest(BasicSampler):
 
 
 class HttpRequestXML(HttpRequest, Renderable):
+    root_element_name = 'HTTPSamplerProxy'
+    
     def render_element(self) -> str:
         """
         Set all parameters in xml and convert it to the string.
         :return: xml in string format
         """
         # default name and stuff setup
-        xml_tree: ElementTree = super().render_element()
-        root = xml_tree.find('HTTPSamplerProxy')
-
-        root.set('enabled', str(self.is_enabled).lower())
-        root.set('testname', self.name)
-        for element in list(root):
+        element_root, xml_tree = super().render_element()
+        
+        for element in list(element_root):
             try:
                 if element.attrib['name'] == 'HTTPSampler.domain':
                     element.text = self.host
