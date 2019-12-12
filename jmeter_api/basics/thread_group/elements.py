@@ -3,7 +3,7 @@ from jmeter_api.basics.config.elements import BasicConfig
 from jmeter_api.basics.sampler.elements import BasicSampler
 from jmeter_api.basics.timer.elements import BasicTimer
 from jmeter_api.basics.utils import IncludesElements
-from typing import Optional
+from typing import Union
 from enum import Enum
 
 
@@ -30,7 +30,7 @@ class BasicThreadGroup(BasicElement, IncludesElements):
                          comments=comments,
                          is_enabled=is_enabled)
     
-    def add_element(self, new_element: Optional[BasicSampler, BasicTimer, BasicConfig]):
+    def add_element(self, new_element: Union[BasicSampler, BasicTimer, BasicConfig]):
         super().add_element(new_element)
         if not isinstance(new_element, (BasicSampler, BasicTimer, BasicConfig)):
             raise TypeError('new_element must be BasicSampler, BasicTimer, BasicConfig. new_element {type(value)} = {value}')
