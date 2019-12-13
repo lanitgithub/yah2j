@@ -16,7 +16,7 @@ class Renderable(ABC):
         template_path = os.path.join(element_path, 'template.xml')
         with open(template_path) as file:
             file_data = file.read()
-            wrapped_template = tag_wrapper(file_data, 'template')
+            wrapped_template = tag_wrapper(file_data, 'template.xml')
             template_as_element_tree = fromstring(wrapped_template)
             return template_as_element_tree
 
@@ -38,11 +38,13 @@ class Renderable(ABC):
         return element_root, xml_tree
 
 
-class IncludesElements:
+class IncludesElements(ABC):
     _elements: List[Renderable] = []
-
+    
+    @abstractmethod
     def add_element(self, new_element: Renderable):
-        self._elements.append(new_element)
+        if not isinstance(new_element, Renderable):
+            raise TypeError('new_element must be Renderable. new_element {type(value)} = {value}')
 
     def get_count_of_elements(self) -> int:
         return len(self._elements)

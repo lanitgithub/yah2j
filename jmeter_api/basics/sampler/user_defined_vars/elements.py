@@ -1,8 +1,9 @@
 from jmeter_api.basics.utils import Renderable
+from xml.etree.ElementTree import tostring, SubElement
 from typing import Union
 
 
-class UserDefinedVariables:
+class UserDefinedVariables(Renderable):
 
     def __init__(self,
                  name: str = '',
@@ -43,8 +44,8 @@ class UserDefinedVariables:
 
     @url_encode.setter
     def url_encode(self, value):
-        if not isinstance(value, str):
-            raise TypeError(f'arg: url_encode should be str. {type(value).__name__} was given')
+        if not isinstance(value, bool):
+            raise TypeError(f'arg: url_encode should be bool. {type(value).__name__} was given')
         self._url_encode = value
 
     @property
@@ -67,6 +68,28 @@ class UserDefinedVariables:
             raise TypeError(f'arg: use_equals should be bool. {type(value).__name__} was given')
         self._use_equals = value
 
-class UserDefinedVariablesXML(Renderable):
-    pass
+    def render_element(self):
+        xml_tree = self.get_template()
+        flag = True
+        for element in list(xml_tree):
+            element.set('name', self.name)
+            for el in list(element):
+                if el.attrib['name'] == 'HTTPArgument.always_encode':
+                    el.text = str(self.url_encode).lower()
+                elif el.attrib['name'] == 'Argument.value':
+                    el.text = str(self._value)
+                elif el.attrib['name'] == 'HTTPArgument.use_equals':
+                    el.text = str(self.use_equals).lower()
+                elif el.attrib['name'] == 'Argument.name':
+                    el.text = self.name
 
+                if self.content_type and flag:
+                    e = SubElement(element, 'stringProp')
+                    e.set('name', 'HTTPArgument.content_type')
+                    e.text = self.content_type
+                    flag = False
+
+        xml_data = ''
+        for element in list(xml_tree):
+            xml_data += tostring(element).decode('utf-8')
+        return xml_data.replace('><', '>\n<')

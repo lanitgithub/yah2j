@@ -36,11 +36,11 @@ class TestArgsTypeCheck:
             RegExpPost(regexp=123)
         with pytest.raises(ValueError, match=r'.*Invalid regular expression.*'):
             RegExpPost(regexp='[')
-    # template type and value check
+    # template.xml type and value check
     def test_template_type_check(self):
-        with pytest.raises(TypeError, match=r'.*arg: template should be int or None.*'):
+        with pytest.raises(TypeError, match=r'.*arg: template.xml should be int or None.*'):
             RegExpPost(template='2')
-        with pytest.raises(ValueError, match=r'.*arg: template should be greater or equal than 1*'):
+        with pytest.raises(ValueError, match=r'.*arg: template.xml should be greater or equal than 1*'):
             RegExpPost(template=0)
     # match_no type and value check
     def test_match_no_type_check(self):

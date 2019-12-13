@@ -1,7 +1,11 @@
 from jmeter_api.basics.sampler.elements import BasicSampler
 from jmeter_api.basics.element.elements import Renderable
-from xml.etree.ElementTree import ElementTree, tostring, SubElement
-from typing import Union
+from jmeter_api.basics.sampler.files_upload.elements import FileUpload
+from jmeter_api.basics.utils import IncludesElements
+from xml.etree.ElementTree import tostring, SubElement
+from jmeter_api.basics.sampler.user_defined_vars.elements import UserDefinedVariables
+from xml.sax.saxutils import unescape
+from typing import Union, List
 import logging
 from enum import Enum
 
@@ -110,7 +114,9 @@ class HttpRequest(BasicSampler):
         self.proxy_port = proxy_port
         self.proxy_username = proxy_username
         self.proxy_password = proxy_password
-
+        self.variables = ''
+        self.text = ''
+        self._upload_file_list: List[FileUpload] = []
 
     @property
     def host(self):
@@ -362,8 +368,51 @@ class HttpRequest(BasicSampler):
             raise TypeError(f'arg: proxy_password should be str. {type(value).__name__} was given')
         self._proxy_password = value
 
-class HttpRequestXML(HttpRequest, Renderable):
+    @property
+    def text(self):
+        return self._text
+
+    @text.setter
+    def text(self, value):
+        if not isinstance(value, str):
+            raise TypeError(f'arg: text should be str. {type(value).__name__} was given')
+        self._text = value
+
+
+class HttpRequestXML(HttpRequest, Renderable, IncludesElements):
     root_element_name = 'HTTPSamplerProxy'
+
+    def add_element(self, *args) -> None:
+        for element in args:
+            if not isinstance(element, UserDefinedVariables):
+                raise TypeError(f'You can add only UserDefinedVariables objects.')
+            self._elements.append(element)
+
+    def add_file_upload(self, *args):
+        for file_up in args:
+            if not isinstance(file_up, FileUpload):
+                raise TypeError(f'You can add only FileUpload objects.')
+            self._upload_file_list.append(file_up)
+
+    def render_upload(self):
+        xml_tree = self.get_template()
+        elem_prop = SubElement(xml_tree, 'elementProp')
+        elem_prop.set('name', 'HTTPsampler.Files')
+        elem_prop.set('elementType', 'HTTPFileArgs')
+        col_prop = SubElement(elem_prop, 'collectionProp')
+        col_prop.set('name', 'HTTPFileArgs.files')
+        upload_str = ''
+        for item in self._upload_file_list:
+            upload_str += item.render_element()
+        col_prop.text = upload_str
+        return unescape(tostring(elem_prop).decode('utf-8'))
+
+    def get_len_upload_files(self):
+        return len(self._upload_file_list)
+
+    def add_body_data(self, text: str) -> None:
+        self.text = text
+
     def render_element(self) -> str:
         """
         Set all parameters in xml and convert it to the string.
@@ -486,12 +535,32 @@ class HttpRequestXML(HttpRequest, Renderable):
                     element.text = self.proxy_password
                     self.proxy_password = ''
 
+                # add boolProp tag for body data
+                flag = True
+                if self.text and flag:
+                    element = SubElement(element_root, 'boolProp')
+                    element.set('name', 'HTTPSampler.postBodyRaw')
+                    element.text = 'true'
+                    flag = False
+
             except KeyError:
                 logging.error('Unable to set xml parameters')
+        # render upload files
+        if self.get_len_upload_files():
+            content_root = xml_tree[0]
+            content_root.text = self.render_upload()
         xml_data = ''
+        if not self.text:
+            content_root = xml_tree[0][0][0]  # to get collectionProp tag
+            print('VARIABLES', content_root.attrib)
+            content_root.text = self.render_inner_elements()
+        else:
+            content_root = xml_tree[0][0][0]
+            body_data = UserDefinedVariables(value=self.text)
+            content_root.text = body_data.render_element()
         for element in list(xml_tree):
-             xml_data += tostring(element).decode('utf-8')
-        return xml_data.replace('><', '>\n<')
+            xml_data += tostring(element).decode('utf-8')
+        return unescape(xml_data).replace('><', '>\n<')
 
 
 # s = HttpRequestXML(host='www.google.com',
@@ -519,6 +588,18 @@ class HttpRequestXML(HttpRequest, Renderable):
 #                    proxy_username='User',
 #                    proxy_password='Pass'
 #                    )
+# l_vars = [
+#     UserDefinedVariables(name='name', value=124, url_encode=True, content_type='css'),
+# UserDefinedVariables(name='name2', value=125, url_encode=True, content_type='css'),
+# ]
+# s.add_element(*l_vars)
+#
+# uploads = [
+#     FileUpload(file_path='test1', param_name='parameter1', mime_type='Mime1'),
+#     FileUpload(file_path='test2', param_name='parameter2', mime_type='Mime1'),
+# ]
+#
+# s.add_file_upload(*uploads)
 # with open('c:\\xml\\http_req.jmx') as file:
 #     data = file.readlines()
 #     data[27] = s.render_element()
