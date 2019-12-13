@@ -16,7 +16,7 @@ class HttpRequest(BasicSampler):
 
     def __init__(self,
                  host: str,
-                 path: str,
+                 path: str = '/',
                  name: str = 'HTTP Request',
                  method: Method = Method.GET,
                  comments: str = '',
