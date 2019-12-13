@@ -27,7 +27,7 @@ class TestUtils:
         for element in elements_list:
             thread_group.add_element(element)
         xml_data = thread_group.render_inner_elements()
-        assert len(re.findall('element_type', xml_data)) == 3
+        assert len(re.findall('element_type', xml_data)) == 6
 
     def test_check_forbidden_symbols(self):
         thread_group = CommonThreadGroupXML(True)
