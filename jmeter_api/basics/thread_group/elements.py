@@ -30,10 +30,11 @@ class BasicThreadGroup(BasicElement, IncludesElements, ABC):
         super().__init__(name=name,
                          comments=comments,
                          is_enabled=is_enabled)
-    
+
     def append(self, new_element: Union[BasicSampler, BasicTimer, BasicConfig]):
         if not isinstance(new_element, (BasicSampler, BasicTimer, BasicConfig)):
-            raise TypeError(f'new_element must be BasicSampler, BasicTimer, BasicConfig. {type(new_element)} was given')
+            raise TypeError(
+                f'new_element must be BasicSampler, BasicTimer, BasicConfig. {type(new_element)} was given')
         self._elements.append(new_element)
         return self
 
