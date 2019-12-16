@@ -15,14 +15,14 @@ class TestUtils:
             'elem2'), BasicElementXML('elem3')]
         inc_elements = IncludesElements()
         for element in elements_list:
-            inc_elements.add_element(element)
-        assert inc_elements.get_count_of_elements() == 3
+            inc_elements.append(element)
+        assert len(inc_elements) == 3
         
     def test_includes_elements_test_render(self):
         elements_list = [BasicElementXML('element_name'), BasicElementXML(
             'element_name'), BasicElementXML('element_name')]
         inc_elements = IncludesElements()
         for element in elements_list:
-            inc_elements.add_element(element)
+            inc_elements.append(element)
         xml_data = inc_elements.render_inner_elements()
         assert len(re.findall('element_name', xml_data)) == 3
