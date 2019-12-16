@@ -57,15 +57,13 @@ class HttpRequest(BasicSampler):
                  name: str = 'HTTP Request',
                  host: str = '',
                  path: str = '',
-                 method: Method = Method.GET, # todo dont forget to use .value when render
+                 method: Method = Method.GET,
                  protocol: Protocol = Protocol.HTTP,
                  port: Union[int, None] = None,
                  content_encoding: str = '',
-                 auto_redirect: bool = False, # todo edit two tags one is true another false "HTTPSampler.follow_redirects"
-                # todo "HTTPSampler.auto_redirects"
+                 auto_redirect: bool = False,
                  keep_alive: bool = True,
                  do_multipart_post: bool = False,
-                 # todo add boolProp tag if True attr: name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART"
                  browser_comp_headers: bool = False,
                  # Advanced scope
                  implementation: Implement = Implement.NONE,
