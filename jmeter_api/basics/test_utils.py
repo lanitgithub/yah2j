@@ -17,24 +17,24 @@ class TestUtils:
         elements_list = [HTTPCacheManagerXML(
         ), HTTPCacheManagerXML(), HTTPCacheManagerXML()]
         for element in elements_list:
-            thread_group.add_element(element)
-        assert thread_group.get_count_of_elements() == 3
-
+            thread_group.append(element)
+        assert len(thread_group) == 3
+        
     def test_includes_elements_test_render(self):
         thread_group = CommonThreadGroupXML(True)
         elements_list = [HTTPCacheManagerXML(
         ), HTTPCacheManagerXML(), HTTPCacheManagerXML()]
         for element in elements_list:
-            thread_group.add_element(element)
+            thread_group.append(element)
         xml_data = thread_group.render_inner_elements()
-        assert len(re.findall('element_type', xml_data)) == 6
+        assert len(re.findall('element_type', xml_data)) == 3
 
     def test_check_forbidden_symbols(self):
         thread_group = CommonThreadGroupXML(True)
         elements_list = [HTTPCacheManagerXML(
         ), HTTPCacheManagerXML(), HTTPCacheManagerXML()]
         for element in elements_list:
-            thread_group.add_element(element)
+            thread_group.append(element)
         xml_data = thread_group.render_inner_elements()
         assert "&lt;" not in xml_data
         assert "&gt;" not in xml_data

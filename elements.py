@@ -1,7 +1,6 @@
 from jmeter_api.basics.thread_group.elements import BasicThreadGroup, ThreadGroupAction
 from jmeter_api.basics.utils import Renderable, IncludesElements
 from xml.etree.ElementTree import Element, ElementTree, tostring
-from xml.sax.saxutils import unescape
 from typing import List, Optional
 from xml.sax.saxutils import unescape
 from settings import logging
@@ -18,7 +17,7 @@ class CommonThreadGroup(BasicThreadGroup, IncludesElements):
                  sheduler_delay: int = 0,
                  name: str = 'BasicThreadGroup',
                  comments: str = '',
-                 is_enabled: bool = True,
+                 is_enable: bool = True,
                  num_threads: int = 1,
                  ramp_time: int = 0,
                  on_sample_error: ThreadGroupAction = ThreadGroupAction.CONTINUE,):
@@ -27,16 +26,15 @@ class CommonThreadGroup(BasicThreadGroup, IncludesElements):
         self.is_sheduler_enable = is_sheduler_enable
         self.sheduler_duration = sheduler_duration
         self.sheduler_delay = sheduler_delay
-        IncludesElements.__init__(self)
-        super().__init__(name=name, comments=comments, is_enabled=is_enabled,
+        super().__init__(name=name, comments=comments, is_enabled=is_enable,
                          num_threads=num_threads, ramp_time=ramp_time)
 
     @property
-    def continue_forever(self):
+    def functional_mode(self):
         return self._continue_forever
 
-    @continue_forever.setter
-    def continue_forever(self, value: bool):
+    @functional_mode.setter
+    def functional_mode(self, value: bool):
         if not isinstance(value, bool):
             raise TypeError(
                 f'continue_forever must be bool. continue_forever {type(value)} = {value}')
@@ -91,7 +89,7 @@ class CommonThreadGroup(BasicThreadGroup, IncludesElements):
 
 class CommonThreadGroupXML(CommonThreadGroup, Renderable):
     root_element_name = 'ThreadGroup'
-
+    
     def render_element(self) -> str:
         element_root, xml_tree = super().render_element()
 
@@ -114,8 +112,7 @@ class CommonThreadGroupXML(CommonThreadGroup, Renderable):
                 elif element.attrib['name'] == 'ThreadGroup.main_controller':
                     for main_controller_element in list(element):
                         if main_controller_element.attrib['name'] == 'LoopController.continue_forever':
-                            main_controller_element.text = str(
-                                self.continue_forever)
+                            main_controller_element.text = str(self.continue_forever)
                         elif main_controller_element.attrib['name'] == 'LoopController.loops':
                             main_controller_element.text = str(self.loops)
             except KeyError:

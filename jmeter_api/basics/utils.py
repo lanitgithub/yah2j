@@ -38,16 +38,13 @@ class Renderable(ABC):
         return element_root, xml_tree
 
 
-class IncludesElements(ABC):
-    _elements: List[Renderable] = []
-    
-    @abstractmethod
-    def add_element(self, new_element: Renderable):
-        if not isinstance(new_element, Renderable):
-            raise TypeError(f'new_element must be Renderable. {type(new_element)} was given.')
+class IncludesElements:
+    def __init__(self):
+        super().__init__()
+        self._elements: List[Renderable] = []
 
-    def get_count_of_elements(self) -> int:
-        return len(self._elements)
+    def append(self, new_element: Renderable):
+        self._elements.append(new_element)
 
     def render_inner_elements(self) -> str:
         logging.debug(
@@ -56,6 +53,18 @@ class IncludesElements(ABC):
         for element in self._elements:
             xml_data += element.render_element()
         return xml_data
+
+    def __len__(self):
+        return len(self._elements)
+
+    def __getitem__(self, position):
+        return self._elements[position]
+
+    def __reversed__(self):
+        return self[::-1]
+
+    def __iter__(self):
+        return iter(self._elements)
 
 
 class FileEncoding(Enum):
@@ -67,3 +76,9 @@ class FileEncoding(Enum):
 
 def tag_wrapper(xml_data_text: str, tag_name: str) -> str:
     return f"<{tag_name}>{xml_data_text}</{tag_name}>"
+
+
+def test_plan_wrapper(xml_data_text: str) -> str:
+    header = '<?xml version="1.0" encoding="UTF-8"?><jmeterTestPlan version="1.2" properties="5.0" jmeter="5.1.1 r1855137"><hashTree>'
+    footer = '</hashTree></jmeterTestPlan>'
+    return f'{header}{xml_data_text}{footer}'

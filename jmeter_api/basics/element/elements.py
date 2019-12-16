@@ -44,7 +44,7 @@ class BasicElement:
     def is_enabled(self, value):
         if not isinstance(value, bool):
             raise TypeError(
-                f'arg: is_enable must be bool. is_enable {type(value)} = {value}')
+                f'arg: is_enabled must be bool. is_enabled {type(value)} = {value}')
         else:
             self._is_enabled = value
 

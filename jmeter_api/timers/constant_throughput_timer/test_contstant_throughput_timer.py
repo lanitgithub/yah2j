@@ -16,7 +16,7 @@ class TestConstThroughputTimer:
             ConstThroughputTimer(comments=123)
 
         # is_enabled type check
-        with pytest.raises(TypeError, match=r".*arg: is_enable must be bool. is_enable*"):
+        with pytest.raises(TypeError, match=r".*arg: is_enabled must be bool. is_enabled*"):
             ConstThroughputTimer(is_enabled="True")
 
         # targ_throughput type check (negative number input)
