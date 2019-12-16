@@ -22,7 +22,7 @@ class Method(Enum):
     POST = 'POST'
     PUT = 'PUT'
     HEAD = 'HEAD'
-    OPTIONS =  'OPTIONS'
+    OPTIONS = 'OPTIONS'
     TRACE = 'TRACE'
     DELETE = 'DELETE'
     PATCH = 'PATCH'
@@ -51,8 +51,7 @@ class Implement(Enum):
     NONE = ''
 
 
-class HttpRequest(BasicSampler):
-
+class HttpRequest(BasicSampler, IncludesElements):
     def __init__(self,
                  name: str = 'HTTP Request',
                  host: str = '',
@@ -87,6 +86,7 @@ class HttpRequest(BasicSampler):
 
         :type source_type: object
         """
+        IncludesElements.__init__(self)
         super().__init__(name=name, comments=comments, is_enabled=is_enabled)
         self.host = host
         self.path = path
@@ -123,7 +123,8 @@ class HttpRequest(BasicSampler):
     @host.setter
     def host(self, value):
         if not isinstance(value, str):
-            raise TypeError(f'arg: host should be str. {type(value).__name__} was given')
+            raise TypeError(
+                f'arg: host should be str. {type(value).__name__} was given')
         self._host = value
 
     @property
@@ -133,7 +134,8 @@ class HttpRequest(BasicSampler):
     @path.setter
     def path(self, value):
         if not isinstance(value, str):
-            raise TypeError(f'arg: path should be str. {type(value).__name__} was given')
+            raise TypeError(
+                f'arg: path should be str. {type(value).__name__} was given')
         self._path = value
 
     @property
@@ -143,7 +145,8 @@ class HttpRequest(BasicSampler):
     @method.setter
     def method(self, value):
         if not isinstance(value, Method):
-            raise TypeError(f'arg: method should be Method. {type(value).__name__} was given')
+            raise TypeError(
+                f'arg: method should be Method. {type(value).__name__} was given')
         self._method = value
 
     @property
@@ -153,7 +156,8 @@ class HttpRequest(BasicSampler):
     @protocol.setter
     def protocol(self, value):
         if not isinstance(value, Protocol):
-            raise TypeError(f'arg: protocol should be Protocol. {type(value).__name__} was given')
+            raise TypeError(
+                f'arg: protocol should be Protocol. {type(value).__name__} was given')
         self._protocol = value
 
     @property
@@ -163,7 +167,8 @@ class HttpRequest(BasicSampler):
     @port.setter
     def port(self, value):
         if value is not None and not isinstance(value, int):
-            raise TypeError(f'arg: port should be int or None. {type(value).__name__} was given')
+            raise TypeError(
+                f'arg: port should be int or None. {type(value).__name__} was given')
         if value is not None and value < 0:
             raise ValueError(f'arg: port should be positive.')
         self._port = value
@@ -175,7 +180,8 @@ class HttpRequest(BasicSampler):
     @content_encoding.setter
     def content_encoding(self, value):
         if not isinstance(value, str):
-            raise TypeError(f'arg: port should be positive int. {type(value).__name__} was given')
+            raise TypeError(
+                f'arg: port should be positive int. {type(value).__name__} was given')
         self._content_encoding = value
 
     @property
@@ -185,7 +191,8 @@ class HttpRequest(BasicSampler):
     @auto_redirect.setter
     def auto_redirect(self, value):
         if not isinstance(value, bool):
-            raise TypeError(f'arg: auto_redirect should be bool. {type(value).__name__} was given')
+            raise TypeError(
+                f'arg: auto_redirect should be bool. {type(value).__name__} was given')
         self._auto_redirect = value
 
     @property
@@ -195,7 +202,8 @@ class HttpRequest(BasicSampler):
     @keep_alive.setter
     def keep_alive(self, value):
         if not isinstance(value, bool):
-            raise TypeError(f'arg: keep_alive should be bool. {type(value).__name__} was given')
+            raise TypeError(
+                f'arg: keep_alive should be bool. {type(value).__name__} was given')
         self._keep_alive = value
 
     @property
@@ -205,7 +213,8 @@ class HttpRequest(BasicSampler):
     @do_multipart_post.setter
     def do_multipart_post(self, value):
         if not isinstance(value, bool):
-            raise TypeError(f'arg: do_multiple_port should be bool. {type(value).__name__} was given')
+            raise TypeError(
+                f'arg: do_multiple_port should be bool. {type(value).__name__} was given')
         self._do_multipart_post = value
 
     @property
@@ -215,7 +224,8 @@ class HttpRequest(BasicSampler):
     @browser_comp_headers.setter
     def browser_comp_headers(self, value):
         if not isinstance(value, bool):
-            raise TypeError(f'arg: browser_comp_headers should be bool. {type(value).__name__} was given')
+            raise TypeError(
+                f'arg: browser_comp_headers should be bool. {type(value).__name__} was given')
         self._browser_comp_headers = value
 
     @property
@@ -225,7 +235,8 @@ class HttpRequest(BasicSampler):
     @implementation.setter
     def implementation(self, value):
         if not isinstance(value, Implement):
-            raise TypeError(f'arg: implementation should be bool. {type(value).__name__} was given')
+            raise TypeError(
+                f'arg: implementation should be bool. {type(value).__name__} was given')
         self._implementation = value
 
     @property
@@ -235,7 +246,8 @@ class HttpRequest(BasicSampler):
     @connect_timeout.setter
     def connect_timeout(self, value):
         if value is not None and not isinstance(value, int):
-            raise TypeError(f'arg: connect_timeout should be int. {type(value).__name__} was given')
+            raise TypeError(
+                f'arg: connect_timeout should be int. {type(value).__name__} was given')
         if value is not None and value < 0:
             raise ValueError(f'arg: connect_timeout should be positive.')
         self._connect_timeout = value
@@ -247,7 +259,8 @@ class HttpRequest(BasicSampler):
     @response_timeout.setter
     def response_timeout(self, value):
         if value is not None and not isinstance(value, int):
-            raise TypeError(f'arg: response_timeout should be int. {type(value).__name__} was given')
+            raise TypeError(
+                f'arg: response_timeout should be int. {type(value).__name__} was given')
         if value is not None and value < 0:
             raise ValueError(f'arg: response_timeout should be positive.')
         self._response_timeout = value
@@ -259,7 +272,8 @@ class HttpRequest(BasicSampler):
     @retrieve_all_emb_resources.setter
     def retrieve_all_emb_resources(self, value):
         if not isinstance(value, bool):
-            raise TypeError(f'arg: retrieve_all_emb_resources should be bool. {type(value).__name__} was given')
+            raise TypeError(
+                f'arg: retrieve_all_emb_resources should be bool. {type(value).__name__} was given')
         self._retrieve_all_emb_resources = value
 
     @property
@@ -269,7 +283,8 @@ class HttpRequest(BasicSampler):
     @parallel_downloads.setter
     def parallel_downloads(self, value):
         if not isinstance(value, bool):
-            raise TypeError(f'arg: parallel_downloads should be bool. {type(value).__name__} was given')
+            raise TypeError(
+                f'arg: parallel_downloads should be bool. {type(value).__name__} was given')
         self._parallel_downloads = value
 
     @property
@@ -279,7 +294,8 @@ class HttpRequest(BasicSampler):
     @parallel_downloads_no.setter
     def parallel_downloads_no(self, value):
         if value is not None and not isinstance(value, int):
-            raise TypeError(f'arg: parallel_downloads_no should be int. {type(value).__name__} was given')
+            raise TypeError(
+                f'arg: parallel_downloads_no should be int. {type(value).__name__} was given')
         if value is not None and value < 0:
             raise ValueError(f'arg: parallel_downloads_no should be positive.')
         self._parallel_downloads_no = value
@@ -291,7 +307,8 @@ class HttpRequest(BasicSampler):
     @url_must_match.setter
     def url_must_match(self, value):
         if not isinstance(value, str):
-            raise TypeError(f'arg: url_must_match should be str. {type(value).__name__} was given')
+            raise TypeError(
+                f'arg: url_must_match should be str. {type(value).__name__} was given')
         self._url_must_match = value
 
     @property
@@ -301,7 +318,8 @@ class HttpRequest(BasicSampler):
     @source_type.setter
     def source_type(self, value):
         if not isinstance(value, Source):
-            raise TypeError(f'arg: source_type should be Source. {type(value).__name__} was given')
+            raise TypeError(
+                f'arg: source_type should be Source. {type(value).__name__} was given')
         self._source_type = value
 
     @property
@@ -311,7 +329,8 @@ class HttpRequest(BasicSampler):
     @source_address.setter
     def source_address(self, value):
         if not isinstance(value, str):
-            raise TypeError(f'arg: source_address should be str. {type(value).__name__} was given')
+            raise TypeError(
+                f'arg: source_address should be str. {type(value).__name__} was given')
         self._source_address = value
 
     @property
@@ -321,7 +340,8 @@ class HttpRequest(BasicSampler):
     @proxy_scheme.setter
     def proxy_scheme(self, value):
         if not isinstance(value, str):
-            raise TypeError(f'arg: proxy_scheme should be str. {type(value).__name__} was given')
+            raise TypeError(
+                f'arg: proxy_scheme should be str. {type(value).__name__} was given')
         self._proxy_scheme = value
 
     @property
@@ -331,7 +351,8 @@ class HttpRequest(BasicSampler):
     @proxy_host.setter
     def proxy_host(self, value):
         if not isinstance(value, str):
-            raise TypeError(f'arg: proxy_host should be str. {type(value).__name__} was given')
+            raise TypeError(
+                f'arg: proxy_host should be str. {type(value).__name__} was given')
         self._proxy_host = value
 
     @property
@@ -341,7 +362,8 @@ class HttpRequest(BasicSampler):
     @proxy_port.setter
     def proxy_port(self, value):
         if value is not None and not isinstance(value, int):
-            raise TypeError(f'arg: proxy_port should be int or None. {type(value).__name__} was given')
+            raise TypeError(
+                f'arg: proxy_port should be int or None. {type(value).__name__} was given')
         if value is not None and value < 0:
             raise ValueError(f'arg: proxy_port should be positive.')
         self._proxy_port = value
@@ -353,7 +375,8 @@ class HttpRequest(BasicSampler):
     @proxy_username.setter
     def proxy_username(self, value):
         if not isinstance(value, str):
-            raise TypeError(f'arg: proxy_username should be str. {type(value).__name__} was given')
+            raise TypeError(
+                f'arg: proxy_username should be str. {type(value).__name__} was given')
         self._proxy_username = value
 
     @property
@@ -363,7 +386,8 @@ class HttpRequest(BasicSampler):
     @proxy_password.setter
     def proxy_password(self, value):
         if not isinstance(value, str):
-            raise TypeError(f'arg: proxy_password should be str. {type(value).__name__} was given')
+            raise TypeError(
+                f'arg: proxy_password should be str. {type(value).__name__} was given')
         self._proxy_password = value
 
     @property
@@ -373,18 +397,20 @@ class HttpRequest(BasicSampler):
     @text.setter
     def text(self, value):
         if not isinstance(value, str):
-            raise TypeError(f'arg: text should be str. {type(value).__name__} was given')
+            raise TypeError(
+                f'arg: text should be str. {type(value).__name__} was given')
         self._text = value
 
 
-class HttpRequestXML(HttpRequest, Renderable, IncludesElements):
+class HttpRequestXML(HttpRequest, Renderable):
     root_element_name = 'HTTPSamplerProxy'
 
-    def add_element(self, *args) -> None:
-        for element in args:
-            if not isinstance(element, UserDefinedVariables):
-                raise TypeError(f'You can add only UserDefinedVariables objects.')
-            self._elements.append(element)
+    # def add_element(self, *args) -> None:
+    #     for element in args:
+    #         if not isinstance(element, UserDefinedVariables):
+    #             raise TypeError(
+    #                 f'You can add only UserDefinedVariables objects.')
+    #         self._elements.append(element)
 
     def add_file_upload(self, *args):
         for file_up in args:
@@ -464,7 +490,8 @@ class HttpRequestXML(HttpRequest, Renderable, IncludesElements):
 
                 if self.browser_comp_headers:
                     element = SubElement(element_root, 'boolProp')
-                    element.set('name', 'HTTPSampler.BROWSER_COMPATIBLE_MULTIPART')
+                    element.set(
+                        'name', 'HTTPSampler.BROWSER_COMPATIBLE_MULTIPART')
                     element.text = str(self.browser_comp_headers).lower()
                     self.browser_comp_headers = not self.browser_comp_headers
                 if self.implementation.value:
@@ -557,4 +584,4 @@ class HttpRequestXML(HttpRequest, Renderable, IncludesElements):
             content_root.text = body_data.render_element()
         for element in list(xml_tree):
             xml_data += tostring(element).decode('utf-8')
-        return unescape(xml_data).replace('><', '>\n<')
+        return unescape(xml_data)
