@@ -64,7 +64,7 @@ class BasicThreadGroup(BasicElement, IncludesElements, ABC):
         if not isinstance(value, int):
             raise TypeError(
                 f'ramp_time must be int. {type(value)} was given')
-            self._ramp_time = value
+        self._ramp_time = value
 
     @property
     def on_sample_error(self) -> ThreadGroupAction:
