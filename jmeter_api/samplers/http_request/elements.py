@@ -550,7 +550,6 @@ class HttpRequestXML(HttpRequest, Renderable, IncludesElements):
         xml_data = ''
         if not self.text:
             content_root = xml_tree[0][0][0]  # to get collectionProp tag
-            print('VARIABLES', content_root.attrib)
             content_root.text = self.render_inner_elements()
         else:
             content_root = xml_tree[0][0][0]
@@ -559,48 +558,3 @@ class HttpRequestXML(HttpRequest, Renderable, IncludesElements):
         for element in list(xml_tree):
             xml_data += tostring(element).decode('utf-8')
         return unescape(xml_data).replace('><', '>\n<')
-
-
-# s = HttpRequestXML(host='www.google.com',
-#                    comments='123',
-#                    method=Method.POST,
-#                    path='/search',
-#                    protocol=Protocol.FTP,
-#                    port=443,
-#                    content_encoding='utf-8',
-#                    keep_alive=False,
-#                    do_multipart_post=True,
-#                    browser_comp_headers=True,
-#                    implementation=Implement.JAVA,
-#                    connect_timeout=123,
-#                    response_timeout=321,
-#                    retrieve_all_emb_resources=True,
-#                    parallel_downloads=True,
-#                    parallel_downloads_no=3,
-#                    url_must_match='test match',
-#                    source_type=Source.HOSTNAME,
-#                    source_address='test hostname',
-#                    proxy_scheme='My scheme',
-#                    proxy_host='Proxy host',
-#                    proxy_port=445,
-#                    proxy_username='User',
-#                    proxy_password='Pass'
-#                    )
-# l_vars = [
-#     UserDefinedVariables(name='name', value=124, url_encode=True, content_type='css'),
-# UserDefinedVariables(name='name2', value=125, url_encode=True, content_type='css'),
-# ]
-# s.add_element(*l_vars)
-#
-# uploads = [
-#     FileUpload(file_path='test1', param_name='parameter1', mime_type='Mime1'),
-#     FileUpload(file_path='test2', param_name='parameter2', mime_type='Mime1'),
-# ]
-#
-# s.add_file_upload(*uploads)
-# with open('c:\\xml\\http_req.jmx') as file:
-#     data = file.readlines()
-#     data[27] = s.render_element()
-#
-# with open('c:\\xml\\http_req_py.jmx', 'w') as file:
-#     file.writelines(data)
