@@ -1,8 +1,9 @@
 from jmeter_api.basics.element.elements import BasicElement
+from abc import ABC
 import logging
 
 
-class BasicTimer(BasicElement):
+class BasicTimer(BasicElement, ABC):
     def __init__(self,
                  name: str = 'BasicTimer',
                  comments: str = '',

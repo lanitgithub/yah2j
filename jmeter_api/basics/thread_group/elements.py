@@ -3,6 +3,7 @@ from jmeter_api.basics.config.elements import BasicConfig
 from jmeter_api.basics.sampler.elements import BasicSampler
 from jmeter_api.basics.timer.elements import BasicTimer
 from jmeter_api.basics.utils import IncludesElements
+from abc import ABC
 from typing import Union
 from enum import Enum
 
@@ -15,7 +16,7 @@ class ThreadGroupAction(Enum):
     STOP_TEST_NOW = 'stoptestnow'
 
 
-class BasicThreadGroup(BasicElement, IncludesElements):
+class BasicThreadGroup(BasicElement, IncludesElements, ABC):
     def __init__(self,
                  name: str = 'BasicThreadGroup',
                  comments: str = '',
@@ -33,7 +34,7 @@ class BasicThreadGroup(BasicElement, IncludesElements):
     def add_element(self, new_element: Union[BasicSampler, BasicTimer, BasicConfig]):
         super().add_element(new_element)
         if not isinstance(new_element, (BasicSampler, BasicTimer, BasicConfig)):
-            raise TypeError('new_element must be BasicSampler, BasicTimer, BasicConfig. new_element {type(value)} = {value}')
+            raise TypeError(f'new_element must be BasicSampler, BasicTimer, BasicConfig. {type(new_element)} was given')
         self._elements.append(new_element)
 
     @property
@@ -44,13 +45,13 @@ class BasicThreadGroup(BasicElement, IncludesElements):
     def num_threads(self, value):
         if not isinstance(value, int):
             raise TypeError(
-                f'num_threads must be int. is_enable {type(value)} = {value}')
+                f'num_threads must be int. {type(value)} was given')
         elif value < -1:
             raise ValueError(
-                f'num_threads can not be less than -1. num_threads {type(value)} = {value}')
+                f'num_threads can not be less than -1. {type(value)} was given')
         elif value == 0:
             raise ValueError(
-                f'num_threads must be more than 0. num_threads {type(value)} = {value}')
+                f'num_threads must be more than 0. {type(value)} was given')
         else:
             self._num_threads = value
 
@@ -62,9 +63,8 @@ class BasicThreadGroup(BasicElement, IncludesElements):
     def ramp_time(self, value):
         if not isinstance(value, int):
             raise TypeError(
-                f'ramp_time must be int. ramp_time {type(value)} = {value}')
-        else:
-            self._ramp_time = value
+                f'ramp_time must be int. {type(value)} was given')
+        self._ramp_time = value
 
     @property
     def on_sample_error(self) -> ThreadGroupAction:
