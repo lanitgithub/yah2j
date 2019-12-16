@@ -1,7 +1,6 @@
 from jmeter_api.basics.utils import Renderable
 from xml.etree.ElementTree import tostring
 
-
 class FileUpload(Renderable):
     def __init__(self,
                  file_path: str = '',
