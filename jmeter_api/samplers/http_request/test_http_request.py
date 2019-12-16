@@ -189,7 +189,7 @@ class TestHttpRequestXML:
         rendered_doc = element.render_element().replace('<hashTree />', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
-            if tag['@name'] == 'HTTPSampler.method':
+            if tag['@name'] == 'HTTPSampler.protocol':
                 assert tag['#text'] == 'ftp'
 
     def test_render_port(self):
