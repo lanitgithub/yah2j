@@ -48,10 +48,10 @@ class BasicThreadGroup(BasicElement, IncludesElements, ABC):
                 f'num_threads must be int. {type(value)} was given')
         elif value < -1:
             raise ValueError(
-                f'num_threads can not be less than -1. {type(value)}')
+                f'num_threads can not be less than -1. {type(value)} was given')
         elif value == 0:
             raise ValueError(
-                f'num_threads must be more than 0. {type(value)}')
+                f'num_threads must be more than 0. {type(value)} was given')
         else:
             self._num_threads = value
 
