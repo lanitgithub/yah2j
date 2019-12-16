@@ -26,7 +26,7 @@ class CsvDataSetConfig(BasicConfig):
                  share_mode: ShareMode = ShareMode.ALL,
                  name: str = 'CsvDataSetConfig',
                  comments: str = '',
-                 is_enable: bool = True):
+                 is_enabled: bool = True):
         self.file_path = file_path
         self.delimiter = delimiter
         self.variable_names = variable_names
@@ -36,7 +36,7 @@ class CsvDataSetConfig(BasicConfig):
         self.recycle = recycle
         self.stop_thread = stop_thread
         self.share_mode = share_mode
-        super().__init__(name=name, comments=comments, is_enable=is_enable)
+        super().__init__(name=name, comments=comments, is_enabled=is_enabled)
 
     @property
     def file_path(self):
@@ -50,7 +50,7 @@ class CsvDataSetConfig(BasicConfig):
             raise FileNotFoundError(f'{value} is not file')
 
     @property
-    def variable_names(self):
+    def variable_names(self) -> List[str]:
         return self._variable_names
 
     @variable_names.setter
@@ -69,7 +69,7 @@ class CsvDataSetConfig(BasicConfig):
             self._variable_names = self.delimiter.join(value)
 
     @property
-    def file_encoding(self):
+    def file_encoding(self) -> FileEncoding:
         return self._fileEncoding
 
     @file_encoding.setter
@@ -81,7 +81,7 @@ class CsvDataSetConfig(BasicConfig):
             self._fileEncoding = value
 
     @property
-    def ignore_first_line(self):
+    def ignore_first_line(self) -> bool:
         return self._ignore_first_line
 
     @ignore_first_line.setter
@@ -93,7 +93,7 @@ class CsvDataSetConfig(BasicConfig):
             self._ignore_first_line = str(value).lower()
 
     @property
-    def delimiter(self):
+    def delimiter(self) -> str:
         return self._delimiter
 
     @delimiter.setter
@@ -105,7 +105,7 @@ class CsvDataSetConfig(BasicConfig):
             self._delimiter = value
 
     @property
-    def quoted_data(self):
+    def quoted_data(self) -> bool:
         return self._quoted_data
 
     @quoted_data.setter
@@ -117,7 +117,7 @@ class CsvDataSetConfig(BasicConfig):
             self._quoted_data = str(value).lower()
 
     @property
-    def recycle(self):
+    def recycle(self) -> bool:
         return self._recycle
 
     @recycle.setter
@@ -129,7 +129,7 @@ class CsvDataSetConfig(BasicConfig):
             self._recycle = str(value).lower()
 
     @property
-    def stop_thread(self):
+    def stop_thread(self) -> bool:
         return self._stop_thread
 
     @stop_thread.setter
@@ -141,7 +141,7 @@ class CsvDataSetConfig(BasicConfig):
             self._stop_thread = str(value).lower()
 
     @property
-    def share_mode(self):
+    def share_mode(self) -> ShareMode:
         return self._share_mode
 
     @share_mode.setter
@@ -154,12 +154,10 @@ class CsvDataSetConfig(BasicConfig):
 
 
 class CsvDataSetConfigXML(CsvDataSetConfig, Renderable):
+    root_element_name = 'CSVDataSet'
+    
     def render_element(self) -> str:
-        xml_tree: Optional[Element] = super().render_element()
-        element_root = xml_tree.find('CSVDataSet')
-
-        element_root.set('enabled', self.is_enable)
-        element_root.set('testname', self.name)
+        element_root, xml_tree = super().render_element()
 
         for element in list(element_root):
             try:

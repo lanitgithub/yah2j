@@ -1,5 +1,9 @@
 from jmeter_api.basics.element.elements import BasicElement
+from jmeter_api.basics.config.elements import BasicConfig
+from jmeter_api.basics.sampler.elements import BasicSampler
+from jmeter_api.basics.timer.elements import BasicTimer
 from jmeter_api.basics.utils import IncludesElements
+from typing import Union
 from enum import Enum
 
 
@@ -15,7 +19,7 @@ class BasicThreadGroup(BasicElement, IncludesElements):
     def __init__(self,
                  name: str = 'BasicThreadGroup',
                  comments: str = '',
-                 is_enable: bool = True,
+                 is_enabled: bool = True,
                  num_threads: int = 1,
                  ramp_time: int = 0,
                  on_sample_error: ThreadGroupAction = ThreadGroupAction.CONTINUE):
@@ -24,10 +28,16 @@ class BasicThreadGroup(BasicElement, IncludesElements):
         self.on_sample_error = on_sample_error
         super().__init__(name=name,
                          comments=comments,
-                         is_enable=is_enable)
+                         is_enabled=is_enabled)
+    
+    def add_element(self, new_element: Union[BasicSampler, BasicTimer, BasicConfig]):
+        super().add_element(new_element)
+        if not isinstance(new_element, (BasicSampler, BasicTimer, BasicConfig)):
+            raise TypeError('new_element must be BasicSampler, BasicTimer, BasicConfig. new_element {type(value)} = {value}')
+        self._elements.append(new_element)
 
     @property
-    def num_threads(self):
+    def num_threads(self) -> int:
         return self._num_threads
 
     @num_threads.setter
@@ -45,7 +55,7 @@ class BasicThreadGroup(BasicElement, IncludesElements):
             self._num_threads = value
 
     @property
-    def ramp_time(self):
+    def ramp_time(self) -> int:
         return self._ramp_time
 
     @ramp_time.setter
@@ -57,7 +67,7 @@ class BasicThreadGroup(BasicElement, IncludesElements):
             self._ramp_time = value
 
     @property
-    def on_sample_error(self):
+    def on_sample_error(self) -> ThreadGroupAction:
         return self._on_sample_error
 
     @on_sample_error.setter

@@ -3,10 +3,9 @@ import logging
 
 
 class BasicTimer(BasicElement):
-
     def __init__(self,
-                 name: str = 'BasicElement',
+                 name: str = 'BasicTimer',
                  comments: str = '',
                  is_enabled: bool = True
                  ):
-        super().__init__(name, comments, is_enabled)
+        super().__init__(name=name, comments=comments, is_enabled=is_enabled)

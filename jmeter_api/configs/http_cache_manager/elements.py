@@ -1,23 +1,23 @@
-from jmeter_api.basics.config.elements import BasicConfig
+from jmeter_api.basics.sampler.elements import BasicSampler
 from jmeter_api.basics.utils import FileEncoding, Renderable
 from xml.etree.ElementTree import Element, ElementTree, tostring
 from typing import List, Optional
 
-class HTTPCacheManager(BasicConfig):
+class HTTPCacheManager(BasicSampler):
     def __init__(self,
                  clear_each_iteration: bool = False,
                  use_cache_control: bool = True,
                  max_elements_in_cache: int = 300,
                  name: str = 'HTTP_Cache_Manager',
                  comments: str = '',
-                 is_enable: bool = True):
+                 is_enabled: bool = True):
         self.clear_each_iteration = clear_each_iteration
         self.use_cache_control = use_cache_control
         self.max_elements_in_cache = max_elements_in_cache
-        super().__init__(name=name, comments=comments, is_enable=is_enable)
+        super().__init__(name=name, comments=comments, is_enabled=is_enabled)
 
     @property
-    def clear_each_iteration(self):
+    def clear_each_iteration(self) -> bool:
         return self._clear_each_iteration
 
     @clear_each_iteration.setter
@@ -30,7 +30,7 @@ class HTTPCacheManager(BasicConfig):
             self._clear_each_iteration = str(value).lower()
 
     @property
-    def use_cache_control(self):
+    def use_cache_control(self) -> bool:
         return self._use_cache_control
 
     @use_cache_control.setter
@@ -42,7 +42,7 @@ class HTTPCacheManager(BasicConfig):
             self._use_cache_control = str(value).lower()
 
     @property
-    def max_elements_in_cache(self):
+    def max_elements_in_cache(self) -> int:
         return self._max_elements_in_cache
 
     @max_elements_in_cache.setter
@@ -56,12 +56,10 @@ class HTTPCacheManager(BasicConfig):
 
 
 class HTTPCacheManagerXML(HTTPCacheManager, Renderable):
+    root_element_name = 'CacheManager'
+    
     def render_element(self) -> str:
-        xml_tree: Optional[Element] = super().render_element()
-        element_root = xml_tree.find('CacheManager')
-
-        element_root.set('enabled', self.is_enable)
-        element_root.set('testname', self.name)
+        element_root, xml_tree = super().render_element()
 
         for element in list(element_root):
             try:

@@ -28,7 +28,7 @@ class ConstantTimer(BasicTimer):
         self.delay = delay
 
     @property
-    def delay(self):
+    def delay(self) -> int:
         return self._delay
 
     @delay.setter
@@ -36,28 +36,27 @@ class ConstantTimer(BasicTimer):
         if not isinstance(value, int) or value < 0:
             raise TypeError(
                 f'arg: delay should be positive int. {type(value).__name__} was given')
-        self._delay = str(value)
+        self._delay = value
 
     def __repr__(self):
         return f'Constant timer: {self.name}, delay: {self.delay}'
 
 
 class ConstantTimerXML(ConstantTimer, Renderable):
+    root_element_name = 'ConstantTimer'
+    
     def render_element(self) -> str:
         """
         Set all parameters in xml and convert it to the string.
         :return: xml in string format
         """
-        xml_tree: Optional[Element] = super().render_element()
-        element_root = xml_tree.find('ConstantTimer')
-        element_root.set('testname', self.name)
-        element_root.set('enabled', self.is_enable)
+        element_root, xml_tree = super().render_element()
         for element in list(element_root):
             try:
                 if element.attrib['name'] == 'TestPlan.comments':
                     element.text = self.comments
                 elif element.attrib['name'] == 'ConstantTimer.delay':
-                    element.text = self.delay
+                    element.text = str(self.delay)
             except KeyError:
                 continue
         xml_data = ''

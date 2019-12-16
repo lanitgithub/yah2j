@@ -91,3 +91,4 @@ class TestConstantThroughputTimerXML:
                                           is_enabled=False)
         rendered_doc = element.render_element()
         assert '<hashTree />' in rendered_doc
+

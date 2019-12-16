@@ -28,7 +28,7 @@ class UniformRandTimer(BasicTimer):
         self.offset_delay = offset_delay
 
     @property
-    def offset_delay(self):
+    def offset_delay(self) -> int:
         return self._offset_delay
 
     @offset_delay.setter
@@ -37,10 +37,10 @@ class UniformRandTimer(BasicTimer):
             raise TypeError(f'Failed to create uniform random timer due to wrong type '
                             f'of OFFSET_DELAY argument. {type(value).__name__} was given, Should be positive'
                             f'str.')
-        self._offset_delay = str(value)
+        self._offset_delay = value
 
     @property
-    def rand_delay(self):
+    def rand_delay(self) -> float:
         return self._rand_delay
 
     @rand_delay.setter
@@ -49,33 +49,31 @@ class UniformRandTimer(BasicTimer):
             raise TypeError(f'Failed to create uniform random timer due to wrong type '
                             f'of RAND_DELAY argument. {type(value).__name__} was given, Should be positive'
                             f'float or int.')
-        self._rand_delay = str(value)
+        self._rand_delay = value
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f'Uniform constant timer: {self.name}, offset: {self.offset_delay}, ' \
             f'random delay: {self.rand_delay}'
 
 
 class UniformRandTimerXML(UniformRandTimer, Renderable):
+    root_element_name = 'UniformRandomTimer'
+    
     def render_element(self) -> str:
         """
         Set all parameters in xml and convert it to the string.
         :return: xml in string format
         """
-        xml_tree: Optional[Element] = super().render_element()
-        element_root = xml_tree.find('UniformRandomTimer')
-        
-        element_root.set('enabled', self.is_enable)
-        element_root.set('testname', self.name)
+        element_root, xml_tree = super().render_element()
 
         for element in list(element_root):
             try:
                 if element.attrib['name'] == 'TestPlan.comments':
                     element.text = self.comments
                 elif element.attrib['name'] == 'RandomTimer.range':
-                    element.text = self.rand_delay
+                    element.text = str(self.rand_delay)
                 elif element.attrib['name'] == 'ConstantTimer.delay':
-                    element.text = self.offset_delay
+                    element.text = str(self.offset_delay)
             except KeyError:
                 continue
         xml_data = ''

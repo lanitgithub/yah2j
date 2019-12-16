@@ -3,6 +3,7 @@ from jmeter_api.basics.utils import Renderable, IncludesElements
 from xml.etree.ElementTree import Element, ElementTree, tostring
 from xml.sax.saxutils import unescape
 from typing import List, Optional
+from xml.sax.saxutils import unescape
 from settings import logging
 from enum import Enum
 import os
@@ -89,12 +90,10 @@ class CommonThreadGroup(BasicThreadGroup, IncludesElements):
 
 
 class CommonThreadGroupXML(CommonThreadGroup, Renderable):
+    root_element_name = 'ThreadGroup'
+    
     def render_element(self) -> str:
-        xml_tree: Optional[Element] = super().render_element()
-        element_root = xml_tree.find('ThreadGroup')
-
-        element_root.set('testname', self.name)
-        element_root.set('enabled', self.is_enable)
+        element_root, xml_tree = super().render_element()
 
         for element in list(element_root):
             try:
@@ -115,9 +114,9 @@ class CommonThreadGroupXML(CommonThreadGroup, Renderable):
                 elif element.attrib['name'] == 'ThreadGroup.main_controller':
                     for main_controller_element in list(element):
                         if main_controller_element.attrib['name'] == 'LoopController.continue_forever':
-                            main_controller_element.text = self.continue_forever
+                            main_controller_element.text = str(self.continue_forever)
                         elif main_controller_element.attrib['name'] == 'LoopController.loops':
-                            main_controller_element.text = self.loops
+                            main_controller_element.text = str(self.loops)
             except KeyError:
                 continue
 
@@ -125,5 +124,9 @@ class CommonThreadGroupXML(CommonThreadGroup, Renderable):
         content_root.text = self.render_inner_elements()
         xml_data = ''
         for element in list(xml_tree):
+<<<<<<< HEAD
             xml_data += tostring(element).decode('utf8')
+=======
+            xml_data += tostring(element).decode('utf-8')
+>>>>>>> 92e5346495fe467f7e6a9631ddf4bb6c8ae5cb0d
         return unescape(xml_data)

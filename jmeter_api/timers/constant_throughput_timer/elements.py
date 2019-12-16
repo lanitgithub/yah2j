@@ -16,13 +16,12 @@ class BasedOn(Enum):
 class ConstThroughputTimer(BasicTimer):
     """
     Constant throughput timer class.
-    (Capslock means arguments)
     """
 
     def __init__(self,
-                 name: str = 'Uniform Random Timer',
+                 name: str = 'Constant Throughput Timer',
                  targ_throughput: float = 0,
-                 based_on: str = 'this_thrd_only',
+                 based_on: BasedOn = BasedOn.THIS_THREAD_ONLY,
                  comments='',
                  is_enabled: bool = True):
         super().__init__(name=name, comments=comments, is_enabled=is_enabled)
@@ -38,7 +37,7 @@ class ConstThroughputTimer(BasicTimer):
         if not isinstance(value, float) and not isinstance(value, int) or value < 0:
             raise TypeError(
                 f'arg: targ_throughput should be positive int or float. {type(value).__name__} was given')
-        self._targ_throughput = str(value)
+        self._targ_throughput = value
 
     @property
     def based_on(self):
@@ -57,17 +56,15 @@ class ConstThroughputTimer(BasicTimer):
 
 
 class ConstThroughputTimerXML(ConstThroughputTimer, Renderable):
+    root_element_name = 'ConstantThroughputTimer'
+    
     def render_element(self) -> str:
         """
         Set all parameters in xml and convert it to the string.
         :return: xml in string format
         """
         # default name and stuff setup
-        xml_tree: Optional[Element] = super().render_element()
-        element_root = xml_tree.find('ConstantThroughputTimer')
-
-        element_root.set('testname', self.name)
-        element_root.set('enabled', self.is_enable)
+        element_root, xml_tree = super().render_element()
 
         string_prop = element_root.find('stringProp')
         string_prop.text = self.comments
@@ -77,7 +74,7 @@ class ConstThroughputTimerXML(ConstThroughputTimer, Renderable):
 
         double_prop = element_root.find('doubleProp')
         double_prop_value = double_prop.find('value')
-        double_prop_value.text = self.targ_throughput
+        double_prop_value.text = str(self.targ_throughput)
 
         xml_data = ''
         for element in list(xml_tree):
