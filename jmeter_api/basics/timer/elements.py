@@ -10,8 +10,3 @@ class BasicTimer(BasicElement):
                  is_enabled: bool = True
                  ):
         super().__init__(name, comments, is_enabled)
-
-    # def render_element(self):
-    #     logging.info(f'{type(self).__name__} | Render in BasicTimer started...')
-    #
-
