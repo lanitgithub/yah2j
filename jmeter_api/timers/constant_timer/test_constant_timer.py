@@ -13,7 +13,7 @@ class TestConstantTimer:
         with pytest.raises(TypeError, match=r".*arg: comments must be str. comments*"):
             ConstantTimer(comments=123)
         # is_enabled type check
-        with pytest.raises(TypeError, match=r".*arg: is_enable must be bool. is_enable*"):
+        with pytest.raises(TypeError, match=r".*arg: is_enabled must be bool. is_enabled*"):
             ConstantTimer(is_enabled="True")
         # delay type check (negative number input)
         with pytest.raises(TypeError, match=r".*arg: delay should be positive int*"):

@@ -18,7 +18,7 @@ class CommonThreadGroup(BasicThreadGroup, IncludesElements):
                  sheduler_delay: int = 0,
                  name: str = 'BasicThreadGroup',
                  comments: str = '',
-                 is_enable: bool = True,
+                 is_enabled: bool = True,
                  num_threads: int = 1,
                  ramp_time: int = 0,
                  on_sample_error: ThreadGroupAction = ThreadGroupAction.CONTINUE,):
@@ -28,7 +28,7 @@ class CommonThreadGroup(BasicThreadGroup, IncludesElements):
         self.sheduler_duration = sheduler_duration
         self.sheduler_delay = sheduler_delay
         IncludesElements.__init__(self)
-        super().__init__(name=name, comments=comments, is_enable=is_enable,
+        super().__init__(name=name, comments=comments, is_enabled=is_enabled,
                          num_threads=num_threads, ramp_time=ramp_time)
 
     @property
@@ -91,7 +91,7 @@ class CommonThreadGroup(BasicThreadGroup, IncludesElements):
 
 class CommonThreadGroupXML(CommonThreadGroup, Renderable):
     root_element_name = 'ThreadGroup'
-    
+
     def render_element(self) -> str:
         element_root, xml_tree = super().render_element()
 
@@ -114,7 +114,8 @@ class CommonThreadGroupXML(CommonThreadGroup, Renderable):
                 elif element.attrib['name'] == 'ThreadGroup.main_controller':
                     for main_controller_element in list(element):
                         if main_controller_element.attrib['name'] == 'LoopController.continue_forever':
-                            main_controller_element.text = str(self.continue_forever)
+                            main_controller_element.text = str(
+                                self.continue_forever)
                         elif main_controller_element.attrib['name'] == 'LoopController.loops':
                             main_controller_element.text = str(self.loops)
             except KeyError:

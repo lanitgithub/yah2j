@@ -15,7 +15,7 @@ class TestHttpRequest:
                 HttpRequest(comments=123, host='', path='')
         # is_enabled type check
         def test_enabled(self):
-            with pytest.raises(TypeError, match=r".*arg: is_enable must be bool. is_enable*"):
+            with pytest.raises(TypeError, match=r".*arg: is_enabled must be bool. is_enable*"):
                 HttpRequest(is_enabled="True",host='',path='')
         # host type check (non string data input)
         def test_host(self):

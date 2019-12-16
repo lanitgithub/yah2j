@@ -15,7 +15,7 @@ class TestArgsTypeCheck:
             RegExpPost(comments=123)
     # is_enabled type check
     def test_is_enabled_type_check(self):
-        with pytest.raises(TypeError, match=r".*arg: is_enable must be bool. is_enable*"):
+        with pytest.raises(TypeError, match=r".*arg: is_enabled must be bool. is_enable*"):
             RegExpPost(is_enabled="True")
     # scope type check (wrong data type input)
     def test_scope_type_check(self):

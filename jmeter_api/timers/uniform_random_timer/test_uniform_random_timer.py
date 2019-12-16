@@ -13,7 +13,7 @@ class TestUniformRandTimer:
         with pytest.raises(TypeError, match=r".*arg: comments must be str. comments*"):
             UniformRandTimer(comments=123)
         # is_enabled type check
-        with pytest.raises(TypeError, match=r".*arg: is_enable must be bool. is_enable*"):
+        with pytest.raises(TypeError, match=r".*arg: is_enabled must be bool. is_enable*"):
             UniformRandTimer(is_enabled="True")
         # offset_delay type check (negative number input)
         with pytest.raises(TypeError, match=r".*Failed to create uniform random timer due to wrong type "
