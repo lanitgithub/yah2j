@@ -1,6 +1,7 @@
 from jmeter_api.basics.thread_group.elements import BasicThreadGroup, ThreadGroupAction
 from jmeter_api.basics.utils import Renderable, IncludesElements
 from xml.etree.ElementTree import Element, ElementTree, tostring
+from xml.sax.saxutils import unescape
 from typing import List, Optional
 from settings import logging
 from enum import Enum
@@ -25,6 +26,7 @@ class CommonThreadGroup(BasicThreadGroup, IncludesElements):
         self.is_sheduler_enable = is_sheduler_enable
         self.sheduler_duration = sheduler_duration
         self.sheduler_delay = sheduler_delay
+        IncludesElements.__init__(self)
         super().__init__(name=name, comments=comments, is_enable=is_enable,
                          num_threads=num_threads, ramp_time=ramp_time)
 
@@ -101,15 +103,15 @@ class CommonThreadGroupXML(CommonThreadGroup, Renderable):
                 elif element.attrib['name'] == 'ThreadGroup.on_sample_error':
                     element.text = self.on_sample_error.value
                 elif element.attrib['name'] == 'ThreadGroup.num_threads':
-                    element.text = self.num_threads
+                    element.text = str(self.num_threads)
                 elif element.attrib['name'] == 'ThreadGroup.ramp_time':
-                    element.text = self.ramp_time
+                    element.text = str(self.ramp_time)
                 elif element.attrib['name'] == 'ThreadGroup.scheduler':
-                    element.text = self.is_sheduler_enable
+                    element.text = str(self.is_sheduler_enable).lower()
                 elif element.attrib['name'] == 'ThreadGroup.duration':
-                    element.text = self.sheduler_duration
+                    element.text = str(self.sheduler_duration)
                 elif element.attrib['name'] == 'ThreadGroup.delay':
-                    element.text = self.sheduler_delay
+                    element.text = str(self.sheduler_delay)
                 elif element.attrib['name'] == 'ThreadGroup.main_controller':
                     for main_controller_element in list(element):
                         if main_controller_element.attrib['name'] == 'LoopController.continue_forever':
@@ -124,4 +126,4 @@ class CommonThreadGroupXML(CommonThreadGroup, Renderable):
         xml_data = ''
         for element in list(xml_tree):
             xml_data += tostring(element).decode('utf8')
-        return xml_data
+        return unescape(xml_data)
