@@ -31,11 +31,11 @@ class BasicThreadGroup(BasicElement, IncludesElements, ABC):
                          comments=comments,
                          is_enabled=is_enabled)
     
-    def add_element(self, new_element: Union[BasicSampler, BasicTimer, BasicConfig]):
-        super().add_element(new_element)
+    def append(self, new_element: Union[BasicSampler, BasicTimer, BasicConfig]):
         if not isinstance(new_element, (BasicSampler, BasicTimer, BasicConfig)):
             raise TypeError(f'new_element must be BasicSampler, BasicTimer, BasicConfig. {type(new_element)} was given')
         self._elements.append(new_element)
+        return self
 
     @property
     def num_threads(self) -> int:

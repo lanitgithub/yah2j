@@ -28,7 +28,7 @@ class CommonThreadGroup(BasicThreadGroup, IncludesElements):
         self.sheduler_duration = sheduler_duration
         self.sheduler_delay = sheduler_delay
         IncludesElements.__init__(self)
-        super().__init__(name=name, comments=comments, is_enabled=is_enabled,
+        BasicThreadGroup.__init__(self, name=name, comments=comments, is_enabled=is_enabled,
                          num_threads=num_threads, ramp_time=ramp_time)
 
     @property

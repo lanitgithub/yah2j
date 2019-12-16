@@ -28,126 +28,126 @@ class TestHttpRequest:
         # method type check (non Method data input)
         def test_method(self):
             with pytest.raises(TypeError):
-                HttpRequest(method=-1)
+                HttpRequest(host='localhost', method=-1)
         def test_protocol(self):
             with pytest.raises(TypeError):
-                HttpRequest(protocol=2)
+                HttpRequest(host='localhost', protocol=2)
         def test_port(self):
             with pytest.raises(ValueError):
-                HttpRequest(port=-1)
+                HttpRequest(host='localhost', port=-1)
         def test_port2(self):
             with pytest.raises(TypeError):
-                HttpRequest(port='123')
+                HttpRequest(host='localhost', port='123')
         def test_content_encoding(self):
             with pytest.raises(TypeError):
-                HttpRequest(content_encoding=-1)
+                HttpRequest(host='localhost', content_encoding=-1)
 
         def test_auto_redirect(self):
             with pytest.raises(TypeError):
-                HttpRequest(auto_redirect=-1)
+                HttpRequest(host='localhost', auto_redirect=-1)
 
         def test_keep_alive(self):
             with pytest.raises(TypeError):
-                HttpRequest(keep_alive=5)
+                HttpRequest(host='localhost', keep_alive=5)
 
         def test_do_multipart_post(self):
             with pytest.raises(TypeError):
-                HttpRequest(do_multipart_post=5)
+                HttpRequest(host='localhost', do_multipart_post=5)
 
         def test_browser_comp_headers(self):
             with pytest.raises(TypeError):
-                HttpRequest(browser_comp_headers=-9)
+                HttpRequest(host='localhost', browser_comp_headers=-9)
 
         def test_implementation(self):
             with pytest.raises(TypeError):
-                HttpRequest(implementation='52')
+                HttpRequest(host='localhost', implementation='52')
 
         def test_connect_timeout(self):
             with pytest.raises(TypeError):
-                HttpRequest(connect_timeout='5')
+                HttpRequest(host='localhost', connect_timeout='5')
 
         def test_connect_timeout2(self):
             with pytest.raises(ValueError):
-                HttpRequest(connect_timeout=-1)
+                HttpRequest(host='localhost', connect_timeout=-1)
 
         def test_response_timeout(self):
             with pytest.raises(TypeError):
-                HttpRequest(response_timeout='5')
+                HttpRequest(host='localhost', response_timeout='5')
 
         def test_response_timeout2(self):
             with pytest.raises(ValueError):
-                HttpRequest(response_timeout=-1)
+                HttpRequest(host='localhost', response_timeout=-1)
 
         def test_retrieve_all_emb_resources(self):
             with pytest.raises(TypeError):
-                HttpRequest(retrieve_all_emb_resources='5')
+                HttpRequest(host='localhost', retrieve_all_emb_resources='5')
 
         def test_parallel_downloads(self):
             with pytest.raises(TypeError):
-                HttpRequest(parallel_downloads='5')
+                HttpRequest(host='localhost', parallel_downloads='5')
 
         def test_parallel_downloads_no(self):
             with pytest.raises(TypeError):
-                HttpRequest(parallel_downloads_no='5')
+                HttpRequest(host='localhost', parallel_downloads_no='5')
 
         def test_parallel_downloads_no2(self):
             with pytest.raises(ValueError):
-                HttpRequest(parallel_downloads_no=-1)
+                HttpRequest(host='localhost', parallel_downloads_no=-1)
 
         def test_parallel_downloads_no(self):
             with pytest.raises(TypeError):
-                HttpRequest(parallel_downloads_no='5')
+                HttpRequest(host='localhost', parallel_downloads_no='5')
 
         def test_url_must_match(self):
             with pytest.raises(TypeError):
-                HttpRequest(url_must_match=True)
+                HttpRequest(host='localhost', url_must_match=True)
 
         def test_source_type(self):
             with pytest.raises(TypeError):
-                HttpRequest(source_type=5)
+                HttpRequest(host='localhost', source_type=5)
 
         def test_source_address(self):
             with pytest.raises(TypeError):
-                HttpRequest(source_address=5)
+                HttpRequest(host='localhost', source_address=5)
 
         def test_proxy_scheme(self):
             with pytest.raises(TypeError):
-                HttpRequest(proxy_scheme=5)
+                HttpRequest(host='localhost', proxy_scheme=5)
 
         def test_proxy_host(self):
             with pytest.raises(TypeError):
-                HttpRequest(proxy_host=5)
+                HttpRequest(host='localhost', proxy_host=5)
 
         def test_proxy_port(self):
             with pytest.raises(TypeError):
-                HttpRequest(proxy_port='5')
+                HttpRequest(host='localhost', proxy_port='5')
 
         def test_proxy_port2(self):
             with pytest.raises(ValueError):
-                HttpRequest(proxy_port=-1)
+                HttpRequest(host='localhost', proxy_port=-1)
 
         def test_proxy_username(self):
             with pytest.raises(TypeError):
-                HttpRequest(proxy_username=-1)
+                HttpRequest(host='localhost', proxy_username=-1)
 
         def test_proxy_password(self):
             with pytest.raises(TypeError):
-                HttpRequest(proxy_password=-1)
+                HttpRequest(host='localhost', proxy_password=-1)
 
         def test_text(self):
             with pytest.raises(TypeError):
-                HttpRequest(text=-1)
+                HttpRequest(host='localhost', text=-1)
 
 
 class TestHttpRequestXML:
     def test_render_name(self):
-        element = HttpRequestXML(name='My http')
+        element = HttpRequestXML(host='localhost', name='My http')
         rendered_doc = element.render_element().replace('<hashTree />', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         assert parsed_doc['HTTPSamplerProxy']['@testname'] == 'My http'
 
     def test_render_comments(self):
-        element = HttpRequestXML(comments='My http')
+        element = HttpRequestXML(host='localhost', comments='My http')
         rendered_doc = element.render_element().replace('<hashTree />', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
@@ -155,7 +155,7 @@ class TestHttpRequestXML:
                 assert tag['#text'] == 'My http'
 
     def test_render_is_enabled(self):
-        element = HttpRequestXML(is_enabled=False)
+        element = HttpRequestXML(host='localhost', is_enabled=False)
         rendered_doc = element.render_element().replace('<hashTree />', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         assert parsed_doc['HTTPSamplerProxy']['@enabled'] == 'false'
@@ -169,7 +169,7 @@ class TestHttpRequestXML:
                 assert tag['#text'] == 'localhost'
 
     def test_render_path(self):
-        element = HttpRequestXML(path='/search')
+        element = HttpRequestXML(host='localhost', path='/search')
         rendered_doc = element.render_element().replace('<hashTree />', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
@@ -177,7 +177,7 @@ class TestHttpRequestXML:
                 assert tag['#text'] == '/search'
 
     def test_render_method(self):
-        element = HttpRequestXML(method=Method.HEAD)
+        element = HttpRequestXML(host='localhost', method=Method.HEAD)
         rendered_doc = element.render_element().replace('<hashTree />', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
@@ -185,7 +185,7 @@ class TestHttpRequestXML:
                 assert tag['#text'] == 'HEAD'
 
     def test_render_protocol(self):
-        element = HttpRequestXML(protocol=Protocol.FTP)
+        element = HttpRequestXML(host='localhost', protocol=Protocol.FTP)
         rendered_doc = element.render_element().replace('<hashTree />', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
@@ -193,7 +193,7 @@ class TestHttpRequestXML:
                 assert tag['#text'] == 'ftp'
 
     def test_render_port(self):
-        element = HttpRequestXML(port=123)
+        element = HttpRequestXML(host='localhost', port=123)
         rendered_doc = element.render_element().replace('<hashTree />', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
@@ -201,7 +201,7 @@ class TestHttpRequestXML:
                 assert tag['#text'] == '123'
 
     def test_render_port2(self):
-        element = HttpRequestXML(port=None)
+        element = HttpRequestXML(host='localhost', port=None)
         rendered_doc = element.render_element().replace('<hashTree />', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
@@ -209,7 +209,7 @@ class TestHttpRequestXML:
                 assert '#text' not in tag.keys()
 
     def test_render_content_encoding(self):
-        element = HttpRequestXML(content_encoding='utf-8')
+        element = HttpRequestXML(host='localhost', content_encoding='utf-8')
         rendered_doc = element.render_element().replace('<hashTree />', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
@@ -217,7 +217,7 @@ class TestHttpRequestXML:
                 assert tag['#text'] == 'utf-8'
 
     def test_render_auto_redirect(self):
-        element = HttpRequestXML(auto_redirect=True)
+        element = HttpRequestXML(host='localhost', auto_redirect=True)
         rendered_doc = element.render_element().replace('<hashTree />', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         for tag in parsed_doc['HTTPSamplerProxy']['boolProp']:
@@ -225,7 +225,7 @@ class TestHttpRequestXML:
                 assert tag['#text'] == 'true'
 
     def test_render_keep_alive(self):
-        element = HttpRequestXML(keep_alive=False)
+        element = HttpRequestXML(host='localhost', keep_alive=False)
         rendered_doc = element.render_element().replace('<hashTree />', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         for tag in parsed_doc['HTTPSamplerProxy']['boolProp']:
@@ -233,7 +233,7 @@ class TestHttpRequestXML:
                 assert tag['#text'] == 'false'
 
     def test_render_do_multipart_post(self):
-        element = HttpRequestXML(do_multipart_post=True)
+        element = HttpRequestXML(host='localhost', do_multipart_post=True)
         rendered_doc = element.render_element().replace('<hashTree />', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         for tag in parsed_doc['HTTPSamplerProxy']['boolProp']:
@@ -241,7 +241,7 @@ class TestHttpRequestXML:
                 assert tag['#text'] == 'true'
 
     def test_render_browser_comp_headers(self):
-        element = HttpRequestXML(browser_comp_headers=True)
+        element = HttpRequestXML(host='localhost', browser_comp_headers=True)
         rendered_doc = element.render_element().replace('<hashTree />', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         for tag in parsed_doc['HTTPSamplerProxy']['boolProp']:
@@ -249,7 +249,7 @@ class TestHttpRequestXML:
                 assert tag['#text'] == 'true'
 
     def test_render_implementation(self):
-        element = HttpRequestXML(implementation=Implement.JAVA)
+        element = HttpRequestXML(host='localhost', implementation=Implement.JAVA)
         rendered_doc = element.render_element().replace('<hashTree />', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
@@ -257,7 +257,7 @@ class TestHttpRequestXML:
                 assert tag['#text'] == 'Java'
 
     def test_render_connect_timeout(self):
-        element = HttpRequestXML(connect_timeout=123)
+        element = HttpRequestXML(host='localhost', connect_timeout=123)
         rendered_doc = element.render_element().replace('<hashTree />', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
@@ -265,7 +265,7 @@ class TestHttpRequestXML:
                 assert tag['#text'] == '123'
 
     def test_render_connect_timeout2(self):
-        element = HttpRequestXML(connect_timeout=None)
+        element = HttpRequestXML(host='localhost', connect_timeout=None)
         rendered_doc = element.render_element().replace('<hashTree />', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
@@ -274,7 +274,7 @@ class TestHttpRequestXML:
 
 
     def test_render_response_timeout(self):
-        element = HttpRequestXML(response_timeout=321)
+        element = HttpRequestXML(host='localhost', response_timeout=321)
         rendered_doc = element.render_element().replace('<hashTree />', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
@@ -282,7 +282,7 @@ class TestHttpRequestXML:
                 assert tag['#text'] == '321'
 
     def test_render_response_timeout2(self):
-        element = HttpRequestXML(response_timeout=None)
+        element = HttpRequestXML(host='localhost', response_timeout=None)
         rendered_doc = element.render_element().replace('<hashTree />', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
@@ -290,7 +290,7 @@ class TestHttpRequestXML:
                 assert '#text' not in tag.keys()
 
     def test_render_retrieve_all_emb_resources(self):
-        element = HttpRequestXML(retrieve_all_emb_resources=True)
+        element = HttpRequestXML(host='localhost', retrieve_all_emb_resources=True)
         rendered_doc = element.render_element().replace('<hashTree />', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         for tag in parsed_doc['HTTPSamplerProxy']['boolProp']:
@@ -298,7 +298,7 @@ class TestHttpRequestXML:
                 assert tag['#text'] == 'true'
 
     def test_render_parallel_downloads(self):
-        element = HttpRequestXML(parallel_downloads=True)
+        element = HttpRequestXML(host='localhost', parallel_downloads=True)
         rendered_doc = element.render_element().replace('<hashTree />', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         for tag in parsed_doc['HTTPSamplerProxy']['boolProp']:
@@ -306,7 +306,7 @@ class TestHttpRequestXML:
                 assert tag['#text'] == 'true'
 
     def test_render_parallel_downloads_no(self):
-        element = HttpRequestXML(parallel_downloads_no=6)
+        element = HttpRequestXML(host='localhost', parallel_downloads_no=6)
         rendered_doc = element.render_element().replace('<hashTree />', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
@@ -314,7 +314,7 @@ class TestHttpRequestXML:
                 assert tag['#text'] == '6'
 
     def test_render_parallel_downloads_no2(self):
-        element = HttpRequestXML(parallel_downloads_no=None)
+        element = HttpRequestXML(host='localhost', parallel_downloads_no=None)
         rendered_doc = element.render_element().replace('<hashTree />', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
@@ -322,7 +322,7 @@ class TestHttpRequestXML:
                 assert '#text' not in tag.keys()
 
     def test_render_url_must_match(self):
-        element = HttpRequestXML(url_must_match='url_match')
+        element = HttpRequestXML(host='localhost', url_must_match='url_match')
         rendered_doc = element.render_element().replace('<hashTree />', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
@@ -330,13 +330,13 @@ class TestHttpRequestXML:
                 assert tag['#text'] == 'url_match'
 
     def test_render_source_type(self):
-        element = HttpRequestXML(source_type=Source.IPV4)
+        element = HttpRequestXML(host='localhost', source_type=Source.IPV4)
         rendered_doc = element.render_element().replace('<hashTree />', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         assert parsed_doc['HTTPSamplerProxy']['intProp']['#text'] == '2'
 
     def test_render_source_address(self):
-        element = HttpRequestXML(source_address='test_source')
+        element = HttpRequestXML(host='localhost', source_address='test_source')
         rendered_doc = element.render_element().replace('<hashTree />', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
@@ -344,7 +344,7 @@ class TestHttpRequestXML:
                 assert tag['#text'] == 'test_source'
 
     def test_render_source_scheme(self):
-        element = HttpRequestXML(proxy_scheme='test_scheme')
+        element = HttpRequestXML(host='localhost', proxy_scheme='test_scheme')
         rendered_doc = element.render_element().replace('<hashTree />', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
@@ -352,7 +352,7 @@ class TestHttpRequestXML:
                 assert tag['#text'] == 'test_scheme'
 
     def test_render_proxy_host(self):
-        element = HttpRequestXML(proxy_host='proxy_localhost')
+        element = HttpRequestXML(host='localhost', proxy_host='proxy_localhost')
         rendered_doc = element.render_element().replace('<hashTree />', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
@@ -360,7 +360,7 @@ class TestHttpRequestXML:
                 assert tag['#text'] == 'proxy_localhost'
 
     def test_render_proxy_port(self):
-        element = HttpRequestXML(proxy_port=443)
+        element = HttpRequestXML(host='localhost', proxy_port=443)
         rendered_doc = element.render_element().replace('<hashTree />', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
@@ -368,7 +368,7 @@ class TestHttpRequestXML:
                 assert tag['#text'] == '443'
 
     def test_render_proxy_port2(self):
-        element = HttpRequestXML(proxy_port=None)
+        element = HttpRequestXML(host='localhost', proxy_port=None)
         rendered_doc = element.render_element().replace('<hashTree />', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
@@ -376,7 +376,7 @@ class TestHttpRequestXML:
                 assert '#text' not in tag.keys()
 
     def test_render_proxy_username(self):
-        element = HttpRequestXML(proxy_username='proxy_username')
+        element = HttpRequestXML(host='localhost', proxy_username='proxy_username')
         rendered_doc = element.render_element().replace('<hashTree />', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
@@ -384,7 +384,7 @@ class TestHttpRequestXML:
                 assert tag['#text'] == 'proxy_username'
 
     def test_render_proxy_password(self):
-        element = HttpRequestXML(proxy_password='pass')
+        element = HttpRequestXML(host='localhost', proxy_password='pass')
         rendered_doc = element.render_element().replace('<hashTree />', '')
         parsed_doc = xmltodict.parse(rendered_doc)
         for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:

@@ -53,9 +53,9 @@ class Implement(Enum):
 
 class HttpRequest(BasicSampler, IncludesElements):
     def __init__(self,
+                 host: str,
+                 path: str = '/',
                  name: str = 'HTTP Request',
-                 host: str = '',
-                 path: str = '',
                  method: Method = Method.GET,
                  protocol: Protocol = Protocol.HTTP,
                  port: Union[int, None] = None,
@@ -87,7 +87,7 @@ class HttpRequest(BasicSampler, IncludesElements):
         :type source_type: object
         """
         IncludesElements.__init__(self)
-        super().__init__(name=name, comments=comments, is_enabled=is_enabled)
+        BasicSampler.__init__(self, name=name, comments=comments, is_enabled=is_enabled)
         self.host = host
         self.path = path
         self.method = method
@@ -404,13 +404,6 @@ class HttpRequest(BasicSampler, IncludesElements):
 
 class HttpRequestXML(HttpRequest, Renderable):
     root_element_name = 'HTTPSamplerProxy'
-
-    # def add_element(self, *args) -> None:
-    #     for element in args:
-    #         if not isinstance(element, UserDefinedVariables):
-    #             raise TypeError(
-    #                 f'You can add only UserDefinedVariables objects.')
-    #         self._elements.append(element)
 
     def add_file_upload(self, *args):
         for file_up in args:
