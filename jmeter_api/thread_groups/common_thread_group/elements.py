@@ -9,7 +9,9 @@ from enum import Enum
 import os
 
 
-class CommonThreadGroup(BasicThreadGroup, IncludesElements):
+class CommonThreadGroup(BasicThreadGroup, IncludesElements, Renderable):
+    root_element_name = 'ThreadGroup'
+
     def __init__(self,
                  continue_forever: bool,
                  loops: int = 1,
@@ -28,8 +30,8 @@ class CommonThreadGroup(BasicThreadGroup, IncludesElements):
         self.sheduler_duration = sheduler_duration
         self.sheduler_delay = sheduler_delay
         IncludesElements.__init__(self)
-        super().__init__(name=name, comments=comments, is_enabled=is_enabled,
-                         num_threads=num_threads, ramp_time=ramp_time)
+        BasicThreadGroup.__init__(self, name=name, comments=comments, is_enabled=is_enabled,
+                                  num_threads=num_threads, ramp_time=ramp_time)
 
     @property
     def continue_forever(self):
@@ -64,7 +66,7 @@ class CommonThreadGroup(BasicThreadGroup, IncludesElements):
         if not isinstance(value, int) or value < 0:
             raise TypeError(
                 f'arg: loops should be positive int. {type(value).__name__} was given')
-        self._loops = str(value)
+        self._loops = value
 
     @property
     def sheduler_duration(self):
@@ -75,7 +77,7 @@ class CommonThreadGroup(BasicThreadGroup, IncludesElements):
         if not isinstance(value, int) or value < 0:
             raise TypeError(
                 f'arg: sheduler_duration should be positive int. {type(value).__name__} was given')
-        self._loops = str(value)
+        self._loops = value
 
     @property
     def sheduler_delay(self):
@@ -86,11 +88,7 @@ class CommonThreadGroup(BasicThreadGroup, IncludesElements):
         if not isinstance(value, int) or value < 0:
             raise TypeError(
                 f'arg: sheduler_delay should be positive int. {type(value).__name__} was given')
-        self._loops = str(value)
-
-
-class CommonThreadGroupXML(CommonThreadGroup, Renderable):
-    root_element_name = 'ThreadGroup'
+        self._loops = value
 
     def render_element(self) -> str:
         element_root, xml_tree = super().render_element()

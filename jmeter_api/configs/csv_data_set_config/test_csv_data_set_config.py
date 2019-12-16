@@ -1,4 +1,4 @@
-from jmeter_api.configs.csv_data_set_config.elements import CsvDataSetConfig, CsvDataSetConfigXML, ShareMode
+from jmeter_api.configs.csv_data_set_config.elements import CsvDataSetConfig, ShareMode
 from jmeter_api.basics.utils import FileEncoding, tag_wrapper
 import xmltodict
 import pytest
@@ -137,76 +137,76 @@ class TestCsvDataSetConfig:
 
 class TestCsvDataSetConfigXML:
     def test_render_delimiter(self):
-        element = CsvDataSetConfigXML(file_path='main.py',
-                                      variable_names=['var1', 'var2'],
-                                      delimiter='|')
+        element = CsvDataSetConfig(file_path='main.py',
+                                   variable_names=['var1', 'var2'],
+                                   delimiter='|')
         rendered_doc = tag_wrapper(element.render_element(), 'result')
         parsed_doc = xmltodict.parse(rendered_doc)
         assert parsed_doc['result']['CSVDataSet']['stringProp'][1]['#text'] == '|'
 
     def test_render_file_encoding(self):
-        element = CsvDataSetConfigXML(file_path='main.py',
-                                      variable_names=['var1', 'var2'],
-                                      file_encoding=FileEncoding.UTF16)
+        element = CsvDataSetConfig(file_path='main.py',
+                                   variable_names=['var1', 'var2'],
+                                   file_encoding=FileEncoding.UTF16)
         rendered_doc = tag_wrapper(element.render_element(), 'result')
         parsed_doc = xmltodict.parse(rendered_doc)
         assert parsed_doc['result']['CSVDataSet']['stringProp'][2]['#text'] == 'UTF-16'
 
     def test_render_file_path(self):
-        element = CsvDataSetConfigXML(file_path='main.py',
-                                      variable_names=['var1', 'var2'],)
+        element = CsvDataSetConfig(file_path='main.py',
+                                   variable_names=['var1', 'var2'],)
         rendered_doc = tag_wrapper(element.render_element(), 'result')
         parsed_doc = xmltodict.parse(rendered_doc)
         assert parsed_doc['result']['CSVDataSet']['stringProp'][3]['#text'] == 'main.py'
 
     def test_render_ignore_first_line(self):
-        element = CsvDataSetConfigXML(file_path='main.py',
-                                      variable_names=['var1', 'var2'],
-                                      ignore_first_line=True)
+        element = CsvDataSetConfig(file_path='main.py',
+                                   variable_names=['var1', 'var2'],
+                                   ignore_first_line=True)
         rendered_doc = tag_wrapper(element.render_element(), 'result')
         parsed_doc = xmltodict.parse(rendered_doc)
         assert parsed_doc['result']['CSVDataSet']['boolProp'][0]['#text'] == 'true'
 
     def test_render_recycle(self):
-        element = CsvDataSetConfigXML(file_path='main.py',
-                                      variable_names=['var1', 'var2'],
-                                      recycle=True)
+        element = CsvDataSetConfig(file_path='main.py',
+                                   variable_names=['var1', 'var2'],
+                                   recycle=True)
         rendered_doc = tag_wrapper(element.render_element(), 'result')
         parsed_doc = xmltodict.parse(rendered_doc)
         assert parsed_doc['result']['CSVDataSet']['boolProp'][2]['#text'] == 'true'
 
     def test_render_shared_mode(self):
-        element = CsvDataSetConfigXML(file_path='main.py',
-                                      variable_names=['var1', 'var2'],
-                                      share_mode=ShareMode.GROUP)
+        element = CsvDataSetConfig(file_path='main.py',
+                                   variable_names=['var1', 'var2'],
+                                   share_mode=ShareMode.GROUP)
         rendered_doc = tag_wrapper(element.render_element(), 'result')
         parsed_doc = xmltodict.parse(rendered_doc)
         assert parsed_doc['result']['CSVDataSet']['stringProp'][4]['#text'] == 'shareMode.group'
 
     def test_render_stop_thread(self):
-        element = CsvDataSetConfigXML(file_path='main.py',
-                                      variable_names=['var1', 'var2'],
-                                      stop_thread=True)
+        element = CsvDataSetConfig(file_path='main.py',
+                                   variable_names=['var1', 'var2'],
+                                   stop_thread=True)
         rendered_doc = tag_wrapper(element.render_element(), 'result')
         parsed_doc = xmltodict.parse(rendered_doc)
         assert parsed_doc['result']['CSVDataSet']['boolProp'][3]['#text'] == 'true'
 
     def test_render_variable_names(self):
-        element = CsvDataSetConfigXML(file_path='main.py',
-                                      variable_names=['var1', 'var2', 'var3', 'var4'],)
+        element = CsvDataSetConfig(file_path='main.py',
+                                   variable_names=['var1', 'var2', 'var3', 'var4'],)
         rendered_doc = tag_wrapper(element.render_element(), 'result')
         parsed_doc = xmltodict.parse(rendered_doc)
         assert parsed_doc['result']['CSVDataSet']['stringProp'][5]['#text'] == 'var1,var2,var3,var4'
 
     def test_render_header_contain(self):
-        element = CsvDataSetConfigXML(file_path='main.py',
-                                      variable_names=['var1', 'var2'],)
+        element = CsvDataSetConfig(file_path='main.py',
+                                   variable_names=['var1', 'var2'],)
         rendered_doc = tag_wrapper(element.render_element(), 'result')
         is_contain = 'xml version' in rendered_doc
         assert is_contain is False
 
     def test_render_hashtree_contain(self):
-        element = CsvDataSetConfigXML(file_path='main.py',
-                                      variable_names=['var1', 'var2'],)
+        element = CsvDataSetConfig(file_path='main.py',
+                                   variable_names=['var1', 'var2'],)
         rendered_doc = tag_wrapper(element.render_element(), 'result')
         assert '<hashTree />' in rendered_doc

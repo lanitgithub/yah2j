@@ -8,9 +8,9 @@ import re
 
 
 class Scope(Enum):
-    MAIN_AND_SUB = 'all' # todo add tag Sample.scope
+    MAIN_AND_SUB = 'all'  # todo add tag Sample.scope
     MAIN = ''
-    SUB = 'children' # todo add tag Sample.scope
+    SUB = 'children'  # todo add tag Sample.scope
 
 
 class Field(Enum):
@@ -24,7 +24,8 @@ class Field(Enum):
     RES_MESSAGE = 'message'
 
 
-class RegExpPost(BasicPostProcessor):
+class RegExpPost(BasicPostProcessor, Renderable):
+    root_element_name = 'RegexExtractor'
 
     def __init__(self,
                  name: str = 'Regular Expression Extractor',
@@ -54,7 +55,8 @@ class RegExpPost(BasicPostProcessor):
     @scope.setter
     def scope(self, value):
         if not isinstance(value, str) and not isinstance(value, Scope):
-            raise TypeError(f'arg: scope should be str or Scope. {type(value).__name__} was given')
+            raise TypeError(
+                f'arg: scope should be str or Scope. {type(value).__name__} was given')
         if isinstance(value, str):
             self._scope = value
         elif isinstance(value, Scope):
@@ -67,7 +69,8 @@ class RegExpPost(BasicPostProcessor):
     @field_to_check.setter
     def field_to_check(self, value):
         if not isinstance(value, Field):
-            raise TypeError(f'arg: field_to_check should be Field. {type(value).__name__} was given')
+            raise TypeError(
+                f'arg: field_to_check should be Field. {type(value).__name__} was given')
         self._field_to_check = value.value
 
     @property
@@ -77,7 +80,8 @@ class RegExpPost(BasicPostProcessor):
     @var_name.setter
     def var_name(self, value):
         if not isinstance(value, str):
-            raise TypeError(f'arg: var_name should be str. {type(value).__name__} was given')
+            raise TypeError(
+                f'arg: var_name should be str. {type(value).__name__} was given')
         self._var_name = value
 
     @property
@@ -87,7 +91,8 @@ class RegExpPost(BasicPostProcessor):
     @regexp.setter
     def regexp(self, value):
         if not isinstance(value, str):
-            raise TypeError(f'arg: regexp should be str. {type(value).__name__} was given')
+            raise TypeError(
+                f'arg: regexp should be str. {type(value).__name__} was given')
         try:
             re.compile(value)
         except re.error as error:
@@ -102,9 +107,11 @@ class RegExpPost(BasicPostProcessor):
     @template.setter
     def template(self, value):
         if value is not None and not isinstance(value, int):
-            raise TypeError(f'arg: template.xml should be int or None. {type(value).__name__} was given')
+            raise TypeError(
+                f'arg: template.xml should be int or None. {type(value).__name__} was given')
         if value is not None and value < 1:
-            raise ValueError(f'arg: template.xml should be greater or equal than 1.')
+            raise ValueError(
+                f'arg: template.xml should be greater or equal than 1.')
         self._template = value
 
     @property
@@ -114,7 +121,8 @@ class RegExpPost(BasicPostProcessor):
     @match_no.setter
     def match_no(self, value):
         if value is not None and not isinstance(value, int):
-            raise TypeError(f'arg: match_no should be int. {type(value).__name__} was given')
+            raise TypeError(
+                f'arg: match_no should be int. {type(value).__name__} was given')
         if value is not None and value < 0:
             raise ValueError(f'arg: match_no should be greater than 0.')
         self._match_no = value
@@ -126,13 +134,10 @@ class RegExpPost(BasicPostProcessor):
     @default_val.setter
     def default_val(self, value):
         if not isinstance(value, str):
-            raise TypeError(f'arg: default_val should be str. {type(value).__name__} was given')
+            raise TypeError(
+                f'arg: default_val should be str. {type(value).__name__} was given')
         self._default_val = value
 
-
-class RegExpPostXML(RegExpPost, Renderable):
-    root_element_name = 'RegexExtractor'
-    
     def render_element(self) -> str:
         element_root, xml_tree = super().render_element()
         flag = True
@@ -174,7 +179,8 @@ class RegExpPostXML(RegExpPost, Renderable):
 
                     if self.default_val == 'empty':
                         element = SubElement(element_root, 'boolProp')
-                        element.set('name', 'RegexExtractor.default_empty_value')
+                        element.set(
+                            'name', 'RegexExtractor.default_empty_value')
                         element.text = 'true'
                     flag = False
             except KeyError:
@@ -182,4 +188,4 @@ class RegExpPostXML(RegExpPost, Renderable):
         xml_data = ''
         for element in list(xml_tree):
             xml_data += tostring(element).decode('utf8')
-        return xml_data.replace('><', '>\n<') # replace for better readability
+        return xml_data.replace('><', '>\n<')  # replace for better readability
