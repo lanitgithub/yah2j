@@ -1,8 +1,9 @@
 from jmeter_api.basics.element.elements import BasicElement
+from abc import ABC
 import logging
 
 
-class BasicPostProcessor(BasicElement):
+class BasicPostProcessor(BasicElement, ABC):
 
     def __init__(self,
                  name: str = 'BasicElement',
