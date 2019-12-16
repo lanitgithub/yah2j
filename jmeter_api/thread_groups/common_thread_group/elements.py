@@ -124,9 +124,5 @@ class CommonThreadGroupXML(CommonThreadGroup, Renderable):
         content_root.text = self.render_inner_elements()
         xml_data = ''
         for element in list(xml_tree):
-<<<<<<< HEAD
-            xml_data += tostring(element).decode('utf8')
-=======
             xml_data += tostring(element).decode('utf-8')
->>>>>>> 92e5346495fe467f7e6a9631ddf4bb6c8ae5cb0d
         return unescape(xml_data)
