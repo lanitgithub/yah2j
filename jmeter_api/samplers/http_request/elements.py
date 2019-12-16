@@ -51,7 +51,9 @@ class Implement(Enum):
     NONE = ''
 
 
-class HttpRequest(BasicSampler, IncludesElements):
+class HttpRequest(BasicSampler, IncludesElements, Renderable):
+    root_element_name = 'HTTPSamplerProxy'
+
     def __init__(self,
                  host: str,
                  path: str = '/',
@@ -87,7 +89,8 @@ class HttpRequest(BasicSampler, IncludesElements):
         :type source_type: object
         """
         IncludesElements.__init__(self)
-        BasicSampler.__init__(self, name=name, comments=comments, is_enabled=is_enabled)
+        BasicSampler.__init__(
+            self, name=name, comments=comments, is_enabled=is_enabled)
         self.host = host
         self.path = path
         self.method = method
@@ -401,10 +404,6 @@ class HttpRequest(BasicSampler, IncludesElements):
                 f'arg: text should be str. {type(value).__name__} was given')
         self._text = value
 
-
-class HttpRequestXML(HttpRequest, Renderable):
-    root_element_name = 'HTTPSamplerProxy'
-
     def add_file_upload(self, *args):
         for file_up in args:
             if not isinstance(file_up, FileUpload):
@@ -435,7 +434,6 @@ class HttpRequestXML(HttpRequest, Renderable):
         Set all parameters in xml and convert it to the string.
         :return: xml in string format
         """
-
         # default name and stuff setup
         element_root, xml_tree = super().render_element()
         for element in list(element_root):
