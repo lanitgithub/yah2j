@@ -16,7 +16,7 @@ class Renderable(ABC):
         template_path = os.path.join(element_path, 'template.xml')
         with open(template_path) as file:
             file_data = file.read()
-            wrapped_template = tag_wrapper(file_data, 'template')
+            wrapped_template = tag_wrapper(file_data, 'template.xml')
             template_as_element_tree = fromstring(wrapped_template)
             return template_as_element_tree
 
@@ -28,7 +28,14 @@ class Renderable(ABC):
         element_root.set('enabled', str(self.is_enabled).lower())
         element_root.set('testname', self.name)
         element_root.set('element_type', str(type(self).__name__))
-        return (element_root, xml_tree)
+        for element in list(element_root):
+            try:
+                if element.attrib['name'] == 'TestPlan.comments':
+                    element.text = self.comments
+                    break
+            except Exception:
+                logging.error('Unable to add comment')
+        return element_root, xml_tree
 
 
 class IncludesElements(ABC):

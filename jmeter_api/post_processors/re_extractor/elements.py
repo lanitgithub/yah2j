@@ -102,9 +102,9 @@ class RegExpPost(BasicPostProcessor):
     @template.setter
     def template(self, value):
         if value is not None and not isinstance(value, int):
-            raise TypeError(f'arg: template should be int or None. {type(value).__name__} was given')
+            raise TypeError(f'arg: template.xml should be int or None. {type(value).__name__} was given')
         if value is not None and value < 1:
-            raise ValueError(f'arg: template should be greater or equal than 1.')
+            raise ValueError(f'arg: template.xml should be greater or equal than 1.')
         self._template = value
 
     @property

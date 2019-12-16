@@ -36,7 +36,7 @@ class ConstantTimer(BasicTimer):
         if not isinstance(value, int) or value < 0:
             raise TypeError(
                 f'arg: delay should be positive int. {type(value).__name__} was given')
-        self._delay = str(value)
+        self._delay = value
 
     def __repr__(self):
         return f'Constant timer: {self.name}, delay: {self.delay}'
@@ -56,7 +56,7 @@ class ConstantTimerXML(ConstantTimer, Renderable):
                 if element.attrib['name'] == 'TestPlan.comments':
                     element.text = self.comments
                 elif element.attrib['name'] == 'ConstantTimer.delay':
-                    element.text = self.delay
+                    element.text = str(self.delay)
             except KeyError:
                 continue
         xml_data = ''
