@@ -83,11 +83,10 @@ class HttpRequest(BasicSampler, IncludesElements):
                  is_enabled: bool = True
                  ):
         """
-
         :type source_type: object
         """
         IncludesElements.__init__(self)
-        super().__init__(name=name, comments=comments, is_enabled=is_enabled)
+        BasicSampler.__init__(self, name=name, comments=comments, is_enabled=is_enabled)
         self.host = host
         self.path = path
         self.method = method
@@ -115,6 +114,7 @@ class HttpRequest(BasicSampler, IncludesElements):
         self.variables = ''
         self.text = ''
         self._upload_file_list: List[FileUpload] = []
+        self._user_defined_variables: List[UserDefinedVariables] = []
 
     @property
     def host(self):
@@ -405,12 +405,12 @@ class HttpRequest(BasicSampler, IncludesElements):
 class HttpRequestXML(HttpRequest, Renderable):
     root_element_name = 'HTTPSamplerProxy'
 
-    # def add_element(self, *args) -> None:
-    #     for element in args:
-    #         if not isinstance(element, UserDefinedVariables):
-    #             raise TypeError(
-    #                 f'You can add only UserDefinedVariables objects.')
-    #         self._elements.append(element)
+    def add_user_variable(self, *args) -> None:
+        for element in args:
+            if not isinstance(element, UserDefinedVariables):
+                raise TypeError(
+                    f'You can add only UserDefinedVariables objects.')
+            self._user_defined_variables.append(element)
 
     def add_file_upload(self, *args):
         for file_up in args:
@@ -418,7 +418,7 @@ class HttpRequestXML(HttpRequest, Renderable):
                 raise TypeError(f'You can add only FileUpload objects.')
             self._upload_file_list.append(file_up)
 
-    def render_upload(self):
+    def _render_upload(self):
         xml_tree = self.get_template()
         elem_prop = SubElement(xml_tree, 'elementProp')
         elem_prop.set('name', 'HTTPsampler.Files')
@@ -573,7 +573,7 @@ class HttpRequestXML(HttpRequest, Renderable):
         # render upload files
         if self.get_len_upload_files():
             content_root = xml_tree[0]
-            content_root.text = self.render_upload()
+            content_root.text = self._render_upload()
         xml_data = ''
         if not self.text:
             content_root = xml_tree[0][0][0]  # to get collectionProp tag
@@ -585,3 +585,6 @@ class HttpRequestXML(HttpRequest, Renderable):
         for element in list(xml_tree):
             xml_data += tostring(element).decode('utf-8')
         return unescape(xml_data)
+
+s = HttpRequestXML(is_enabled=False)
+print(s.render_element())

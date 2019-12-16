@@ -77,3 +77,5 @@ class BasicThreadGroup(BasicElement, IncludesElements, ABC):
                 f'on_sample_error must be ThreadGroupAction. on_sample_error {type(value)} = {value}')
         else:
             self._on_sample_error = value
+
+print.__call__()
