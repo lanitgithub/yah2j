@@ -1,5 +1,5 @@
 from jmeter_api.basics.non_test_elements.elements import NonTestElements
-from jmeter_api.basics.utils import FileEncoding, Renderable, IncludesElements, test_plan_wrapper
+from jmeter_api.basics.utils import Renderable, IncludesElements, test_plan_wrapper
 from xml.etree.ElementTree import Element, ElementTree, tostring
 from xml.sax.saxutils import unescape
 from typing import List, Optional
