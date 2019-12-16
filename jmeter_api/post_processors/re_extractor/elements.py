@@ -146,7 +146,7 @@ class RegExpPostXML(RegExpPost, Renderable):
                     element.text = self.var_name
                 elif element.attrib['name'] == 'RegexExtractor.regex':
                     element.text = self.regexp
-                elif element.attrib['name'] == 'RegexExtractor.template.xml':
+                elif element.attrib['name'] == 'RegexExtractor.template':
                     if self.template is None:
                         element.text = ''
                     else:
