@@ -44,7 +44,7 @@ class IncludesElements(ABC):
     @abstractmethod
     def add_element(self, new_element: Renderable):
         if not isinstance(new_element, Renderable):
-            raise TypeError('new_element must be Renderable. new_element {type(value)} = {value}')
+            raise TypeError(f'new_element must be Renderable. {type(value)} was given.')
 
     def get_count_of_elements(self) -> int:
         return len(self._elements)

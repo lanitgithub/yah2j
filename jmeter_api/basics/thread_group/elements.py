@@ -33,7 +33,7 @@ class BasicThreadGroup(BasicElement, IncludesElements):
     def add_element(self, new_element: Union[BasicSampler, BasicTimer, BasicConfig]):
         super().add_element(new_element)
         if not isinstance(new_element, (BasicSampler, BasicTimer, BasicConfig)):
-            raise TypeError('new_element must be BasicSampler, BasicTimer, BasicConfig. new_element {type(value)} = {value}')
+            raise TypeError(f'new_element must be BasicSampler, BasicTimer, BasicConfig. {type(new_element)} was given')
         self._elements.append(new_element)
 
     @property
@@ -44,13 +44,13 @@ class BasicThreadGroup(BasicElement, IncludesElements):
     def num_threads(self, value):
         if not isinstance(value, int):
             raise TypeError(
-                f'num_threads must be int. is_enable {type(value)} = {value}')
+                f'num_threads must be int. {type(value)} was given')
         elif value < -1:
             raise ValueError(
-                f'num_threads can not be less than -1. num_threads {type(value)} = {value}')
+                f'num_threads can not be less than -1. {type(value)}')
         elif value == 0:
             raise ValueError(
-                f'num_threads must be more than 0. num_threads {type(value)} = {value}')
+                f'num_threads must be more than 0. {type(value)}')
         else:
             self._num_threads = value
 
@@ -62,8 +62,7 @@ class BasicThreadGroup(BasicElement, IncludesElements):
     def ramp_time(self, value):
         if not isinstance(value, int):
             raise TypeError(
-                f'ramp_time must be int. ramp_time {type(value)} = {value}')
-        else:
+                f'ramp_time must be int. {type(value)} was given')
             self._ramp_time = value
 
     @property
