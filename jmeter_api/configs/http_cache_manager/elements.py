@@ -3,7 +3,10 @@ from jmeter_api.basics.utils import FileEncoding, Renderable
 from xml.etree.ElementTree import Element, ElementTree, tostring
 from typing import List, Optional
 
-class HTTPCacheManager(BasicSampler):
+
+class HTTPCacheManager(BasicSampler, Renderable):
+    root_element_name = 'CacheManager'
+
     def __init__(self,
                  clear_each_iteration: bool = False,
                  use_cache_control: bool = True,
@@ -54,10 +57,6 @@ class HTTPCacheManager(BasicSampler):
         else:
             self._max_elements_in_cache = str(value)
 
-
-class HTTPCacheManagerXML(HTTPCacheManager, Renderable):
-    root_element_name = 'CacheManager'
-    
     def render_element(self) -> str:
         element_root, xml_tree = super().render_element()
 

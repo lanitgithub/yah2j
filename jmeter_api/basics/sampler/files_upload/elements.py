@@ -1,7 +1,11 @@
 from jmeter_api.basics.utils import Renderable
 from xml.etree.ElementTree import tostring
 
+
 class FileUpload(Renderable):
+
+    TEMPLATE = 'file_upload_template.xml'
+
     def __init__(self,
                  file_path: str = '',
                  param_name: str = '',
@@ -41,7 +45,7 @@ class FileUpload(Renderable):
             raise TypeError(f'arg: mime_type should be str. {type(value).__name__} was given')
         self._mime_type = value
 
-    def render_element(self):
+    def to_xml(self):
 
         xml_tree = self.get_template()
 

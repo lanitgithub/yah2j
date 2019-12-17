@@ -5,6 +5,8 @@ from typing import Union
 
 class UserDefinedVariables(Renderable):
 
+    TEMPLATE = 'user_defined_variables.xml'
+
     def __init__(self,
                  name: str = '',
                  value: Union[str, int] = '',
@@ -68,7 +70,7 @@ class UserDefinedVariables(Renderable):
             raise TypeError(f'arg: use_equals should be bool. {type(value).__name__} was given')
         self._use_equals = value
 
-    def render_element(self):
+    def to_xml(self):
         xml_tree = self.get_template()
         flag = True
         for element in list(xml_tree):

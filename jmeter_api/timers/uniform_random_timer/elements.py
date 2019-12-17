@@ -5,7 +5,9 @@ from typing import Optional
 import xmltodict
 
 
-class UniformRandTimer(BasicTimer):
+class UniformRandTimer(BasicTimer, Renderable):
+    root_element_name = 'UniformRandomTimer'
+
     """
     Uniform random timer class.
     (Capslock means arguments)
@@ -21,8 +23,7 @@ class UniformRandTimer(BasicTimer):
                  comments: str = '',
                  offset_delay: int = 0,
                  rand_delay: float = 100,
-                 is_enabled: bool = True
-                 ):
+                 is_enabled: bool = True):
         super().__init__(name=name, comments=comments, is_enabled=is_enabled)
         self.rand_delay = rand_delay
         self.offset_delay = offset_delay
@@ -55,16 +56,12 @@ class UniformRandTimer(BasicTimer):
         return f'Uniform constant timer: {self.name}, offset: {self.offset_delay}, ' \
             f'random delay: {self.rand_delay}'
 
-
-class UniformRandTimerXML(UniformRandTimer, Renderable):
-    root_element_name = 'UniformRandomTimer'
-    
-    def render_element(self) -> str:
+    def to_xml(self) -> str:
         """
         Set all parameters in xml and convert it to the string.
         :return: xml in string format
         """
-        element_root, xml_tree = super().render_element()
+        element_root, xml_tree = super().to_xml()
 
         for element in list(element_root):
             try:

@@ -1,4 +1,4 @@
-from jmeter_api.timers.constant_throughput_timer.elements import ConstThroughputTimer, ConstThroughputTimerXML, BasedOn
+from jmeter_api.timers.constant_throughput_timer.elements import ConstThroughputTimer, BasedOn
 from jmeter_api.basics.utils import tag_wrapper
 import xmltodict
 import pytest
@@ -34,61 +34,60 @@ class TestConstThroughputTimer:
 
 class TestConstantThroughputTimerXML:
     def test_render_intProp(self):
-        element = ConstThroughputTimerXML(name='My tp timer',
-                                          targ_throughput=2,
-                                          based_on=BasedOn.THIS_THREAD_ONLY,
-                                          comments='My comments',
-                                          is_enabled=False)
-        rendered_doc = element.render_element()
+        element = ConstThroughputTimer(name='My tp timer',
+                                       targ_throughput=2,
+                                       based_on=BasedOn.THIS_THREAD_ONLY,
+                                       comments='My comments',
+                                       is_enabled=False)
+        rendered_doc = element.to_xml()
         parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc, 'test_results'))
         assert parsed_doc['test_results']['ConstantThroughputTimer']['intProp']['#text'] == '0'
 
     def test_render_testname(self):
-        element = ConstThroughputTimerXML(name='My tp timer',
-                                          targ_throughput=2,
-                                          based_on=BasedOn.THIS_THREAD_ONLY,
-                                          comments='My comments',
-                                          is_enabled=False)
-        rendered_doc = element.render_element()
+        element = ConstThroughputTimer(name='My tp timer',
+                                       targ_throughput=2,
+                                       based_on=BasedOn.THIS_THREAD_ONLY,
+                                       comments='My comments',
+                                       is_enabled=False)
+        rendered_doc = element.to_xml()
         parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc, 'test_results'))
         assert parsed_doc['test_results']['ConstantThroughputTimer']['@testname'] == 'My tp timer'
 
     def test_render_enabled(self):
-        element = ConstThroughputTimerXML(name='My tp timer',
-                                          targ_throughput=2,
-                                          based_on=BasedOn.THIS_THREAD_ONLY,
-                                          comments='My comments',
-                                          is_enabled=False)
-        rendered_doc = element.render_element()
+        element = ConstThroughputTimer(name='My tp timer',
+                                       targ_throughput=2,
+                                       based_on=BasedOn.THIS_THREAD_ONLY,
+                                       comments='My comments',
+                                       is_enabled=False)
+        rendered_doc = element.to_xml()
         parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc, 'test_results'))
         assert parsed_doc['test_results']['ConstantThroughputTimer']['@enabled'] == 'false'
 
     def test_render_value(self):
-        element = ConstThroughputTimerXML(name='My tp timer',
-                                          targ_throughput=2,
-                                          based_on=BasedOn.THIS_THREAD_ONLY,
-                                          comments='My comments',
-                                          is_enabled=False)
-        rendered_doc = element.render_element()
+        element = ConstThroughputTimer(name='My tp timer',
+                                       targ_throughput=2,
+                                       based_on=BasedOn.THIS_THREAD_ONLY,
+                                       comments='My comments',
+                                       is_enabled=False)
+        rendered_doc = element.to_xml()
         parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc, 'test_results'))
         assert parsed_doc['test_results']['ConstantThroughputTimer']['doubleProp']['value'] == '2'
 
     def test_render_value_stringProp(self):
-        element = ConstThroughputTimerXML(name='My tp timer',
-                                          targ_throughput=2,
-                                          based_on=BasedOn.THIS_THREAD_ONLY,
-                                          comments='My comments',
-                                          is_enabled=False)
-        rendered_doc = element.render_element()
+        element = ConstThroughputTimer(name='My tp timer',
+                                       targ_throughput=2,
+                                       based_on=BasedOn.THIS_THREAD_ONLY,
+                                       comments='My comments',
+                                       is_enabled=False)
+        rendered_doc = element.to_xml()
         parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc, 'test_results'))
         assert parsed_doc['test_results']['ConstantThroughputTimer']['stringProp']['#text'] == 'My comments'
 
     def test_render_hashtree_contain(self):
-        element = ConstThroughputTimerXML(name='My tp timer',
-                                          targ_throughput=2,
-                                          based_on=BasedOn.THIS_THREAD_ONLY,
-                                          comments='My comments',
-                                          is_enabled=False)
-        rendered_doc = element.render_element()
+        element = ConstThroughputTimer(name='My tp timer',
+                                       targ_throughput=2,
+                                       based_on=BasedOn.THIS_THREAD_ONLY,
+                                       comments='My comments',
+                                       is_enabled=False)
+        rendered_doc = element.to_xml()
         assert '<hashTree />' in rendered_doc
-

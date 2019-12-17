@@ -13,10 +13,11 @@ class BasedOn(Enum):
     ALL_ACTIVE_SHARED_THREADS_IN_CURRENT_THREAD = '4'
 
 
-class ConstThroughputTimer(BasicTimer):
+class ConstThroughputTimer(BasicTimer, Renderable):
     """
     Constant throughput timer class.
     """
+    root_element_name = 'ConstantThroughputTimer'
 
     def __init__(self,
                  name: str = 'Constant Throughput Timer',
@@ -54,17 +55,13 @@ class ConstThroughputTimer(BasicTimer):
     def __repr__(self):
         return f'Constant throughput timer: {self._name}, throughput: {self.targ_throughput}'
 
-
-class ConstThroughputTimerXML(ConstThroughputTimer, Renderable):
-    root_element_name = 'ConstantThroughputTimer'
-    
-    def render_element(self) -> str:
+    def to_xml(self) -> str:
         """
         Set all parameters in xml and convert it to the string.
         :return: xml in string format
         """
         # default name and stuff setup
-        element_root, xml_tree = super().render_element()
+        element_root, xml_tree = super().to_xml()
 
         string_prop = element_root.find('stringProp')
         string_prop.text = self.comments

@@ -7,21 +7,20 @@ import inspect
 import xml
 import os
 
-
 class Renderable(ABC):
     root_element_name = 'BasicElement'
 
     def get_template(self) -> Element:
         element_path = os.path.dirname(inspect.getfile(self.__class__))
-        template_path = os.path.join(element_path, 'template.xml')
+        template_path = os.path.join(element_path, self.TEMPLATE)
         with open(template_path) as file:
             file_data = file.read()
-            wrapped_template = tag_wrapper(file_data, 'template.xml')
+            wrapped_template = tag_wrapper(file_data, 'uniform_rand_timer_template.xml')
             template_as_element_tree = fromstring(wrapped_template)
             return template_as_element_tree
 
     @abstractmethod
-    def render_element(self) -> Element:
+    def to_xml(self) -> Element:
         logging.debug(f'{type(self).__name__} | Render started')
         xml_tree: Optional[Element] = self.get_template()
         element_root = xml_tree.find(self.root_element_name)
@@ -43,14 +42,16 @@ class IncludesElements(ABC):
         self._elements: List[Renderable] = []
 
     def append(self, new_element: Renderable):
+        if not isinstance(new_element, Renderable):
+            raise TypeError(f'You can only add Renderable objects.')
         self._elements.append(new_element)
 
-    def render_inner_elements(self) -> str:
+    def _render_inner_elements(self) -> str:
         logging.debug(
             f'{type(self).__name__} | Render inner elements started')
         xml_data = ''
         for element in self._elements:
-            xml_data += element.render_element()
+            xml_data += element.to_xml()
         return xml_data
 
     def __len__(self):

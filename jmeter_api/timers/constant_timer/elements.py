@@ -4,7 +4,7 @@ from jmeter_api.basics.utils import Renderable
 from typing import Optional
 
 
-class ConstantTimer(BasicTimer):
+class ConstantTimer(BasicTimer, Renderable):
     """
     Constant timer class.
 
@@ -17,6 +17,7 @@ class ConstantTimer(BasicTimer):
     delay (int): set time delay in milliseconds, default is 300 ms
     is_enabled (bool): if set to False disable element in jmeter, default is True
     """
+    root_element_name = 'ConstantTimer'
 
     def __init__(self,
                  name: str = 'Constant Timer',
@@ -41,16 +42,12 @@ class ConstantTimer(BasicTimer):
     def __repr__(self):
         return f'Constant timer: {self.name}, delay: {self.delay}'
 
-
-class ConstantTimerXML(ConstantTimer, Renderable):
-    root_element_name = 'ConstantTimer'
-    
-    def render_element(self) -> str:
+    def to_xml(self) -> str:
         """
         Set all parameters in xml and convert it to the string.
         :return: xml in string format
         """
-        element_root, xml_tree = super().render_element()
+        element_root, xml_tree = super().to_xml()
         for element in list(element_root):
             try:
                 if element.attrib['name'] == 'TestPlan.comments':
