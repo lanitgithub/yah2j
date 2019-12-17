@@ -589,7 +589,3 @@ class HttpRequest(BasicSampler, IncludesElements, Renderable):
         for element in list(xml_tree):
             xml_data += tostring(element).decode('utf-8')
         return unescape(xml_data).replace('><', '>\n<')
-
-s = HttpRequest(is_enabled=False, comments='my comm')
-s.add_file_upload(FileUpload())
-print(s.render_element())
