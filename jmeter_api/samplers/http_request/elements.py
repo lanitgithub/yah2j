@@ -51,7 +51,10 @@ class Implement(Enum):
     NONE = ''
 
 
-class HttpRequest(BasicSampler, IncludesElements):
+class HttpRequest(BasicSampler, IncludesElements, Renderable):
+
+    root_element_name = 'HTTPSamplerProxy'
+
     def __init__(self,
                  name: str = 'HTTP Request',
                  host: str = '',
@@ -402,14 +405,11 @@ class HttpRequest(BasicSampler, IncludesElements):
         self._text = value
 
 
-class HttpRequestXML(HttpRequest, Renderable):
-    root_element_name = 'HTTPSamplerProxy'
 
     def add_user_variable(self, *args) -> None:
         for element in args:
             if not isinstance(element, UserDefinedVariables):
-                raise TypeError(
-                    f'You can add only UserDefinedVariables objects.')
+                raise TypeError(f'You can add only UserDefinedVariables objects.')
             self._user_defined_variables.append(element)
 
     def add_file_upload(self, *args):
@@ -442,13 +442,10 @@ class HttpRequestXML(HttpRequest, Renderable):
         Set all parameters in xml and convert it to the string.
         :return: xml in string format
         """
-
         # default name and stuff setup
         element_root, xml_tree = super().render_element()
         for element in list(element_root):
             try:
-                # if element.attrib['name'] == 'TestPlan.comments':
-                #     element.text = self.comments
                 if element.attrib['name'] == 'HTTPSampler.domain':
                     element.text = self.host
                 elif element.attrib['name'] == 'HTTPSampler.path':
@@ -570,6 +567,9 @@ class HttpRequestXML(HttpRequest, Renderable):
 
             except KeyError:
                 logging.error('Unable to set xml parameters')
+
+        #render inner elements
+
         # render upload files
         if self.get_len_upload_files():
             content_root = xml_tree[0]
@@ -584,7 +584,8 @@ class HttpRequestXML(HttpRequest, Renderable):
             content_root.text = body_data.render_element()
         for element in list(xml_tree):
             xml_data += tostring(element).decode('utf-8')
-        return unescape(xml_data)
+        return unescape(xml_data).replace('><', '>\n<')
 
-s = HttpRequestXML(is_enabled=False)
+s = HttpRequest(is_enabled=False, comments='my comm')
+s.add_file_upload(FileUpload())
 print(s.render_element())
