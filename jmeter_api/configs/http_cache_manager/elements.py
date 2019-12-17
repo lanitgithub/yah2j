@@ -1,11 +1,13 @@
 from jmeter_api.basics.sampler.elements import BasicSampler
-from jmeter_api.basics.utils import FileEncoding, Renderable
-from xml.etree.ElementTree import Element, ElementTree, tostring
-from typing import List, Optional
+from jmeter_api.basics.utils import Renderable
+from xml.etree.ElementTree import tostring
+
 
 
 class HTTPCacheManager(BasicSampler, Renderable):
+
     root_element_name = 'CacheManager'
+    TEMPLATE = 'http_cache_manager.xml'
 
     def __init__(self,
                  clear_each_iteration: bool = False,
@@ -57,8 +59,8 @@ class HTTPCacheManager(BasicSampler, Renderable):
         else:
             self._max_elements_in_cache = str(value)
 
-    def render_element(self) -> str:
-        element_root, xml_tree = super().render_element()
+    def to_xml(self) -> str:
+        element_root, xml_tree = super().to_xml()
 
         for element in list(element_root):
             try:

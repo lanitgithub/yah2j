@@ -1,5 +1,5 @@
-from jmeter_api.configs.http_cache_manager.elements import HTTPCacheManager
-from jmeter_api.basics.utils import FileEncoding, tag_wrapper
+from jmeter_api.configs.elements import HTTPCacheManager
+from jmeter_api.basics.utils import tag_wrapper
 import xmltodict
 import pytest
 
@@ -51,7 +51,7 @@ class TestHTTPCacheManager:
             element = HTTPCacheManager(clear_each_iteration=False,
                                        use_cache_control=True,
                                        max_elements_in_cache=100)
-            rendered_doc = tag_wrapper(element.render_element(), 'result')
+            rendered_doc = tag_wrapper(element.to_xml(), 'result')
             parsed_doc = xmltodict.parse(rendered_doc)
             assert parsed_doc['result']['CacheManager']['boolProp'][0]['#text'] == 'false'
 
@@ -59,7 +59,7 @@ class TestHTTPCacheManager:
             element = HTTPCacheManager(clear_each_iteration=False,
                                        use_cache_control=True,
                                        max_elements_in_cache=100)
-            rendered_doc = tag_wrapper(element.render_element(), 'result')
+            rendered_doc = tag_wrapper(element.to_xml(), 'result')
             parsed_doc = xmltodict.parse(rendered_doc)
             assert parsed_doc['result']['CacheManager']['boolProp'][1]['#text'] == 'true'
 
@@ -67,6 +67,6 @@ class TestHTTPCacheManager:
             element = HTTPCacheManager(clear_each_iteration=False,
                                        use_cache_control=True,
                                        max_elements_in_cache=100)
-            rendered_doc = tag_wrapper(element.render_element(), 'result')
+            rendered_doc = tag_wrapper(element.to_xml(), 'result')
             parsed_doc = xmltodict.parse(rendered_doc)
             assert parsed_doc['result']['CacheManager']['intProp']['#text'] == '100'
