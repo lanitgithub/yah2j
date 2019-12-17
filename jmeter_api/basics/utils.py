@@ -22,7 +22,7 @@ class Renderable(ABC):
 
     @abstractmethod
     def render_element(self) -> Element:
-        logging.debug(f'{type(self).__name__} | Render started...')
+        logging.debug(f'{type(self).__name__} | Render started')
         xml_tree: Optional[Element] = self.get_template()
         element_root = xml_tree.find(self.root_element_name)
         element_root.set('enabled', str(self.is_enabled).lower())
@@ -38,9 +38,8 @@ class Renderable(ABC):
         return element_root, xml_tree
 
 
-class IncludesElements:
+class IncludesElements(ABC):
     def __init__(self):
-        super().__init__()
         self._elements: List[Renderable] = []
 
     def append(self, new_element: Renderable):
@@ -48,7 +47,7 @@ class IncludesElements:
 
     def render_inner_elements(self) -> str:
         logging.debug(
-            f'{type(self).__name__} | Render inner elements started...')
+            f'{type(self).__name__} | Render inner elements started')
         xml_data = ''
         for element in self._elements:
             xml_data += element.render_element()

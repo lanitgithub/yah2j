@@ -52,6 +52,7 @@ class Implement(Enum):
 
 
 class HttpRequest(BasicSampler, IncludesElements, Renderable):
+
     root_element_name = 'HTTPSamplerProxy'
 
     def __init__(self,
@@ -85,12 +86,12 @@ class HttpRequest(BasicSampler, IncludesElements, Renderable):
                  is_enabled: bool = True
                  ):
         """
-
         :type source_type: object
         """
         IncludesElements.__init__(self)
-        BasicSampler.__init__(
-            self, name=name, comments=comments, is_enabled=is_enabled)
+
+        BasicSampler.__init__(self, name=name, comments=comments, is_enabled=is_enabled)
+
         self.host = host
         self.path = path
         self.method = method
@@ -118,6 +119,7 @@ class HttpRequest(BasicSampler, IncludesElements, Renderable):
         self.variables = ''
         self.text = ''
         self._upload_file_list: List[FileUpload] = []
+        self._user_defined_variables: List[UserDefinedVariables] = []
 
     @property
     def host(self):
@@ -404,13 +406,23 @@ class HttpRequest(BasicSampler, IncludesElements, Renderable):
                 f'arg: text should be str. {type(value).__name__} was given')
         self._text = value
 
+
+
+
+    def add_user_variable(self, *args) -> None:
+        for element in args:
+            if not isinstance(element, UserDefinedVariables):
+                raise TypeError(f'You can add only UserDefinedVariables objects.')
+            self._user_defined_variables.append(element)
+
+
     def add_file_upload(self, *args):
         for file_up in args:
             if not isinstance(file_up, FileUpload):
                 raise TypeError(f'You can add only FileUpload objects.')
             self._upload_file_list.append(file_up)
 
-    def render_upload(self):
+    def _render_upload(self):
         xml_tree = self.get_template()
         elem_prop = SubElement(xml_tree, 'elementProp')
         elem_prop.set('name', 'HTTPsampler.Files')
@@ -438,8 +450,6 @@ class HttpRequest(BasicSampler, IncludesElements, Renderable):
         element_root, xml_tree = super().render_element()
         for element in list(element_root):
             try:
-                # if element.attrib['name'] == 'TestPlan.comments':
-                #     element.text = self.comments
                 if element.attrib['name'] == 'HTTPSampler.domain':
                     element.text = self.host
                 elif element.attrib['name'] == 'HTTPSampler.path':
@@ -561,10 +571,13 @@ class HttpRequest(BasicSampler, IncludesElements, Renderable):
 
             except KeyError:
                 logging.error('Unable to set xml parameters')
+
+        #render inner elements
+
         # render upload files
         if self.get_len_upload_files():
             content_root = xml_tree[0]
-            content_root.text = self.render_upload()
+            content_root.text = self._render_upload()
         xml_data = ''
         if not self.text:
             content_root = xml_tree[0][0][0]  # to get collectionProp tag
@@ -575,4 +588,8 @@ class HttpRequest(BasicSampler, IncludesElements, Renderable):
             content_root.text = body_data.render_element()
         for element in list(xml_tree):
             xml_data += tostring(element).decode('utf-8')
-        return unescape(xml_data)
+        return unescape(xml_data).replace('><', '>\n<')
+
+s = HttpRequest(is_enabled=False, comments='my comm')
+s.add_file_upload(FileUpload())
+print(s.render_element())
