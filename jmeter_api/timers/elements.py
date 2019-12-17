@@ -37,8 +37,7 @@ class ConstThroughputTimer(BasicTimer, Renderable):
     @targ_throughput.setter
     def targ_throughput(self, value: Union[float, int]):
         if not isinstance(value, float) and not isinstance(value, int) or value < 0:
-            raise TypeError(
-                f'arg: targ_throughput should be positive int or float. {type(value).__name__} was given')
+            raise TypeError(f'arg: targ_throughput should be positive int or float. {type(value).__name__} was given')
         self._targ_throughput = value
 
     @property
@@ -62,10 +61,7 @@ class ConstThroughputTimer(BasicTimer, Renderable):
         :return: xml in string format
         """
         # default name and stuff setup
-        element_root, xml_tree = super().to_xml()
-
-        string_prop = element_root.find('stringProp')
-        string_prop.text = self.comments
+        element_root, xml_tree = super()._add_basics()
 
         int_prop = element_root.find('intProp')
         int_prop.text = self.based_on.value
@@ -78,8 +74,6 @@ class ConstThroughputTimer(BasicTimer, Renderable):
         for element in list(xml_tree):
             xml_data += tostring(element).decode('utf8')
         return xml_data
-
-
 
 
 class ConstantTimer(BasicTimer, Renderable):
@@ -126,7 +120,7 @@ class ConstantTimer(BasicTimer, Renderable):
         Set all parameters in xml and convert it to the string.
         :return: xml in string format
         """
-        element_root, xml_tree = super().to_xml()
+        element_root, xml_tree = super()._add_basics()
         for element in list(element_root):
             try:
                 if element.attrib['name'] == 'TestPlan.comments':
@@ -198,7 +192,7 @@ class UniformRandTimer(BasicTimer, Renderable):
         Set all parameters in xml and convert it to the string.
         :return: xml in string format
         """
-        element_root, xml_tree = super().to_xml()
+        element_root, xml_tree = super()._add_basics()
 
         for element in list(element_root):
             try:

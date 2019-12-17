@@ -9,8 +9,10 @@ from enum import Enum
 import os
 
 
-class CommonThreadGroup(BasicThreadGroup, IncludesElements):
+class CommonThreadGroup(BasicThreadGroup, IncludesElements, Renderable):
+
     root_element_name = 'ThreadGroup'
+    TEMPLATE = 'common_thread_group_template.xml'
 
     def __init__(self,
                  continue_forever: bool,
@@ -91,7 +93,7 @@ class CommonThreadGroup(BasicThreadGroup, IncludesElements):
         self._loops = value
 
     def to_xml(self) -> str:
-        element_root, xml_tree = super().to_xml()
+        element_root, xml_tree = super()._add_basics()
 
         for element in list(element_root):
             try:

@@ -135,7 +135,7 @@ class TestCsvDataSetConfig:
             assert csvdata.share_mode == ShareMode.ALL
 
 
-class TestCsvDataSetConfigXML:
+class TestCsvDataSetConfig:
     def test_render_delimiter(self):
         element = CsvDataSetConfig(file_path='main.py',
                                    variable_names=['var1', 'var2'],

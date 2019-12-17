@@ -1,4 +1,4 @@
-from jmeter_api.timers.constant_timer.elements import ConstantTimer
+from jmeter_api.timers.elements import ConstantTimer
 from jmeter_api.basics.utils import tag_wrapper
 import xmltodict
 import pytest
@@ -7,19 +7,19 @@ import pytest
 class TestConstantTimer:
     def test_args_type_check(self):
         # name type check
-        with pytest.raises(TypeError, match=r".*arg: name must be str. name*"):
+        with pytest.raises(TypeError):
             ConstantTimer(name=123)
         # comments type check
-        with pytest.raises(TypeError, match=r".*arg: comments must be str. comments*"):
+        with pytest.raises(TypeError):
             ConstantTimer(comments=123)
         # is_enabled type check
-        with pytest.raises(TypeError, match=r".*arg: is_enabled must be bool. is_enabled*"):
+        with pytest.raises(TypeError):
             ConstantTimer(is_enabled="True")
         # delay type check (negative number input)
-        with pytest.raises(TypeError, match=r".*arg: delay should be positive int*"):
+        with pytest.raises(TypeError):
             ConstantTimer(delay=-1)
         # delay type check (wrong data type input)
-        with pytest.raises(TypeError, match=r".*arg: delay should be positive int*"):
+        with pytest.raises(TypeError):
             ConstantTimer(delay='123')
 
 

@@ -25,6 +25,7 @@ class ConstThroughputTimer(BasicTimer, Renderable):
                  based_on: BasedOn = BasedOn.THIS_THREAD_ONLY,
                  comments='',
                  is_enabled: bool = True):
+
         super().__init__(name=name, comments=comments, is_enabled=is_enabled)
         self.targ_throughput = targ_throughput
         self.based_on = based_on

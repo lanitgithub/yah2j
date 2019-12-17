@@ -1,4 +1,4 @@
-from jmeter_api.timers.uniform_random_timer.elements import UniformRandTimer
+from jmeter_api.timers.elements import UniformRandTimer
 from jmeter_api.basics.utils import tag_wrapper
 import xmltodict
 import pytest
@@ -7,29 +7,25 @@ import pytest
 class TestUniformRandTimer:
     def test_args_type_check(self):
         # name type check
-        with pytest.raises(TypeError, match=r".*arg: name must be str. name*"):
+        with pytest.raises(TypeError):
             UniformRandTimer(name=123)
         # comments type check
-        with pytest.raises(TypeError, match=r".*arg: comments must be str. comments*"):
+        with pytest.raises(TypeError):
             UniformRandTimer(comments=123)
         # is_enabled type check
-        with pytest.raises(TypeError, match=r".*arg: is_enabled must be bool. is_enable*"):
+        with pytest.raises(TypeError, ):
             UniformRandTimer(is_enabled="True")
         # offset_delay type check (negative number input)
-        with pytest.raises(TypeError, match=r".*Failed to create uniform random timer due to wrong type "
-                                            r"of OFFSET_DELAY argument.*"):
+        with pytest.raises(TypeError):
             UniformRandTimer(offset_delay=-1)
         # offset_delay type check (wrong data type input)
-        with pytest.raises(TypeError, match=r".*Failed to create uniform random timer due to wrong type "
-                                            r"of OFFSET_DELAY argument.*"):
+        with pytest.raises(TypeError):
             UniformRandTimer(offset_delay='123')
         # rand_delay type check (negative number input)
-        with pytest.raises(TypeError, match=r".*Failed to create uniform random timer due to wrong type "
-                                            r"of RAND_DELAY argument.*"):
+        with pytest.raises(TypeError):
             UniformRandTimer(rand_delay=-1)
         # rand_delay type check (wrong data type input)
-        with pytest.raises(TypeError, match=r".*Failed to create uniform random timer due to wrong type "
-                           r"of RAND_DELAY argument.*"):
+        with pytest.raises(TypeError):
             UniformRandTimer(rand_delay='123')
 
 

@@ -1,4 +1,4 @@
-from jmeter_api.timers.constant_throughput_timer.elements import ConstThroughputTimer, BasedOn
+from jmeter_api.timers.elements import ConstThroughputTimer, BasedOn
 from jmeter_api.basics.utils import tag_wrapper
 import xmltodict
 import pytest
@@ -8,15 +8,15 @@ import logging
 class TestConstThroughputTimer:
     def test_args_type_check(self):
         # name type check
-        with pytest.raises(TypeError, match=r".*arg: name must be str. name*"):
+        with pytest.raises(TypeError):
             ConstThroughputTimer(name=123)
 
         # comments type check
-        with pytest.raises(TypeError, match=r".*arg: comments must be str. comments*"):
+        with pytest.raises(TypeError):
             ConstThroughputTimer(comments=123)
 
         # is_enabled type check
-        with pytest.raises(TypeError, match=r".*arg: is_enabled must be bool. is_enabled*"):
+        with pytest.raises(TypeError):
             ConstThroughputTimer(is_enabled="True")
 
         # targ_throughput type check (negative number input)

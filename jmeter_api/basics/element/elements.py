@@ -1,10 +1,10 @@
 from xml.etree.ElementTree import Element, tostring
 from jmeter_api.basics.utils import Renderable
 from settings import logging
-from abc import ABC, abstractmethod
+from abc import ABC
 
 
-class BasicElement(Renderable, ABC):
+class BasicElement(ABC):
 
     root_element_name = 'Arguments'
     TEMPLATE = 'basic_element_template.xml'
@@ -22,8 +22,7 @@ class BasicElement(Renderable, ABC):
     @name.setter
     def name(self, value) -> None:
         if not isinstance(value, str):
-            raise TypeError(
-                f'arg: name must be str. {type(value).__name__} was given.')
+            raise TypeError(f'arg: name must be str. {type(value).__name__} was given.')
         self._name = value
 
     @property
@@ -48,9 +47,9 @@ class BasicElement(Renderable, ABC):
                 f'arg: is_enabled must be bool. {type(value).__name__} was given.')
         self._is_enabled = value
 
-    def to_xml(self) -> str:
-        return super().to_xml()
-        # element_root, xml_tree = super().to_xml()
-        # string_prop: Element = element_root.find('stringProp')
-        # string_prop.text = self.comments
-        # return tostring(element_root).decode('utf8')
+    # def to_xml(self):
+    #     xml_data = ''
+    #     element_root, xml_tree = super()._add_basics()
+    #     for element in list(xml_tree):
+    #         xml_data += tostring(element).decode('utf-8')
+    #     return xml_data.replace('><', '>\n<')

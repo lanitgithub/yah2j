@@ -1,5 +1,5 @@
 from jmeter_api.basics.config.elements import BasicConfig
-from jmeter_api.basics.sampler.elements import BasicSampler
+from jmeter_api.basics.utils import Renderable
 from jmeter_api.basics.utils import FileEncoding
 from xml.etree.ElementTree import tostring
 import logging
@@ -14,7 +14,7 @@ class ShareMode(Enum):
     THREAD = 'shareMode.thread'
 
 
-class CsvDataSetConfig(BasicConfig):
+class CsvDataSetConfig(BasicConfig, Renderable):
 
     root_element_name = 'CSVDataSet'
     TEMPLATE = 'csv_data_set_config_template.xml'
@@ -142,12 +142,10 @@ class CsvDataSetConfig(BasicConfig):
             self._share_mode = value
 
     def to_xml(self) -> str:
-        element_root, xml_tree = super().to_xml()
+        element_root, xml_tree = super()._add_basics()
 
         for element in list(element_root):
             try:
-                # if element.attrib['name'] == 'TestPlan.comments':
-                #     element.text = self.comments
                 if element.attrib['name'] == 'delimiter':
                     element.text = self.delimiter
                 elif element.attrib['name'] == 'fileEncoding':
@@ -174,7 +172,7 @@ class CsvDataSetConfig(BasicConfig):
         return xml_data
 
 
-class HTTPCacheManager(BasicConfig):
+class HTTPCacheManager(BasicConfig, Renderable):
 
     root_element_name = 'CacheManager'
     TEMPLATE = 'http_cache_manager.xml'
@@ -225,7 +223,7 @@ class HTTPCacheManager(BasicConfig):
         self._max_elements_in_cache = value
 
     def to_xml(self) -> str:
-        element_root, xml_tree = super().to_xml()
+        element_root, xml_tree = super()._add_basics()
 
         for element in list(element_root):
             try:

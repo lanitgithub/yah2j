@@ -1,7 +1,7 @@
 from jmeter_api.timers.elements import ConstantTimer, ConstThroughputTimer, UniformRandTimer
 from jmeter_api.basics.sampler.elements import BasicSampler
 from jmeter_api.basics.sampler.elements import FileUpload, UserDefinedVariables
-from jmeter_api.basics.utils import IncludesElements
+from jmeter_api.basics.utils import IncludesElements, Renderable
 
 from xml.etree.ElementTree import tostring, SubElement
 from xml.sax.saxutils import unescape
@@ -51,7 +51,7 @@ class Implement(Enum):
     NONE = ''
 
 
-class HttpRequest(BasicSampler, IncludesElements):
+class HttpRequest(BasicSampler, IncludesElements, Renderable):
 
     root_element_name = 'HTTPSamplerProxy'
     TEMPLATE = 'http_request_template.xml'
@@ -449,7 +449,7 @@ class HttpRequest(BasicSampler, IncludesElements):
         :return: xml in string format
         """
         # default name and stuff setup
-        element_root = super()._add_basics()
+        element_root, xml_tree = super()._add_basics()
         for element in list(element_root):
             try:
                 if element.attrib['name'] == 'HTTPSampler.domain':
@@ -575,18 +575,19 @@ class HttpRequest(BasicSampler, IncludesElements):
                 logging.error('Unable to set xml parameters')
 
         xml_data = ''
+
         #render inner renderable elements
-        if len(self):
-            if len(self) == 1:
-                content_root = element_root.find('hashTree')
-                content_root.text = self._render_inner_elements().replace('<hashTree />', '')
-            else:
-                content_root = element_root.find('hashTree')
-                content_root.text = self._render_inner_elements()
+
+        if len(self) == 1:
+            content_root = xml_tree.find('hashTree')
+            content_root.text = self._render_inner_elements().replace('<hashTree />', '')
+        elif len(self) > 1:
+            content_root = xml_tree.find('hashTree')
+            content_root.text = self._render_inner_elements()
 
         # render upload files
         if self.get_len_upload_files():
-            content_root = xml_tree[0] #todo in case of error change to elementtree
+            content_root = xml_tree[0]
             content_root.text = self._render_upload()
 
         if not self.text:
@@ -601,52 +602,5 @@ class HttpRequest(BasicSampler, IncludesElements):
         return unescape(xml_data).replace('><', '>\n<')
 
 
-s = HttpRequest(host='www.google.com',
-                   comments='123',
-                   method=Method.POST,
-                   path='/search',
-                   protocol=Protocol.FTP,
-                   port=443,
-                   content_encoding='utf-8',
-                   keep_alive=False,
-                   do_multipart_post=True,
-                   browser_comp_headers=True,
-                   implementation=Implement.JAVA,
-                   connect_timeout=123,
-                   response_timeout=321,
-                   retrieve_all_emb_resources=True,
-                   parallel_downloads=True,
-                   parallel_downloads_no=3,
-                   url_must_match='test match',
-                   source_type=Source.HOSTNAME,
-                   source_address='test hostname',
-                   proxy_scheme='My scheme',
-                   proxy_host='Proxy host',
-                   proxy_port=445,
-                   proxy_username='User',
-                   proxy_password='Pass',
-                   )
-
-l_vars = [
-    UserDefinedVariables(name='name', value=124, url_encode=True, content_type='css'),
-UserDefinedVariables(name='name2', value=125, url_encode=True, content_type='css'),
-]
-s.add_user_variable(*l_vars)
-
-uploads = [
-    FileUpload(file_path='test1', param_name='parameter1', mime_type='Mime1'),
-    FileUpload(file_path='test2', param_name='parameter2', mime_type='Mime1'),
-]
-
-s.add_file_upload(*uploads)
-s.add_body_data('TEST')
-s.append(UniformRandTimer())
-s.append(ConstThroughputTimer())
-s.append(ConstantTimer())
-
-with open('c:\\xml\\http_req.jmx') as file:
-    data = file.readlines()
-    data[27] = s.to_xml()
-
-with open('c:\\xml\\http_req_py.jmx', 'w') as file:
-    file.writelines(data)
+h =HttpRequest()
+print(h.__doc__)

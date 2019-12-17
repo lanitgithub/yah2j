@@ -5,7 +5,6 @@ from settings import logging
 from enum import Enum
 from typing import List, Optional
 import inspect
-import xml
 import os
 
 
@@ -19,26 +18,29 @@ class Renderable(ABC):
         with open(template_path) as file:
              file_data = file.read()
              wrapped_template = tag_wrapper(file_data, self.root_element_name)
-        # print(template_path)
-        #template_path = template_path.replace('/', '\\')
         template_as_element_tree = fromstring(wrapped_template)
         return template_as_element_tree
 
-    def _add_basics(self) -> Element:
-        logging.debug(f'{type(self).__name__} | Render started')
-        xml_tree: Optional[ElementTree] = self.get_template()
+    @abstractmethod
+    def to_xml(self):
+        pass
+
+    def _add_basics(self) -> (Element, Element):
+        logging.info(f'{type(self).__name__} | Render started')
+        xml_tree: Optional[Element] = self.get_template()
         element_root = xml_tree.find(self.root_element_name)
         element_root.set('enabled', str(self.is_enabled).lower())
         element_root.set('testname', self.name)
         element_root.set('element_type', str(type(self).__name__))
-        for element in list(element_root):
+        elem_list = element_root.findall('stringProp')
+        for element in elem_list:
             try:
                 if element.attrib['name'] == 'TestPlan.comments':
                     element.text = self.comments
                     break
             except Exception:
                 logging.error('Unable to add comment')
-        return xml_tree
+        return element_root, xml_tree
 
 
 class IncludesElements(ABC):
@@ -51,8 +53,7 @@ class IncludesElements(ABC):
         self._elements.append(new_element)
 
     def _render_inner_elements(self) -> str:
-        logging.debug(
-            f'{type(self).__name__} | Render inner elements started')
+        logging.info(f'{type(self).__name__} | Render inner elements started')
         xml_data = ''
         for element in self._elements:
             xml_data += element.to_xml()

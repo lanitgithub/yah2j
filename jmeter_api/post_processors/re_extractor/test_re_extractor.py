@@ -7,59 +7,59 @@ import pytest
 class TestArgsTypeCheck:
     # name type check
     def test_name_type_check(self):
-        with pytest.raises(TypeError, match=r".*arg: name must be str. name*"):
+        with pytest.raises(TypeError):
             RegExpPost(name=123)
     # comments type check
 
     def test_comments_type_check(self):
-        with pytest.raises(TypeError, match=r".*arg: comments must be str. comments*"):
+        with pytest.raises(TypeError):
             RegExpPost(comments=123)
     # is_enabled type check
 
     def test_is_enabled_type_check(self):
-        with pytest.raises(TypeError, match=r".*arg: is_enabled must be bool. is_enable*"):
+        with pytest.raises(TypeError):
             RegExpPost(is_enabled="True")
     # scope type check (wrong data type input)
 
     def test_scope_type_check(self):
-        with pytest.raises(TypeError, match=r".*arg: scope should be str or Scope*"):
+        with pytest.raises(TypeError):
             RegExpPost(scope=123)
     # field_to_check type check (wrong data type input)
 
     def test_field_to_check_type_check(self):
-        with pytest.raises(TypeError, match=r".*arg: field_to_check should be Field*"):
+        with pytest.raises(TypeError):
             RegExpPost(field_to_check=123)
             RegExpPost(field_to_check='123')
     # var_name type check (wrong data type input)
 
     def test_var_name_type_check(self):
-        with pytest.raises(TypeError, match=r".*arg: var_name should be str*"):
+        with pytest.raises(TypeError):
             RegExpPost(var_name=-1)
     # regexp type and compile check (wrong data type input)
 
     def test_regexp_type_check(self):
-        with pytest.raises(TypeError, match=r".*arg: regexp should be str*"):
+        with pytest.raises(TypeError):
             RegExpPost(regexp=123)
-        with pytest.raises(ValueError, match=r'.*Invalid regular expression.*'):
+        with pytest.raises(ValueError):
             RegExpPost(regexp='[')
     # uniform_rand_timer_template.xml type and value check
 
     def test_template_type_check(self):
-        with pytest.raises(TypeError, match=r'.*arg: uniform_rand_timer_template.xml should be int or None.*'):
+        with pytest.raises(TypeError):
             RegExpPost(template='2')
-        with pytest.raises(ValueError, match=r'.*arg: uniform_rand_timer_template.xml should be greater or equal than 1*'):
+        with pytest.raises(ValueError):
             RegExpPost(template=0)
     # match_no type and value check
 
     def test_match_no_type_check(self):
-        with pytest.raises(TypeError, match=r'.*arg: match_no should be int.*'):
+        with pytest.raises(TypeError):
             RegExpPost(match_no='2')
-        with pytest.raises(ValueError, match=r'.*arg: match_no should be greater than 0*'):
+        with pytest.raises(ValueError):
             RegExpPost(match_no=-1)
     # default_val type check
 
     def test_default_val_type_check(self):
-        with pytest.raises(TypeError, match=r'.*arg: default_val should be str*'):
+        with pytest.raises(TypeError):
             RegExpPost(default_val=-1)
 
 

@@ -1,4 +1,4 @@
-from jmeter_api.configs.csv_data_set_config.elements import CsvDataSetConfig, ShareMode
+from jmeter_api.configs.elements import CsvDataSetConfig, ShareMode
 from jmeter_api.configs.elements import HTTPCacheManager, FileEncoding
 
 from jmeter_api.timers.constant_throughput_timer.elements import ConstThroughputTimer, BasedOn
