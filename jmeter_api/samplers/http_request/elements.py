@@ -56,9 +56,9 @@ class HttpRequest(BasicSampler, IncludesElements, Renderable):
     root_element_name = 'HTTPSamplerProxy'
 
     def __init__(self,
+                 host: str,
+                 path: str = '/',
                  name: str = 'HTTP Request',
-                 host: str = '',
-                 path: str = '',
                  method: Method = Method.GET,
                  protocol: Protocol = Protocol.HTTP,
                  port: Union[int, None] = None,
@@ -89,7 +89,9 @@ class HttpRequest(BasicSampler, IncludesElements, Renderable):
         :type source_type: object
         """
         IncludesElements.__init__(self)
+
         BasicSampler.__init__(self, name=name, comments=comments, is_enabled=is_enabled)
+
         self.host = host
         self.path = path
         self.method = method
@@ -406,11 +408,13 @@ class HttpRequest(BasicSampler, IncludesElements, Renderable):
 
 
 
+
     def add_user_variable(self, *args) -> None:
         for element in args:
             if not isinstance(element, UserDefinedVariables):
                 raise TypeError(f'You can add only UserDefinedVariables objects.')
             self._user_defined_variables.append(element)
+
 
     def add_file_upload(self, *args):
         for file_up in args:

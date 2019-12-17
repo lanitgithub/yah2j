@@ -13,7 +13,9 @@ class ShareMode(Enum):
     THREAD = 'shareMode.thread'
 
 
-class CsvDataSetConfig(BasicConfig):
+class CsvDataSetConfig(BasicConfig, Renderable):
+    root_element_name = 'CSVDataSet'
+
     def __init__(self,
                  file_path,
                  variable_names: List[str],
@@ -152,10 +154,6 @@ class CsvDataSetConfig(BasicConfig):
         else:
             self._share_mode = value
 
-
-class CsvDataSetConfigXML(CsvDataSetConfig, Renderable):
-    root_element_name = 'CSVDataSet'
-    
     def render_element(self) -> str:
         element_root, xml_tree = super().render_element()
 
