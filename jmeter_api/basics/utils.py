@@ -1,4 +1,5 @@
 from xml.etree.ElementTree import Element, ElementTree, tostring, fromstring
+from xml.etree.ElementTree import parse
 from abc import ABC, abstractmethod
 from settings import logging
 from enum import Enum
@@ -7,22 +8,25 @@ import inspect
 import xml
 import os
 
+
 class Renderable(ABC):
+
     root_element_name = 'BasicElement'
 
     def get_template(self) -> Element:
         element_path = os.path.dirname(inspect.getfile(self.__class__))
         template_path = os.path.join(element_path, self.TEMPLATE)
         with open(template_path) as file:
-            file_data = file.read()
-            wrapped_template = tag_wrapper(file_data, 'uniform_rand_timer_template.xml')
-            template_as_element_tree = fromstring(wrapped_template)
-            return template_as_element_tree
+             file_data = file.read()
+             wrapped_template = tag_wrapper(file_data, self.root_element_name)
+        # print(template_path)
+        #template_path = template_path.replace('/', '\\')
+        template_as_element_tree = fromstring(wrapped_template)
+        return template_as_element_tree
 
-    @abstractmethod
-    def to_xml(self) -> Element:
+    def _add_basics(self) -> Element:
         logging.debug(f'{type(self).__name__} | Render started')
-        xml_tree: Optional[Element] = self.get_template()
+        xml_tree: Optional[ElementTree] = self.get_template()
         element_root = xml_tree.find(self.root_element_name)
         element_root.set('enabled', str(self.is_enabled).lower())
         element_root.set('testname', self.name)
@@ -34,7 +38,7 @@ class Renderable(ABC):
                     break
             except Exception:
                 logging.error('Unable to add comment')
-        return element_root, xml_tree
+        return xml_tree
 
 
 class IncludesElements(ABC):

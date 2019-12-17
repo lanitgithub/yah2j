@@ -1,10 +1,8 @@
 from jmeter_api.basics.sampler.elements import BasicSampler
-from jmeter_api.basics.utils import Renderable
 from xml.etree.ElementTree import tostring
 
 
-
-class HTTPCacheManager(BasicSampler, Renderable):
+class HTTPCacheManager(BasicSampler):
 
     root_element_name = 'CacheManager'
     TEMPLATE = 'http_cache_manager.xml'

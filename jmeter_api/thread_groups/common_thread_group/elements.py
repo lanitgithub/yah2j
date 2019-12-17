@@ -9,7 +9,7 @@ from enum import Enum
 import os
 
 
-class CommonThreadGroup(BasicThreadGroup, IncludesElements, Renderable):
+class CommonThreadGroup(BasicThreadGroup, IncludesElements):
     root_element_name = 'ThreadGroup'
 
     def __init__(self,

@@ -1,6 +1,5 @@
 from jmeter_api.timers.elements import ConstantTimer, ConstThroughputTimer, UniformRandTimer
 from jmeter_api.basics.sampler.elements import BasicSampler
-from jmeter_api.basics.element.elements import Renderable
 from jmeter_api.basics.sampler.elements import FileUpload, UserDefinedVariables
 from jmeter_api.basics.utils import IncludesElements
 
@@ -52,7 +51,7 @@ class Implement(Enum):
     NONE = ''
 
 
-class HttpRequest(BasicSampler, IncludesElements, Renderable):
+class HttpRequest(BasicSampler, IncludesElements):
 
     root_element_name = 'HTTPSamplerProxy'
     TEMPLATE = 'http_request_template.xml'
@@ -450,7 +449,7 @@ class HttpRequest(BasicSampler, IncludesElements, Renderable):
         :return: xml in string format
         """
         # default name and stuff setup
-        element_root, xml_tree = super().to_xml()
+        element_root = super()._add_basics()
         for element in list(element_root):
             try:
                 if element.attrib['name'] == 'HTTPSampler.domain':
@@ -579,19 +578,19 @@ class HttpRequest(BasicSampler, IncludesElements, Renderable):
         #render inner renderable elements
         if len(self):
             if len(self) == 1:
-                content_root = xml_tree.find('hashTree')
+                content_root = element_root.find('hashTree')
                 content_root.text = self._render_inner_elements().replace('<hashTree />', '')
             else:
-                content_root = xml_tree.find('hashTree')
+                content_root = element_root.find('hashTree')
                 content_root.text = self._render_inner_elements()
 
         # render upload files
         if self.get_len_upload_files():
-            content_root = xml_tree[0]
+            content_root = xml_tree[0] #todo in case of error change to elementtree
             content_root.text = self._render_upload()
 
         if not self.text:
-            content_root = xml_tree[0][0][0]  # to get collectionProp tag
+            content_root = xml_tree[0][0][0]  # to get collectionProp tag#todo in case of error change to elementtree
             content_root.text = self._render_user_variables() # todo recurcive render for user defined variables
         else:
             content_root = xml_tree[0][0][0]

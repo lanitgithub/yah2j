@@ -1,9 +1,10 @@
 from xml.etree.ElementTree import Element, tostring
 from jmeter_api.basics.utils import Renderable
 from settings import logging
+from abc import ABC, abstractmethod
 
 
-class BasicElement(Renderable):
+class BasicElement(Renderable, ABC):
 
     root_element_name = 'Arguments'
     TEMPLATE = 'basic_element_template.xml'
@@ -48,7 +49,8 @@ class BasicElement(Renderable):
         self._is_enabled = value
 
     def to_xml(self) -> str:
-        element_root, xml_tree = super().get_template()
-        string_prop: Element = element_root.find('stringProp')
-        string_prop.text = self.comments
-        return tostring(element_root).decode('utf8')
+        return super().to_xml()
+        # element_root, xml_tree = super().to_xml()
+        # string_prop: Element = element_root.find('stringProp')
+        # string_prop.text = self.comments
+        # return tostring(element_root).decode('utf8')

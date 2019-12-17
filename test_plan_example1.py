@@ -16,4 +16,4 @@ if __name__ == "__main__":
     second_thread_group.append(ConstThroughputTimer(targ_throughput=10))
     test_plan.append(second_thread_group)
     
-    open('test_plan_example1.jmx', 'w').write(test_plan.render_element())
+    open('test_plan_example1.jmx', 'w').write(test_plan.to_xml())

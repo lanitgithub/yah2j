@@ -1,7 +1,8 @@
 from jmeter_api.basics.config.elements import BasicConfig
 from jmeter_api.basics.sampler.elements import BasicSampler
-from jmeter_api.basics.utils import FileEncoding, Renderable
+from jmeter_api.basics.utils import FileEncoding
 from xml.etree.ElementTree import tostring
+import logging
 from typing import List
 from enum import Enum
 import os
@@ -13,13 +14,13 @@ class ShareMode(Enum):
     THREAD = 'shareMode.thread'
 
 
-class CsvDataSetConfig(BasicConfig, Renderable):
+class CsvDataSetConfig(BasicConfig):
 
     root_element_name = 'CSVDataSet'
     TEMPLATE = 'csv_data_set_config_template.xml'
 
     def __init__(self,
-                 file_path,
+                 file_path: str,
                  variable_names: List[str],
                  file_encoding: FileEncoding = FileEncoding.UTF8,
                  ignore_first_line: bool = False,
@@ -43,15 +44,14 @@ class CsvDataSetConfig(BasicConfig, Renderable):
         super().__init__(name=name, comments=comments, is_enabled=is_enabled)
 
     @property
-    def file_path(self):
+    def file_path(self) -> str:
         return self._file_path
 
     @file_path.setter
     def file_path(self, value):
-        if os.path.isfile(value):
-            self._file_path = value
-        else:
+        if not os.path.isfile(value):
             raise FileNotFoundError(f'{value} is not file')
+        self._file_path = value
 
     @property
     def variable_names(self) -> List[str]:
@@ -60,17 +60,11 @@ class CsvDataSetConfig(BasicConfig, Renderable):
     @variable_names.setter
     def variable_names(self, value):
         if not isinstance(value, list):
-            raise TypeError(
-                f'variable_names must be List[str]. variable_names {type(value)} = {value}')
-        else:
-            for element in value:
-                if not isinstance(element, str):
-                    raise TypeError(
-                        f'All elements must be str. element: {type(element)} = {element}')
-                elif element.isdigit():
-                    raise TypeError(
-                        f'elements must contain chars: {type(element)} = {element}')
-            self._variable_names = self.delimiter.join(value)
+            raise TypeError(f'variable_names should be List[str]. {type(value).__name__} was given')
+        for element in value:
+            if not isinstance(element, str):
+                raise TypeError(f'All elements must be str. {type(element).__name__} was given')
+        self._variable_names = value
 
     @property
     def file_encoding(self) -> FileEncoding:
@@ -91,10 +85,8 @@ class CsvDataSetConfig(BasicConfig, Renderable):
     @ignore_first_line.setter
     def ignore_first_line(self, value):
         if not isinstance(value, bool):
-            raise TypeError(
-                f'ignore_first_line must be bool. ignore_first_line {type(value)} = {value}')
-        else:
-            self._ignore_first_line = str(value).lower()
+            raise TypeError(f'ignore_first_line must be bool. {type(value).__name__} was given')
+        self._ignore_first_line = value
 
     @property
     def delimiter(self) -> str:
@@ -103,10 +95,8 @@ class CsvDataSetConfig(BasicConfig, Renderable):
     @delimiter.setter
     def delimiter(self, value):
         if not isinstance(value, str):
-            raise TypeError(
-                f'delimiter must be str. delimiter {type(value)} = {value}')
-        else:
-            self._delimiter = value
+            raise TypeError(f'delimiter should be str. {type(value).__name__} was given')
+        self._delimiter = value
 
     @property
     def quoted_data(self) -> bool:
@@ -115,10 +105,8 @@ class CsvDataSetConfig(BasicConfig, Renderable):
     @quoted_data.setter
     def quoted_data(self, value):
         if not isinstance(value, bool):
-            raise TypeError(
-                f'quoted_data must be bool. quoted_data {type(value)} = {value}')
-        else:
-            self._quoted_data = str(value).lower()
+            raise TypeError(f'quoted_data must be bool. {type(value).__name__} was given')
+        self._quoted_data = value
 
     @property
     def recycle(self) -> bool:
@@ -128,9 +116,8 @@ class CsvDataSetConfig(BasicConfig, Renderable):
     def recycle(self, value):
         if not isinstance(value, bool):
             raise TypeError(
-                f'recycle must be bool. recycle {type(value)} = {value}')
-        else:
-            self._recycle = str(value).lower()
+                f'recycle should be bool. {type(value).__name__} was given')
+        self._recycle = value
 
     @property
     def stop_thread(self) -> bool:
@@ -139,10 +126,8 @@ class CsvDataSetConfig(BasicConfig, Renderable):
     @stop_thread.setter
     def stop_thread(self, value):
         if not isinstance(value, bool):
-            raise TypeError(
-                f'stop_thread must be bool. stop_thread {type(value)} = {value}')
-        else:
-            self._stop_thread = str(value).lower()
+            raise TypeError(f'stop_thread must be bool. {type(value).__name__} was given')
+        self._stop_thread = value
 
     @property
     def share_mode(self) -> ShareMode:
@@ -161,35 +146,35 @@ class CsvDataSetConfig(BasicConfig, Renderable):
 
         for element in list(element_root):
             try:
-                if element.attrib['name'] == 'TestPlan.comments':
-                    element.text = self.comments
-                elif element.attrib['name'] == 'delimiter':
+                # if element.attrib['name'] == 'TestPlan.comments':
+                #     element.text = self.comments
+                if element.attrib['name'] == 'delimiter':
                     element.text = self.delimiter
                 elif element.attrib['name'] == 'fileEncoding':
                     element.text = self.file_encoding.value
                 elif element.attrib['name'] == 'filename':
                     element.text = self.file_path
                 elif element.attrib['name'] == 'ignoreFirstLine':
-                    element.text = self.ignore_first_line
+                    element.text = str(self.ignore_first_line).lower()
                 elif element.attrib['name'] == 'quotedData':
-                    element.text = self.quoted_data
+                    element.text = str(self.quoted_data).lower()
                 elif element.attrib['name'] == 'recycle':
-                    element.text = self.recycle
+                    element.text = str(self.recycle).lower()
                 elif element.attrib['name'] == 'shareMode':
                     element.text = self.share_mode.value
                 elif element.attrib['name'] == 'stopThread':
-                    element.text = self.stop_thread
+                    element.text = str(self.stop_thread).lower()
                 elif element.attrib['name'] == 'variableNames':
-                    element.text = self.variable_names
+                    element.text = self.delimiter.join(self.variable_names)
             except KeyError:
-                continue
+                logging.error(f'Unable to properly convert {self.__class__} to xml.')
         xml_data = ''
         for element in list(xml_tree):
             xml_data += tostring(element).decode('utf8')
         return xml_data
 
 
-class HTTPCacheManager(BasicSampler, Renderable):
+class HTTPCacheManager(BasicConfig):
 
     root_element_name = 'CacheManager'
     TEMPLATE = 'http_cache_manager.xml'
@@ -213,11 +198,9 @@ class HTTPCacheManager(BasicSampler, Renderable):
     @clear_each_iteration.setter
     def clear_each_iteration(self, value):
         if not isinstance(value, bool):
-            raise TypeError(
-                f'clear_each_iteration must be bool. \
-                    clear_each_iteration {type(value)} = {value}')
-        else:
-            self._clear_each_iteration = str(value).lower()
+            raise TypeError(f'clear_each_iteration should be bool. '
+                            f'{type(value).__name__} was given')
+        self._clear_each_iteration = value
 
     @property
     def use_cache_control(self) -> bool:
@@ -226,10 +209,8 @@ class HTTPCacheManager(BasicSampler, Renderable):
     @use_cache_control.setter
     def use_cache_control(self, value):
         if not isinstance(value, bool):
-            raise TypeError(
-                f'use_cache_control must be bool. use_cache_control {type(value)} = {value}')
-        else:
-            self._use_cache_control = str(value).lower()
+            raise TypeError(f'use_cache_control should be bool. {type(value).__name__} was given')
+        self._use_cache_control = value
 
     @property
     def max_elements_in_cache(self) -> int:
@@ -239,10 +220,9 @@ class HTTPCacheManager(BasicSampler, Renderable):
     def max_elements_in_cache(self, value):
         if not isinstance(value, int):
             raise TypeError(
-                f'max_elements_in_cache must be int. \
-                max_elements_in_cache {type(value)} = {value}')
-        else:
-            self._max_elements_in_cache = str(value)
+                f'max_elements_in_cache should be int.'
+                f' {type(value).__name__} was given')
+        self._max_elements_in_cache = value
 
     def to_xml(self) -> str:
         element_root, xml_tree = super().to_xml()
@@ -250,13 +230,13 @@ class HTTPCacheManager(BasicSampler, Renderable):
         for element in list(element_root):
             try:
                 if element.attrib['name'] == 'clearEachIteration':
-                    element.text = self.clear_each_iteration
+                    element.text = str(self.clear_each_iteration).lower()
                 elif element.attrib['name'] == 'useExpires':
-                    element.text = self.use_cache_control
+                    element.text = str(self.use_cache_control).lower()
                 elif element.attrib['name'] == 'maxSize':
-                    element.text = self.max_elements_in_cache
+                    element.text = str(self.max_elements_in_cache)
             except KeyError:
-                continue
+                logging.error(f'Unable to properly convert {self.__class__} to xml.')
 
         xml_data = ''
         for element in list(xml_tree):
