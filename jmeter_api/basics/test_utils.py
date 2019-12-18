@@ -13,7 +13,7 @@ class TestUtils:
         assert parsed_data['test_wrapper']['a'] == 'testdata'
 
     def test_includes_elements_get_size(self):
-        thread_group = CommonThreadGroup(True)
+        thread_group = CommonThreadGroup(continue_forever=True)
         elements_list = [HTTPCacheManager(), 
                          HTTPCacheManager(),
                          HTTPCacheManager()]
@@ -22,7 +22,7 @@ class TestUtils:
         assert len(thread_group) == 3
 
     def test_includes_elements_test_render(self):
-        thread_group = CommonThreadGroup(True)
+        thread_group = CommonThreadGroup(continue_forever=True)
         elements_list = [HTTPCacheManager(), 
                          HTTPCacheManager(),
                          HTTPCacheManager()]
@@ -32,7 +32,7 @@ class TestUtils:
         assert len(re.findall('element_type', xml_data)) == 3
 
     def test_check_forbidden_symbols(self):
-        thread_group = CommonThreadGroup(True)
+        thread_group = CommonThreadGroup(continue_forever=True)
         elements_list = [HTTPCacheManager(), 
                          HTTPCacheManager(),
                          HTTPCacheManager()]
