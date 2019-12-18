@@ -1,5 +1,6 @@
 from jmeter_api.basics.post_processor.elements import BasicPostProcessor
 from jmeter_api.basics.element.elements import Renderable
+from jmeter_api.basics.utils import tree_to_str
 from xml.etree.ElementTree import Element, SubElement, tostring
 from enum import Enum
 from typing import Union, Optional
@@ -186,7 +187,4 @@ class RegExpPost(BasicPostProcessor, Renderable):
                     flag = False
             except KeyError:
                 logging.error(f'Unable to render XML')
-        xml_data = ''
-        for element in list(xml_tree):
-            xml_data += tostring(element).decode('utf8')
-        return xml_data.replace('><', '>\n<')  # replace for better readability
+        return tree_to_str(xml_tree)

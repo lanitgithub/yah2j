@@ -1,6 +1,5 @@
 from jmeter_api.basics.config.elements import BasicConfig
-from jmeter_api.basics.utils import Renderable
-from jmeter_api.basics.utils import FileEncoding
+from jmeter_api.basics.utils import Renderable, FileEncoding, tree_to_str
 from xml.etree.ElementTree import tostring
 import logging
 from typing import List
@@ -74,7 +73,7 @@ class CsvDataSetConfig(BasicConfig, Renderable):
     def file_encoding(self, value):
         if not isinstance(value, FileEncoding):
             raise TypeError(
-                f'file_encoding must be FileEncoding. file_encoding {type(value)} = {value}')
+                f'file_encoding must be FileEncoding. {type(value).__name__} was given')
         else:
             self._fileEncoding = value
 
@@ -137,7 +136,7 @@ class CsvDataSetConfig(BasicConfig, Renderable):
     def share_mode(self, value):
         if not isinstance(value, ShareMode):
             raise TypeError(
-                f'share_mode must be ShareMode. share_mode {type(value)} = {value}')
+                f'share_mode must be ShareMode. {type(value).__name__} was given')
         else:
             self._share_mode = value
 
@@ -166,10 +165,7 @@ class CsvDataSetConfig(BasicConfig, Renderable):
                     element.text = self.delimiter.join(self.variable_names)
             except KeyError:
                 logging.error(f'Unable to properly convert {self.__class__} to xml.')
-        xml_data = ''
-        for element in list(xml_tree):
-            xml_data += tostring(element).decode('utf8')
-        return xml_data
+        return tree_to_str(xml_tree)
 
 
 class HTTPCacheManager(BasicConfig, Renderable):
@@ -235,8 +231,4 @@ class HTTPCacheManager(BasicConfig, Renderable):
                     element.text = str(self.max_elements_in_cache)
             except KeyError:
                 logging.error(f'Unable to properly convert {self.__class__} to xml.')
-
-        xml_data = ''
-        for element in list(xml_tree):
-            xml_data += tostring(element).decode('utf8')
-        return xml_data
+        return tree_to_str(xml_tree)

@@ -1,5 +1,5 @@
 from jmeter_api.basics.thread_group.elements import BasicThreadGroup, ThreadGroupAction
-from jmeter_api.basics.utils import Renderable, IncludesElements
+from jmeter_api.basics.utils import Renderable, IncludesElements, tree_to_str
 from xml.etree.ElementTree import Element, ElementTree, tostring
 from xml.sax.saxutils import unescape
 from typing import List, Optional
@@ -123,7 +123,4 @@ class CommonThreadGroup(BasicThreadGroup, IncludesElements, Renderable):
 
         content_root = xml_tree.find('hashTree')
         content_root.text = self._render_inner_elements()
-        xml_data = ''
-        for element in list(xml_tree):
-            xml_data += tostring(element).decode('utf-8')
-        return unescape(xml_data)
+        return tree_to_str(xml_tree)

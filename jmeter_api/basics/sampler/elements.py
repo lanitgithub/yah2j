@@ -1,5 +1,5 @@
 from jmeter_api.basics.element.elements import BasicElement
-from jmeter_api.basics.utils import Renderable
+from jmeter_api.basics.utils import Renderable, tree_to_str
 from xml.etree.ElementTree import tostring, SubElement
 from typing import Union
 from abc import ABC
@@ -71,11 +71,7 @@ class FileUpload(Renderable):
                 elif el.attrib['name'] == 'File.mimetype':
                     el.text = self.mime_type
 
-        xml_data = ''
-
-        for element in list(xml_tree):
-            xml_data += tostring(element).decode('utf-8')
-        return xml_data.replace('><', '>\n<')
+        return tree_to_str(xml_tree)
 
 
 class UserDefinedVariables(Renderable):
@@ -165,8 +161,4 @@ class UserDefinedVariables(Renderable):
                     e.set('name', 'HTTPArgument.content_type')
                     e.text = self.content_type
                     flag = False
-
-        xml_data = ''
-        for element in list(xml_tree):
-            xml_data += tostring(element).decode('utf-8')
-        return xml_data.replace('><', '>\n<')
+        return tree_to_str(xml_tree)

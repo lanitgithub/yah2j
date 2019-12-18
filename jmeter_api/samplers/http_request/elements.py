@@ -1,7 +1,6 @@
-from jmeter_api.timers.elements import ConstantTimer, ConstThroughputTimer, UniformRandTimer
 from jmeter_api.basics.sampler.elements import BasicSampler
 from jmeter_api.basics.sampler.elements import FileUpload, UserDefinedVariables
-from jmeter_api.basics.utils import IncludesElements, Renderable
+from jmeter_api.basics.utils import IncludesElements, Renderable, tree_to_str
 
 from xml.etree.ElementTree import tostring, SubElement
 from xml.sax.saxutils import unescape
@@ -574,8 +573,6 @@ class HttpRequest(BasicSampler, IncludesElements, Renderable):
             except KeyError:
                 logging.error('Unable to set xml parameters')
 
-        xml_data = ''
-
         #render inner renderable elements
 
         if len(self) == 1:
@@ -591,16 +588,10 @@ class HttpRequest(BasicSampler, IncludesElements, Renderable):
             content_root.text = self._render_upload()
 
         if not self.text:
-            content_root = xml_tree[0][0][0]  # to get collectionProp tag#todo in case of error change to elementtree
-            content_root.text = self._render_user_variables() # todo recurcive render for user defined variables
+            content_root = xml_tree[0][0][0]  # to get collectionProp tag
+            content_root.text = self._render_user_variables()
         else:
             content_root = xml_tree[0][0][0]
             body_data = UserDefinedVariables(value=self.text)
             content_root.text = body_data.to_xml()
-        for element in list(xml_tree):
-            xml_data += tostring(element).decode('utf-8')
-        return unescape(xml_data).replace('><', '>\n<')
-
-
-h =HttpRequest()
-print(h.__doc__)
+        return tree_to_str(xml_tree)
