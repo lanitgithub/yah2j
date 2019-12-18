@@ -9,9 +9,9 @@ import os
 
 
 class Renderable(ABC):
-
     root_element_name = 'BasicElement'
-
+    TEMPLATE = 'default_template.xml'
+    
     def get_template(self) -> Element:
         element_path = os.path.dirname(inspect.getfile(self.__class__))
         template_path = os.path.join(element_path, 'templates', self.TEMPLATE)
