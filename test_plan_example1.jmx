@@ -45,7 +45,8 @@
     <stringProp name="HTTPSampler.connect_timeout" />
     <stringProp name="HTTPSampler.response_timeout" />
     <stringProp name="TestPlan.comments" />
-<stringProp name="HTTPSampler.proxyPort" /></HTTPSamplerProxy>
+<stringProp name="HTTPSampler.proxyPort" />
+</HTTPSamplerProxy>
 <hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request">
     <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
         <collectionProp name="Arguments.arguments" />
@@ -64,7 +65,8 @@
     <stringProp name="HTTPSampler.connect_timeout" />
     <stringProp name="HTTPSampler.response_timeout" />
     <stringProp name="TestPlan.comments" />
-<stringProp name="HTTPSampler.proxyPort" /></HTTPSamplerProxy>
+<stringProp name="HTTPSampler.proxyPort" />
+</HTTPSamplerProxy>
 <hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request">
     <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
         <collectionProp name="Arguments.arguments" />
@@ -83,7 +85,8 @@
     <stringProp name="HTTPSampler.connect_timeout" />
     <stringProp name="HTTPSampler.response_timeout" />
     <stringProp name="TestPlan.comments" />
-<stringProp name="HTTPSampler.proxyPort" /></HTTPSamplerProxy>
+<stringProp name="HTTPSampler.proxyPort" />
+</HTTPSamplerProxy>
 <hashTree /><ConstantTimer element_type="ConstantTimer" enabled="true" guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer">
     <stringProp name="TestPlan.comments" />
     <stringProp name="ConstantTimer.delay">1000</stringProp>
@@ -119,7 +122,8 @@
     <stringProp name="HTTPSampler.connect_timeout" />
     <stringProp name="HTTPSampler.response_timeout" />
     <stringProp name="TestPlan.comments" />
-<stringProp name="HTTPSampler.proxyPort" /></HTTPSamplerProxy>
+<stringProp name="HTTPSampler.proxyPort" />
+</HTTPSamplerProxy>
 <hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler1">
     <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
         <collectionProp name="Arguments.arguments" />
@@ -138,7 +142,8 @@
     <stringProp name="HTTPSampler.connect_timeout" />
     <stringProp name="HTTPSampler.response_timeout" />
     <stringProp name="TestPlan.comments" />
-<stringProp name="HTTPSampler.proxyPort" /></HTTPSamplerProxy>
+<stringProp name="HTTPSampler.proxyPort" />
+</HTTPSamplerProxy>
 <hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler2">
     <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
         <collectionProp name="Arguments.arguments" />
@@ -157,7 +162,8 @@
     <stringProp name="HTTPSampler.connect_timeout" />
     <stringProp name="HTTPSampler.response_timeout" />
     <stringProp name="TestPlan.comments" />
-<stringProp name="HTTPSampler.proxyPort" /></HTTPSamplerProxy>
+<stringProp name="HTTPSampler.proxyPort" />
+</HTTPSamplerProxy>
 <hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler3">
     <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
         <collectionProp name="Arguments.arguments" />
@@ -176,7 +182,8 @@
     <stringProp name="HTTPSampler.connect_timeout" />
     <stringProp name="HTTPSampler.response_timeout" />
     <stringProp name="TestPlan.comments" />
-<stringProp name="HTTPSampler.proxyPort" /></HTTPSamplerProxy>
+<stringProp name="HTTPSampler.proxyPort" />
+</HTTPSamplerProxy>
 <hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler4">
     <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
         <collectionProp name="Arguments.arguments" />
@@ -195,7 +202,8 @@
     <stringProp name="HTTPSampler.connect_timeout" />
     <stringProp name="HTTPSampler.response_timeout" />
     <stringProp name="TestPlan.comments" />
-<stringProp name="HTTPSampler.proxyPort" /></HTTPSamplerProxy>
+<stringProp name="HTTPSampler.proxyPort" />
+</HTTPSamplerProxy>
 <hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler5">
     <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
         <collectionProp name="Arguments.arguments" />
@@ -214,7 +222,8 @@
     <stringProp name="HTTPSampler.connect_timeout" />
     <stringProp name="HTTPSampler.response_timeout" />
     <stringProp name="TestPlan.comments" />
-<stringProp name="HTTPSampler.proxyPort" /></HTTPSamplerProxy>
+<stringProp name="HTTPSampler.proxyPort" />
+</HTTPSamplerProxy>
 <hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler6">
     <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
         <collectionProp name="Arguments.arguments" />
@@ -233,7 +242,8 @@
     <stringProp name="HTTPSampler.connect_timeout" />
     <stringProp name="HTTPSampler.response_timeout" />
     <stringProp name="TestPlan.comments" />
-<stringProp name="HTTPSampler.proxyPort" /></HTTPSamplerProxy>
+<stringProp name="HTTPSampler.proxyPort" />
+</HTTPSamplerProxy>
 <hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler7">
     <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
         <collectionProp name="Arguments.arguments" />
@@ -252,7 +262,8 @@
     <stringProp name="HTTPSampler.connect_timeout" />
     <stringProp name="HTTPSampler.response_timeout" />
     <stringProp name="TestPlan.comments" />
-<stringProp name="HTTPSampler.proxyPort" /></HTTPSamplerProxy>
+<stringProp name="HTTPSampler.proxyPort" />
+</HTTPSamplerProxy>
 <hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler8">
     <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
         <collectionProp name="Arguments.arguments" />
@@ -271,7 +282,8 @@
     <stringProp name="HTTPSampler.connect_timeout" />
     <stringProp name="HTTPSampler.response_timeout" />
     <stringProp name="TestPlan.comments" />
-<stringProp name="HTTPSampler.proxyPort" /></HTTPSamplerProxy>
+<stringProp name="HTTPSampler.proxyPort" />
+</HTTPSamplerProxy>
 <hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler9">
     <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
         <collectionProp name="Arguments.arguments" />
@@ -290,7 +302,8 @@
     <stringProp name="HTTPSampler.connect_timeout" />
     <stringProp name="HTTPSampler.response_timeout" />
     <stringProp name="TestPlan.comments" />
-<stringProp name="HTTPSampler.proxyPort" /></HTTPSamplerProxy>
+<stringProp name="HTTPSampler.proxyPort" />
+</HTTPSamplerProxy>
 <hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler10">
     <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
         <collectionProp name="Arguments.arguments" />
@@ -309,7 +322,8 @@
     <stringProp name="HTTPSampler.connect_timeout" />
     <stringProp name="HTTPSampler.response_timeout" />
     <stringProp name="TestPlan.comments" />
-<stringProp name="HTTPSampler.proxyPort" /></HTTPSamplerProxy>
+<stringProp name="HTTPSampler.proxyPort" />
+</HTTPSamplerProxy>
 <hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler11">
     <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
         <collectionProp name="Arguments.arguments" />
@@ -328,7 +342,8 @@
     <stringProp name="HTTPSampler.connect_timeout" />
     <stringProp name="HTTPSampler.response_timeout" />
     <stringProp name="TestPlan.comments" />
-<stringProp name="HTTPSampler.proxyPort" /></HTTPSamplerProxy>
+<stringProp name="HTTPSampler.proxyPort" />
+</HTTPSamplerProxy>
 <hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler12">
     <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
         <collectionProp name="Arguments.arguments" />
@@ -347,7 +362,8 @@
     <stringProp name="HTTPSampler.connect_timeout" />
     <stringProp name="HTTPSampler.response_timeout" />
     <stringProp name="TestPlan.comments" />
-<stringProp name="HTTPSampler.proxyPort" /></HTTPSamplerProxy>
+<stringProp name="HTTPSampler.proxyPort" />
+</HTTPSamplerProxy>
 <hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler13">
     <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
         <collectionProp name="Arguments.arguments" />
@@ -366,7 +382,8 @@
     <stringProp name="HTTPSampler.connect_timeout" />
     <stringProp name="HTTPSampler.response_timeout" />
     <stringProp name="TestPlan.comments" />
-<stringProp name="HTTPSampler.proxyPort" /></HTTPSamplerProxy>
+<stringProp name="HTTPSampler.proxyPort" />
+</HTTPSamplerProxy>
 <hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler14">
     <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
         <collectionProp name="Arguments.arguments" />
@@ -385,7 +402,8 @@
     <stringProp name="HTTPSampler.connect_timeout" />
     <stringProp name="HTTPSampler.response_timeout" />
     <stringProp name="TestPlan.comments" />
-<stringProp name="HTTPSampler.proxyPort" /></HTTPSamplerProxy>
+<stringProp name="HTTPSampler.proxyPort" />
+</HTTPSamplerProxy>
 <hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler15">
     <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
         <collectionProp name="Arguments.arguments" />
@@ -404,7 +422,8 @@
     <stringProp name="HTTPSampler.connect_timeout" />
     <stringProp name="HTTPSampler.response_timeout" />
     <stringProp name="TestPlan.comments" />
-<stringProp name="HTTPSampler.proxyPort" /></HTTPSamplerProxy>
+<stringProp name="HTTPSampler.proxyPort" />
+</HTTPSamplerProxy>
 <hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler16">
     <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
         <collectionProp name="Arguments.arguments" />
@@ -423,7 +442,8 @@
     <stringProp name="HTTPSampler.connect_timeout" />
     <stringProp name="HTTPSampler.response_timeout" />
     <stringProp name="TestPlan.comments" />
-<stringProp name="HTTPSampler.proxyPort" /></HTTPSamplerProxy>
+<stringProp name="HTTPSampler.proxyPort" />
+</HTTPSamplerProxy>
 <hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler17">
     <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
         <collectionProp name="Arguments.arguments" />
@@ -442,7 +462,8 @@
     <stringProp name="HTTPSampler.connect_timeout" />
     <stringProp name="HTTPSampler.response_timeout" />
     <stringProp name="TestPlan.comments" />
-<stringProp name="HTTPSampler.proxyPort" /></HTTPSamplerProxy>
+<stringProp name="HTTPSampler.proxyPort" />
+</HTTPSamplerProxy>
 <hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler18">
     <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
         <collectionProp name="Arguments.arguments" />
@@ -461,7 +482,8 @@
     <stringProp name="HTTPSampler.connect_timeout" />
     <stringProp name="HTTPSampler.response_timeout" />
     <stringProp name="TestPlan.comments" />
-<stringProp name="HTTPSampler.proxyPort" /></HTTPSamplerProxy>
+<stringProp name="HTTPSampler.proxyPort" />
+</HTTPSamplerProxy>
 <hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler19">
     <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
         <collectionProp name="Arguments.arguments" />
@@ -480,7 +502,8 @@
     <stringProp name="HTTPSampler.connect_timeout" />
     <stringProp name="HTTPSampler.response_timeout" />
     <stringProp name="TestPlan.comments" />
-<stringProp name="HTTPSampler.proxyPort" /></HTTPSamplerProxy>
+<stringProp name="HTTPSampler.proxyPort" />
+</HTTPSamplerProxy>
 <hashTree /><ConstantThroughputTimer element_type="ConstThroughputTimer" enabled="true" guiclass="TestBeanGUI" testclass="ConstantThroughputTimer" testname="Constant Throughput Timer">
   <intProp name="calcMode">0</intProp>
   <doubleProp>

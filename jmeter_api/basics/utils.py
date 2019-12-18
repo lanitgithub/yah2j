@@ -14,7 +14,7 @@ class Renderable(ABC):
 
     def get_template(self) -> Element:
         element_path = os.path.dirname(inspect.getfile(self.__class__))
-        template_path = os.path.join(element_path, self.TEMPLATE)
+        template_path = os.path.join(element_path, 'templates', self.TEMPLATE)
         with open(template_path) as file:
              file_data = file.read()
              wrapped_template = tag_wrapper(file_data, self.root_element_name)

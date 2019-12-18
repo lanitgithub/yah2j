@@ -1,6 +1,4 @@
 from jmeter_api.basics.element.elements import BasicElement
-from jmeter_api.basics.utils import tag_wrapper
-import xmltodict
 import pytest
 
 
