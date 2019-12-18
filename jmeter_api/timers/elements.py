@@ -1,6 +1,6 @@
 from xml.etree.ElementTree import Element, ElementTree, tostring
 from jmeter_api.basics.timer.elements import BasicTimer
-from jmeter_api.basics.utils import Renderable
+from jmeter_api.basics.utils import Renderable, tree_to_str
 from typing import Optional, Union
 from enum import Enum
 
@@ -70,10 +70,7 @@ class ConstThroughputTimer(BasicTimer, Renderable):
         double_prop_value = double_prop.find('value')
         double_prop_value.text = str(self.targ_throughput)
 
-        xml_data = ''
-        for element in list(xml_tree):
-            xml_data += tostring(element).decode('utf8')
-        return xml_data
+        return tree_to_str(xml_tree)
 
 
 class ConstantTimer(BasicTimer, Renderable):
@@ -129,10 +126,7 @@ class ConstantTimer(BasicTimer, Renderable):
                     element.text = str(self.delay)
             except KeyError:
                 continue
-        xml_data = ''
-        for element in list(xml_tree):
-            xml_data += tostring(element).decode('utf8')
-        return xml_data
+        return tree_to_str(xml_tree)
 
 
 class UniformRandTimer(BasicTimer, Renderable):
@@ -204,7 +198,4 @@ class UniformRandTimer(BasicTimer, Renderable):
                     element.text = str(self.offset_delay)
             except KeyError:
                 continue
-        xml_data = ''
-        for element in list(xml_tree):
-            xml_data += tostring(element).decode('utf8')
-        return xml_data
+        return tree_to_str(xml_tree)

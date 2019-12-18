@@ -1,5 +1,5 @@
 from xml.etree.ElementTree import Element, ElementTree, tostring, fromstring
-from xml.etree.ElementTree import parse
+from xml.sax.saxutils import unescape
 from abc import ABC, abstractmethod
 from settings import logging
 from enum import Enum
@@ -87,3 +87,9 @@ def test_plan_wrapper(xml_data_text: str) -> str:
     header = '<?xml version="1.0" encoding="UTF-8"?><jmeterTestPlan version="1.2" properties="5.0" jmeter="5.1.1 r1855137"><hashTree>'
     footer = '</hashTree></jmeterTestPlan>'
     return f'{header}{xml_data_text}{footer}'
+
+def tree_to_str(xml_tree: Element):
+    xml_data = ''
+    for element in list(xml_tree):
+        xml_data += tostring(element).decode('utf-8')
+    return unescape(xml_data).replace('><', '>\n<')
