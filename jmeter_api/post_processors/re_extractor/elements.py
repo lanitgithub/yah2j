@@ -25,7 +25,9 @@ class Field(Enum):
 
 
 class RegExpPost(BasicPostProcessor, Renderable):
+
     root_element_name = 'RegexExtractor'
+    TEMPLATE = 'reg_exp_template.xml'
 
     def __init__(self,
                  name: str = 'Regular Expression Extractor',
@@ -108,10 +110,10 @@ class RegExpPost(BasicPostProcessor, Renderable):
     def template(self, value):
         if value is not None and not isinstance(value, int):
             raise TypeError(
-                f'arg: template.xml should be int or None. {type(value).__name__} was given')
+                f'arg: common_thread_group_template.xml should be int or None. {type(value).__name__} was given')
         if value is not None and value < 1:
             raise ValueError(
-                f'arg: template.xml should be greater or equal than 1.')
+                f'arg: common_thread_group_template.xml should be greater or equal than 1.')
         self._template = value
 
     @property
@@ -138,8 +140,8 @@ class RegExpPost(BasicPostProcessor, Renderable):
                 f'arg: default_val should be str. {type(value).__name__} was given')
         self._default_val = value
 
-    def render_element(self) -> str:
-        element_root, xml_tree = super().render_element()
+    def to_xml(self) -> str:
+        element_root, xml_tree = super()._add_basics()
         flag = True
         for element in list(element_root):
             try:
@@ -179,8 +181,7 @@ class RegExpPost(BasicPostProcessor, Renderable):
 
                     if self.default_val == 'empty':
                         element = SubElement(element_root, 'boolProp')
-                        element.set(
-                            'name', 'RegexExtractor.default_empty_value')
+                        element.set('name', 'RegexExtractor.default_empty_value')
                         element.text = 'true'
                     flag = False
             except KeyError:

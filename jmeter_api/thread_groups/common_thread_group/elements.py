@@ -10,7 +10,9 @@ import os
 
 
 class CommonThreadGroup(BasicThreadGroup, IncludesElements, Renderable):
+
     root_element_name = 'ThreadGroup'
+    TEMPLATE = 'common_thread_group_template.xml'
 
     def __init__(self,
                  continue_forever: bool,
@@ -90,8 +92,8 @@ class CommonThreadGroup(BasicThreadGroup, IncludesElements, Renderable):
                 f'arg: sheduler_delay should be positive int. {type(value).__name__} was given')
         self._loops = value
 
-    def render_element(self) -> str:
-        element_root, xml_tree = super().render_element()
+    def to_xml(self) -> str:
+        element_root, xml_tree = super()._add_basics()
 
         for element in list(element_root):
             try:
@@ -120,7 +122,7 @@ class CommonThreadGroup(BasicThreadGroup, IncludesElements, Renderable):
                 continue
 
         content_root = xml_tree.find('hashTree')
-        content_root.text = self.render_inner_elements()
+        content_root.text = self._render_inner_elements()
         xml_data = ''
         for element in list(xml_tree):
             xml_data += tostring(element).decode('utf-8')

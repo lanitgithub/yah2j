@@ -1,9 +1,9 @@
+from jmeter_api.timers.elements import ConstantTimer, ConstThroughputTimer, UniformRandTimer
 from jmeter_api.basics.sampler.elements import BasicSampler
-from jmeter_api.basics.element.elements import Renderable
-from jmeter_api.basics.sampler.files_upload.elements import FileUpload
-from jmeter_api.basics.utils import IncludesElements
+from jmeter_api.basics.sampler.elements import FileUpload, UserDefinedVariables
+from jmeter_api.basics.utils import IncludesElements, Renderable
+
 from xml.etree.ElementTree import tostring, SubElement
-from jmeter_api.basics.sampler.user_defined_vars.elements import UserDefinedVariables
 from xml.sax.saxutils import unescape
 from typing import Union, List
 import logging
@@ -54,11 +54,12 @@ class Implement(Enum):
 class HttpRequest(BasicSampler, IncludesElements, Renderable):
 
     root_element_name = 'HTTPSamplerProxy'
+    TEMPLATE = 'http_request_template.xml'
 
     def __init__(self,
-                 host: str,
-                 path: str = '/',
                  name: str = 'HTTP Request',
+                 host: str = '',
+                 path: str = '/',
                  method: Method = Method.GET,
                  protocol: Protocol = Protocol.HTTP,
                  port: Union[int, None] = None,
@@ -86,12 +87,11 @@ class HttpRequest(BasicSampler, IncludesElements, Renderable):
                  is_enabled: bool = True
                  ):
         """
+
         :type source_type: object
         """
         IncludesElements.__init__(self)
-
         BasicSampler.__init__(self, name=name, comments=comments, is_enabled=is_enabled)
-
         self.host = host
         self.path = path
         self.method = method
@@ -406,15 +406,11 @@ class HttpRequest(BasicSampler, IncludesElements, Renderable):
                 f'arg: text should be str. {type(value).__name__} was given')
         self._text = value
 
-
-
-
     def add_user_variable(self, *args) -> None:
         for element in args:
             if not isinstance(element, UserDefinedVariables):
                 raise TypeError(f'You can add only UserDefinedVariables objects.')
             self._user_defined_variables.append(element)
-
 
     def add_file_upload(self, *args):
         for file_up in args:
@@ -422,7 +418,7 @@ class HttpRequest(BasicSampler, IncludesElements, Renderable):
                 raise TypeError(f'You can add only FileUpload objects.')
             self._upload_file_list.append(file_up)
 
-    def _render_upload(self):
+    def _render_upload(self) -> str:
         xml_tree = self.get_template()
         elem_prop = SubElement(xml_tree, 'elementProp')
         elem_prop.set('name', 'HTTPsampler.Files')
@@ -431,23 +427,29 @@ class HttpRequest(BasicSampler, IncludesElements, Renderable):
         col_prop.set('name', 'HTTPFileArgs.files')
         upload_str = ''
         for item in self._upload_file_list:
-            upload_str += item.render_element()
+            upload_str += item.to_xml()
         col_prop.text = upload_str
         return unescape(tostring(elem_prop).decode('utf-8'))
 
-    def get_len_upload_files(self):
+    def _render_user_variables(self):
+        xml_str = ''
+        for element in self._user_defined_variables:
+            xml_str += element.to_xml()
+        return xml_str
+
+    def get_len_upload_files(self) -> int:
         return len(self._upload_file_list)
 
     def add_body_data(self, text: str) -> None:
         self.text = text
 
-    def render_element(self) -> str:
+    def to_xml(self) -> str:
         """
         Set all parameters in xml and convert it to the string.
         :return: xml in string format
         """
         # default name and stuff setup
-        element_root, xml_tree = super().render_element()
+        element_root, xml_tree = super()._add_basics()
         for element in list(element_root):
             try:
                 if element.attrib['name'] == 'HTTPSampler.domain':
@@ -572,20 +574,33 @@ class HttpRequest(BasicSampler, IncludesElements, Renderable):
             except KeyError:
                 logging.error('Unable to set xml parameters')
 
-        #render inner elements
+        xml_data = ''
+
+        #render inner renderable elements
+
+        if len(self) == 1:
+            content_root = xml_tree.find('hashTree')
+            content_root.text = self._render_inner_elements().replace('<hashTree />', '')
+        elif len(self) > 1:
+            content_root = xml_tree.find('hashTree')
+            content_root.text = self._render_inner_elements()
 
         # render upload files
         if self.get_len_upload_files():
             content_root = xml_tree[0]
             content_root.text = self._render_upload()
-        xml_data = ''
+
         if not self.text:
-            content_root = xml_tree[0][0][0]  # to get collectionProp tag
-            content_root.text = self.render_inner_elements()
+            content_root = xml_tree[0][0][0]  # to get collectionProp tag#todo in case of error change to elementtree
+            content_root.text = self._render_user_variables() # todo recurcive render for user defined variables
         else:
             content_root = xml_tree[0][0][0]
             body_data = UserDefinedVariables(value=self.text)
-            content_root.text = body_data.render_element()
+            content_root.text = body_data.to_xml()
         for element in list(xml_tree):
             xml_data += tostring(element).decode('utf-8')
         return unescape(xml_data).replace('><', '>\n<')
+
+
+h =HttpRequest()
+print(h.__doc__)

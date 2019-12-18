@@ -1,4 +1,4 @@
-from jmeter_api.configs.http_cache_manager.elements import HTTPCacheManager
+from jmeter_api.configs.elements import HTTPCacheManager
 from jmeter_api.thread_groups.common_thread_group.elements import CommonThreadGroup
 from jmeter_api.basics.utils import tag_wrapper, IncludesElements
 import xmltodict
@@ -28,7 +28,7 @@ class TestUtils:
                          HTTPCacheManager()]
         for element in elements_list:
             thread_group.append(element)
-        xml_data = thread_group.render_inner_elements()
+        xml_data = thread_group._render_inner_elements()
         assert len(re.findall('element_type', xml_data)) == 3
 
     def test_check_forbidden_symbols(self):
@@ -38,6 +38,6 @@ class TestUtils:
                          HTTPCacheManager()]
         for element in elements_list:
             thread_group.append(element)
-        xml_data = thread_group.render_inner_elements()
+        xml_data = thread_group._render_inner_elements()
         assert "&lt;" not in xml_data
         assert "&gt;" not in xml_data

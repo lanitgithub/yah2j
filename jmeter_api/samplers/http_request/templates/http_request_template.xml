@@ -17,4 +17,4 @@
     <stringProp name="HTTPSampler.response_timeout"></stringProp>
     <stringProp name="TestPlan.comments"></stringProp>
 </HTTPSamplerProxy>
-<hashTree/>
+<hashTree></hashTree>

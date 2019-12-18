@@ -1,4 +1,4 @@
-from jmeter_api.configs.csv_data_set_config.elements import CsvDataSetConfig, ShareMode
+from jmeter_api.configs.elements import CsvDataSetConfig, ShareMode
 from jmeter_api.basics.utils import FileEncoding, tag_wrapper
 import xmltodict
 import pytest
@@ -135,12 +135,12 @@ class TestCsvDataSetConfig:
             assert csvdata.share_mode == ShareMode.ALL
 
 
-class TestCsvDataSetConfigXML:
+class TestCsvDataSetConfig:
     def test_render_delimiter(self):
         element = CsvDataSetConfig(file_path='main.py',
                                    variable_names=['var1', 'var2'],
                                    delimiter='|')
-        rendered_doc = tag_wrapper(element.render_element(), 'result')
+        rendered_doc = tag_wrapper(element.to_xml(), 'result')
         parsed_doc = xmltodict.parse(rendered_doc)
         assert parsed_doc['result']['CSVDataSet']['stringProp'][1]['#text'] == '|'
 
@@ -148,14 +148,14 @@ class TestCsvDataSetConfigXML:
         element = CsvDataSetConfig(file_path='main.py',
                                    variable_names=['var1', 'var2'],
                                    file_encoding=FileEncoding.UTF16)
-        rendered_doc = tag_wrapper(element.render_element(), 'result')
+        rendered_doc = tag_wrapper(element.to_xml(), 'result')
         parsed_doc = xmltodict.parse(rendered_doc)
         assert parsed_doc['result']['CSVDataSet']['stringProp'][2]['#text'] == 'UTF-16'
 
     def test_render_file_path(self):
         element = CsvDataSetConfig(file_path='main.py',
                                    variable_names=['var1', 'var2'],)
-        rendered_doc = tag_wrapper(element.render_element(), 'result')
+        rendered_doc = tag_wrapper(element.to_xml(), 'result')
         parsed_doc = xmltodict.parse(rendered_doc)
         assert parsed_doc['result']['CSVDataSet']['stringProp'][3]['#text'] == 'main.py'
 
@@ -163,7 +163,7 @@ class TestCsvDataSetConfigXML:
         element = CsvDataSetConfig(file_path='main.py',
                                    variable_names=['var1', 'var2'],
                                    ignore_first_line=True)
-        rendered_doc = tag_wrapper(element.render_element(), 'result')
+        rendered_doc = tag_wrapper(element.to_xml(), 'result')
         parsed_doc = xmltodict.parse(rendered_doc)
         assert parsed_doc['result']['CSVDataSet']['boolProp'][0]['#text'] == 'true'
 
@@ -171,7 +171,7 @@ class TestCsvDataSetConfigXML:
         element = CsvDataSetConfig(file_path='main.py',
                                    variable_names=['var1', 'var2'],
                                    recycle=True)
-        rendered_doc = tag_wrapper(element.render_element(), 'result')
+        rendered_doc = tag_wrapper(element.to_xml(), 'result')
         parsed_doc = xmltodict.parse(rendered_doc)
         assert parsed_doc['result']['CSVDataSet']['boolProp'][2]['#text'] == 'true'
 
@@ -179,7 +179,7 @@ class TestCsvDataSetConfigXML:
         element = CsvDataSetConfig(file_path='main.py',
                                    variable_names=['var1', 'var2'],
                                    share_mode=ShareMode.GROUP)
-        rendered_doc = tag_wrapper(element.render_element(), 'result')
+        rendered_doc = tag_wrapper(element.to_xml(), 'result')
         parsed_doc = xmltodict.parse(rendered_doc)
         assert parsed_doc['result']['CSVDataSet']['stringProp'][4]['#text'] == 'shareMode.group'
 
@@ -187,26 +187,26 @@ class TestCsvDataSetConfigXML:
         element = CsvDataSetConfig(file_path='main.py',
                                    variable_names=['var1', 'var2'],
                                    stop_thread=True)
-        rendered_doc = tag_wrapper(element.render_element(), 'result')
+        rendered_doc = tag_wrapper(element.to_xml(), 'result')
         parsed_doc = xmltodict.parse(rendered_doc)
         assert parsed_doc['result']['CSVDataSet']['boolProp'][3]['#text'] == 'true'
 
     def test_render_variable_names(self):
         element = CsvDataSetConfig(file_path='main.py',
                                    variable_names=['var1', 'var2', 'var3', 'var4'],)
-        rendered_doc = tag_wrapper(element.render_element(), 'result')
+        rendered_doc = tag_wrapper(element.to_xml(), 'result')
         parsed_doc = xmltodict.parse(rendered_doc)
         assert parsed_doc['result']['CSVDataSet']['stringProp'][5]['#text'] == 'var1,var2,var3,var4'
 
     def test_render_header_contain(self):
         element = CsvDataSetConfig(file_path='main.py',
                                    variable_names=['var1', 'var2'],)
-        rendered_doc = tag_wrapper(element.render_element(), 'result')
+        rendered_doc = tag_wrapper(element.to_xml(), 'result')
         is_contain = 'xml version' in rendered_doc
         assert is_contain is False
 
     def test_render_hashtree_contain(self):
         element = CsvDataSetConfig(file_path='main.py',
                                    variable_names=['var1', 'var2'],)
-        rendered_doc = tag_wrapper(element.render_element(), 'result')
+        rendered_doc = tag_wrapper(element.to_xml(), 'result')
         assert '<hashTree />' in rendered_doc
