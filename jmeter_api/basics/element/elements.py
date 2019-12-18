@@ -7,7 +7,6 @@ from abc import ABC
 class BasicElement(ABC):
 
     root_element_name = 'Arguments'
-    TEMPLATE = 'basic_element_template.xml'
 
     def __init__(self, name: str = 'BasicElement', comments: str = '', is_enabled: bool = True):
         logging.info(f'{type(self).__name__} | Init started')
@@ -46,10 +45,3 @@ class BasicElement(ABC):
             raise TypeError(
                 f'arg: is_enabled must be bool. {type(value).__name__} was given.')
         self._is_enabled = value
-
-    # def to_xml(self):
-    #     xml_data = ''
-    #     element_root, xml_tree = super()._add_basics()
-    #     for element in list(xml_tree):
-    #         xml_data += tostring(element).decode('utf-8')
-    #     return xml_data.replace('><', '>\n<')
