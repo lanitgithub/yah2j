@@ -55,7 +55,7 @@ class HttpRequest(BasicSampler, IncludesElements, Renderable):
     root_element_name = 'HTTPSamplerProxy'
     TEMPLATE = 'http_request_template.xml'
 
-    def __init__(self,
+    def __init__(self, *,
                  name: str = 'HTTP Request',
                  host: str = '',
                  path: str = '/',
