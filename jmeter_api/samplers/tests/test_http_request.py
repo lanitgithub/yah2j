@@ -1,4 +1,4 @@
-from jmeter_api.samplers.http_request.elements import HttpRequest, Method, Protocol, Implement, Source
+from jmeter_api.samplers.elements import HttpRequest, Method, Protocol, Implement, Source
 import xmltodict
 import pytest
 
