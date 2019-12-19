@@ -7,7 +7,7 @@ from abc import ABC
 class BasicElement(ABC):
 
     root_element_name = 'Arguments'
-    TEMPLATE = 'basic_element_template.xml'
+    # TEMPLATE = 'basic_element_template.xml'
 
     def __init__(self, name: str = 'BasicElement', comments: str = '', is_enabled: bool = True):
         logging.info(f'{type(self).__name__} | Init started')

@@ -88,8 +88,10 @@ def test_plan_wrapper(xml_data_text: str) -> str:
     footer = '</hashTree></jmeterTestPlan>'
     return f'{header}{xml_data_text}{footer}'
 
-def tree_to_str(xml_tree: Element):
+def tree_to_str(xml_tree: Element, hashtree: bool = False):
     xml_data = ''
     for element in list(xml_tree):
         xml_data += tostring(element).decode('utf-8')
+    if hashtree:
+        xml_data += '<hashTree/>'
     return unescape(xml_data).replace('><', '>\n<')

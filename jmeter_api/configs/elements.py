@@ -18,7 +18,7 @@ class CsvDataSetConfig(BasicConfig, Renderable):
     root_element_name = 'CSVDataSet'
     TEMPLATE = 'csv_data_set_config_template.xml'
 
-    def __init__(self,
+    def __init__(self, *,
                  file_path: str,
                  variable_names: List[str],
                  file_encoding: FileEncoding = FileEncoding.UTF8,
@@ -173,7 +173,7 @@ class HTTPCacheManager(BasicConfig, Renderable):
     root_element_name = 'CacheManager'
     TEMPLATE = 'http_cache_manager.xml'
 
-    def __init__(self,
+    def __init__(self, *,
                  clear_each_iteration: bool = False,
                  use_cache_control: bool = True,
                  max_elements_in_cache: int = 300,

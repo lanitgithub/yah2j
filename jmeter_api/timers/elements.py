@@ -20,7 +20,7 @@ class ConstThroughputTimer(BasicTimer, Renderable):
     root_element_name = 'ConstantThroughputTimer'
     TEMPLATE = 'constant_throughput_timer_template.xml'
 
-    def __init__(self,
+    def __init__(self, *,
                  name: str = 'Constant Throughput Timer',
                  targ_throughput: float = 0,
                  based_on: BasedOn = BasedOn.THIS_THREAD_ONLY,
@@ -89,7 +89,7 @@ class ConstantTimer(BasicTimer, Renderable):
     root_element_name = 'ConstantTimer'
     TEMPLATE = 'constant_timer_template.xml'
 
-    def __init__(self,
+    def __init__(self, *,
                  name: str = 'Constant Timer',
                  delay: int = 300,
                  comments: str = '',
@@ -143,7 +143,7 @@ class UniformRandTimer(BasicTimer, Renderable):
     root_element_name = 'UniformRandomTimer'
     TEMPLATE = 'uniform_rand_timer_template.xml'
 
-    def __init__(self,
+    def __init__(self, *,
                  name: str = 'Uniform Random Timer',
                  comments: str = '',
                  offset_delay: int = 0,
