@@ -1,9 +1,9 @@
-from jmeter_api.configs.elements import HTTPCacheManager, FileEncoding
-from jmeter_api.timers.elements import ConstThroughputTimer, BasedOn
+from jmeter_api.configs.elements import HTTPCacheManager
+from jmeter_api.timers.elements import ConstThroughputTimer
 from jmeter_api.timers.elements import ConstantTimer
 from jmeter_api.non_test_elements.test_plan.elements import TestPlan
-from jmeter_api.samplers.http_request.elements import HttpRequest, Method, Protocol, FileUpload, Source, Implement
-from jmeter_api.thread_groups.common_thread_group.elements import CommonThreadGroup, ThreadGroupAction
+from jmeter_api.samplers.elements import HttpRequest
+from jmeter_api.thread_groups.common_thread_group.elements import CommonThreadGroup
 
 if __name__ == "__main__":
     test_plan = TestPlan(name='NewTestPlan')
