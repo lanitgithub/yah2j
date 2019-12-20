@@ -7,7 +7,7 @@ from typing import List, Optional
 
 class TestPlan(NonTestElements, IncludesElements, Renderable):
     root_element_name = 'TestPlan'
-
+    TEMPLATE = 'test_plan_template.xml'
     def __init__(self,
                  functional_mode: bool = False,
                  teardown_on_shutdown: bool = True,
@@ -58,8 +58,8 @@ class TestPlan(NonTestElements, IncludesElements, Renderable):
         else:
             self._serialize_threadgroups = value
 
-    def render_element(self):
-        element_root, xml_tree = super().render_element()
+    def to_xml(self):
+        element_root, xml_tree = super()._add_basics()
 
         element_root.set('enabled', str(self.is_enabled).lower())
         element_root.set('testname', self.name)
@@ -78,7 +78,7 @@ class TestPlan(NonTestElements, IncludesElements, Renderable):
                 continue
 
         content_root = xml_tree.find('hashTree')
-        content_root.text = self.render_inner_elements()
+        content_root.text = self._render_inner_elements()
         xml_data = ''
         for element in list(xml_tree):
             xml_data += tostring(element).decode('utf8')
