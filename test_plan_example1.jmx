@@ -1,23 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?><jmeterTestPlan version="1.2" properties="5.0" jmeter="5.1.1 r1855137"><hashTree><TestPlan element_type="TestPlan" enabled="true" guiclass="TestPlanGui" testclass="TestPlan" testname="NewTestPlan">
+<?xml version="1.0" encoding="UTF-8"?><jmeterTestPlan version="1.2" properties="5.0" jmeter="5.1.1 r1855137"><hashTree><TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="NewTestPlan" enabled="true" element_type="TestPlan">
   <stringProp name="TestPlan.comments" />
   <boolProp name="TestPlan.functional_mode">False</boolProp>
   <boolProp name="TestPlan.tearDown_on_shutdown">True</boolProp>
   <boolProp name="TestPlan.serialize_threadgroups">False</boolProp>
-  <elementProp elementType="Arguments" enabled="true" guiclass="ArgumentsPanel" name="TestPlan.user_defined_variables" testclass="Arguments" testname="User Defined Variables">
+  <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
     <collectionProp name="Arguments.arguments" />
   </elementProp>
   <stringProp name="TestPlan.user_define_classpath" />
 </TestPlan>
-<hashTree><CacheManager element_type="HTTPCacheManager" enabled="true" guiclass="CacheManagerGui" testclass="CacheManager" testname="HTTP_Cache_Manager">
+<hashTree><CacheManager guiclass="CacheManagerGui" testclass="CacheManager" testname="HTTP_Cache_Manager" enabled="true" element_type="HTTPCacheManager">
   <boolProp name="clearEachIteration">true</boolProp>
   <boolProp name="useExpires">true</boolProp>
   <intProp name="maxSize">300</intProp>
 </CacheManager>
 <hashTree />
-<ThreadGroup element_type="CommonThreadGroup" enabled="true" guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="FirstThreadGroup">
+<ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="FirstThreadGroup" enabled="true" element_type="CommonThreadGroup">
   <stringProp name="TestPlan.comments" />
   <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
-  <elementProp elementType="LoopController" enabled="true" guiclass="LoopControlPanel" name="ThreadGroup.main_controller" testclass="LoopController" testname="Loop Controller">
+  <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
     <boolProp name="LoopController.continue_forever">true</boolProp>
     <stringProp name="LoopController.loops">0</stringProp>
   </elementProp>
@@ -27,8 +27,9 @@
   <stringProp name="ThreadGroup.duration">0</stringProp>
   <stringProp name="ThreadGroup.delay">0</stringProp>
 </ThreadGroup>
-<hashTree><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request">
-    <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
+<hashTree>
+<HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request" enabled="true" element_type="HttpRequest">
+    <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments" />
     </elementProp>
     <stringProp name="HTTPSampler.domain">www.google.com</stringProp>
@@ -47,8 +48,9 @@
     <stringProp name="TestPlan.comments" />
 <stringProp name="HTTPSampler.proxyPort" />
 </HTTPSamplerProxy>
-<hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request">
-    <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
+<hashTree />
+<HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request" enabled="true" element_type="HttpRequest">
+    <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments" />
     </elementProp>
     <stringProp name="HTTPSampler.domain">www.google.com</stringProp>
@@ -67,8 +69,9 @@
     <stringProp name="TestPlan.comments" />
 <stringProp name="HTTPSampler.proxyPort" />
 </HTTPSamplerProxy>
-<hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request">
-    <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
+<hashTree />
+<HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request" enabled="true" element_type="HttpRequest">
+    <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments" />
     </elementProp>
     <stringProp name="HTTPSampler.domain">www.google.com</stringProp>
@@ -87,14 +90,16 @@
     <stringProp name="TestPlan.comments" />
 <stringProp name="HTTPSampler.proxyPort" />
 </HTTPSamplerProxy>
-<hashTree /><ConstantTimer element_type="ConstantTimer" enabled="true" guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer">
+<hashTree />
+<ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true" element_type="ConstantTimer">
     <stringProp name="TestPlan.comments" />
     <stringProp name="ConstantTimer.delay">1000</stringProp>
 </ConstantTimer>
-<hashTree /></hashTree><ThreadGroup element_type="CommonThreadGroup" enabled="true" guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="SecondThreadGroup">
+<hashTree />
+</hashTree><ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="SecondThreadGroup" enabled="true" element_type="CommonThreadGroup">
   <stringProp name="TestPlan.comments" />
   <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
-  <elementProp elementType="LoopController" enabled="true" guiclass="LoopControlPanel" name="ThreadGroup.main_controller" testclass="LoopController" testname="Loop Controller">
+  <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
     <boolProp name="LoopController.continue_forever">true</boolProp>
     <stringProp name="LoopController.loops">0</stringProp>
   </elementProp>
@@ -104,8 +109,9 @@
   <stringProp name="ThreadGroup.duration">0</stringProp>
   <stringProp name="ThreadGroup.delay">0</stringProp>
 </ThreadGroup>
-<hashTree><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler0">
-    <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
+<hashTree>
+<HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler0" enabled="true" element_type="HttpRequest">
+    <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments" />
     </elementProp>
     <stringProp name="HTTPSampler.domain">www.google.com</stringProp>
@@ -124,8 +130,9 @@
     <stringProp name="TestPlan.comments" />
 <stringProp name="HTTPSampler.proxyPort" />
 </HTTPSamplerProxy>
-<hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler1">
-    <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
+<hashTree />
+<HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler1" enabled="true" element_type="HttpRequest">
+    <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments" />
     </elementProp>
     <stringProp name="HTTPSampler.domain">www.google.com</stringProp>
@@ -144,8 +151,9 @@
     <stringProp name="TestPlan.comments" />
 <stringProp name="HTTPSampler.proxyPort" />
 </HTTPSamplerProxy>
-<hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler2">
-    <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
+<hashTree />
+<HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler2" enabled="true" element_type="HttpRequest">
+    <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments" />
     </elementProp>
     <stringProp name="HTTPSampler.domain">www.google.com</stringProp>
@@ -164,8 +172,9 @@
     <stringProp name="TestPlan.comments" />
 <stringProp name="HTTPSampler.proxyPort" />
 </HTTPSamplerProxy>
-<hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler3">
-    <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
+<hashTree />
+<HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler3" enabled="true" element_type="HttpRequest">
+    <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments" />
     </elementProp>
     <stringProp name="HTTPSampler.domain">www.google.com</stringProp>
@@ -184,8 +193,9 @@
     <stringProp name="TestPlan.comments" />
 <stringProp name="HTTPSampler.proxyPort" />
 </HTTPSamplerProxy>
-<hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler4">
-    <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
+<hashTree />
+<HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler4" enabled="true" element_type="HttpRequest">
+    <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments" />
     </elementProp>
     <stringProp name="HTTPSampler.domain">www.google.com</stringProp>
@@ -204,8 +214,9 @@
     <stringProp name="TestPlan.comments" />
 <stringProp name="HTTPSampler.proxyPort" />
 </HTTPSamplerProxy>
-<hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler5">
-    <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
+<hashTree />
+<HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler5" enabled="true" element_type="HttpRequest">
+    <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments" />
     </elementProp>
     <stringProp name="HTTPSampler.domain">www.google.com</stringProp>
@@ -224,8 +235,9 @@
     <stringProp name="TestPlan.comments" />
 <stringProp name="HTTPSampler.proxyPort" />
 </HTTPSamplerProxy>
-<hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler6">
-    <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
+<hashTree />
+<HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler6" enabled="true" element_type="HttpRequest">
+    <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments" />
     </elementProp>
     <stringProp name="HTTPSampler.domain">www.google.com</stringProp>
@@ -244,8 +256,9 @@
     <stringProp name="TestPlan.comments" />
 <stringProp name="HTTPSampler.proxyPort" />
 </HTTPSamplerProxy>
-<hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler7">
-    <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
+<hashTree />
+<HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler7" enabled="true" element_type="HttpRequest">
+    <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments" />
     </elementProp>
     <stringProp name="HTTPSampler.domain">www.google.com</stringProp>
@@ -264,8 +277,9 @@
     <stringProp name="TestPlan.comments" />
 <stringProp name="HTTPSampler.proxyPort" />
 </HTTPSamplerProxy>
-<hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler8">
-    <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
+<hashTree />
+<HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler8" enabled="true" element_type="HttpRequest">
+    <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments" />
     </elementProp>
     <stringProp name="HTTPSampler.domain">www.google.com</stringProp>
@@ -284,8 +298,9 @@
     <stringProp name="TestPlan.comments" />
 <stringProp name="HTTPSampler.proxyPort" />
 </HTTPSamplerProxy>
-<hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler9">
-    <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
+<hashTree />
+<HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler9" enabled="true" element_type="HttpRequest">
+    <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments" />
     </elementProp>
     <stringProp name="HTTPSampler.domain">www.google.com</stringProp>
@@ -304,8 +319,9 @@
     <stringProp name="TestPlan.comments" />
 <stringProp name="HTTPSampler.proxyPort" />
 </HTTPSamplerProxy>
-<hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler10">
-    <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
+<hashTree />
+<HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler10" enabled="true" element_type="HttpRequest">
+    <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments" />
     </elementProp>
     <stringProp name="HTTPSampler.domain">www.google.com</stringProp>
@@ -324,8 +340,9 @@
     <stringProp name="TestPlan.comments" />
 <stringProp name="HTTPSampler.proxyPort" />
 </HTTPSamplerProxy>
-<hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler11">
-    <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
+<hashTree />
+<HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler11" enabled="true" element_type="HttpRequest">
+    <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments" />
     </elementProp>
     <stringProp name="HTTPSampler.domain">www.google.com</stringProp>
@@ -344,8 +361,9 @@
     <stringProp name="TestPlan.comments" />
 <stringProp name="HTTPSampler.proxyPort" />
 </HTTPSamplerProxy>
-<hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler12">
-    <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
+<hashTree />
+<HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler12" enabled="true" element_type="HttpRequest">
+    <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments" />
     </elementProp>
     <stringProp name="HTTPSampler.domain">www.google.com</stringProp>
@@ -364,8 +382,9 @@
     <stringProp name="TestPlan.comments" />
 <stringProp name="HTTPSampler.proxyPort" />
 </HTTPSamplerProxy>
-<hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler13">
-    <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
+<hashTree />
+<HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler13" enabled="true" element_type="HttpRequest">
+    <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments" />
     </elementProp>
     <stringProp name="HTTPSampler.domain">www.google.com</stringProp>
@@ -384,8 +403,9 @@
     <stringProp name="TestPlan.comments" />
 <stringProp name="HTTPSampler.proxyPort" />
 </HTTPSamplerProxy>
-<hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler14">
-    <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
+<hashTree />
+<HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler14" enabled="true" element_type="HttpRequest">
+    <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments" />
     </elementProp>
     <stringProp name="HTTPSampler.domain">www.google.com</stringProp>
@@ -404,8 +424,9 @@
     <stringProp name="TestPlan.comments" />
 <stringProp name="HTTPSampler.proxyPort" />
 </HTTPSamplerProxy>
-<hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler15">
-    <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
+<hashTree />
+<HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler15" enabled="true" element_type="HttpRequest">
+    <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments" />
     </elementProp>
     <stringProp name="HTTPSampler.domain">www.google.com</stringProp>
@@ -424,8 +445,9 @@
     <stringProp name="TestPlan.comments" />
 <stringProp name="HTTPSampler.proxyPort" />
 </HTTPSamplerProxy>
-<hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler16">
-    <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
+<hashTree />
+<HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler16" enabled="true" element_type="HttpRequest">
+    <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments" />
     </elementProp>
     <stringProp name="HTTPSampler.domain">www.google.com</stringProp>
@@ -444,8 +466,9 @@
     <stringProp name="TestPlan.comments" />
 <stringProp name="HTTPSampler.proxyPort" />
 </HTTPSamplerProxy>
-<hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler17">
-    <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
+<hashTree />
+<HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler17" enabled="true" element_type="HttpRequest">
+    <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments" />
     </elementProp>
     <stringProp name="HTTPSampler.domain">www.google.com</stringProp>
@@ -464,8 +487,9 @@
     <stringProp name="TestPlan.comments" />
 <stringProp name="HTTPSampler.proxyPort" />
 </HTTPSamplerProxy>
-<hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler18">
-    <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
+<hashTree />
+<HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler18" enabled="true" element_type="HttpRequest">
+    <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments" />
     </elementProp>
     <stringProp name="HTTPSampler.domain">www.google.com</stringProp>
@@ -484,8 +508,9 @@
     <stringProp name="TestPlan.comments" />
 <stringProp name="HTTPSampler.proxyPort" />
 </HTTPSamplerProxy>
-<hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler19">
-    <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
+<hashTree />
+<HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler19" enabled="true" element_type="HttpRequest">
+    <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments" />
     </elementProp>
     <stringProp name="HTTPSampler.domain">www.google.com</stringProp>
@@ -504,7 +529,8 @@
     <stringProp name="TestPlan.comments" />
 <stringProp name="HTTPSampler.proxyPort" />
 </HTTPSamplerProxy>
-<hashTree /><ConstantThroughputTimer element_type="ConstThroughputTimer" enabled="true" guiclass="TestBeanGUI" testclass="ConstantThroughputTimer" testname="Constant Throughput Timer">
+<hashTree />
+<ConstantThroughputTimer guiclass="TestBeanGUI" testclass="ConstantThroughputTimer" testname="Constant Throughput Timer" enabled="true" element_type="ConstThroughputTimer">
   <intProp name="calcMode">0</intProp>
   <doubleProp>
     <name>throughput</name>
