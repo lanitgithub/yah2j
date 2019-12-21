@@ -18,7 +18,10 @@ class TestCommonThreadGroop:
             with pytest.raises(TypeError):
                 CommonThreadGroup(serialize_threadgroups="True")
 
-    # class TestRenderCommonThreadGroop:
-    #     def test_parameter_num_threads(self):
-    #         btg = CommonThreadGroup(num_threads=10)
-    #         assert btg.num_threads == 10
+        def test_positive(self):
+            CommonThreadGroup(continue_forever=True)
+
+    class TestRenderCommonThreadGroop:
+        def test_parameter_num_threads(self):
+            btg = CommonThreadGroup(num_threads=10)
+            assert btg.num_threads == 10
