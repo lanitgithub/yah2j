@@ -4,7 +4,7 @@ import xmltodict
 import pytest
 
 
-class TestTestPlan:
+class TestTestPlanArgs:
     # name type check
     class TestContinueForever:
         def test_check(self):
