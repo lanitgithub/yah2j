@@ -4,7 +4,7 @@ import xmltodict
 import pytest
 
 
-class TestCommonThreadGroop:
+class TestCommonThreadGroopArgs:
     class TestContinueForever:
         def test_check(self):
             with pytest.raises(TypeError):
@@ -80,7 +80,7 @@ class TestCommonThreadGroop:
             CommonThreadGroup(continue_forever=True, sheduler_delay=23)
 
 
-class TestRenderCommonThreadGroop:
+class TestCommonThreadGroopRender:
     def test_loops(self):
         element = CommonThreadGroup(
             continue_forever=True, loops=55, sheduler_duration=1000, sheduler_delay=2000)
