@@ -1,4 +1,4 @@
-from jmeter_api.configs.elements import HTTPCacheManager
+from jmeter_api.configs.http_cache_manager.elements import HTTPCacheManager
 from jmeter_api.thread_groups.common_thread_group.elements import CommonThreadGroup
 from jmeter_api.basics.utils import tag_wrapper, IncludesElements
 import xmltodict
