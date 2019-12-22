@@ -28,7 +28,6 @@ class Field(Enum):
 class RegExpPost(BasicPostProcessor, Renderable):
 
     root_element_name = 'RegexExtractor'
-    TEMPLATE = 'reg_exp_template.xml'
 
     def __init__(self,
                  name: str = 'Regular Expression Extractor',
