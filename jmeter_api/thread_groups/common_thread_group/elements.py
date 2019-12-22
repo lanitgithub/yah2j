@@ -12,7 +12,6 @@ import os
 class CommonThreadGroup(BasicThreadGroup, IncludesElements, Renderable):
 
     root_element_name = 'ThreadGroup'
-    TEMPLATE = 'common_thread_group_template.xml'
 
     def __init__(self, *,
                  continue_forever: bool,

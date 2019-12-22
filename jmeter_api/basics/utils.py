@@ -11,10 +11,11 @@ import os
 class Renderable(ABC):
 
     root_element_name = 'BasicElement'
+    TEMPLATE = 'template.xml'
 
     def get_template(self) -> Element:
         element_path = os.path.dirname(inspect.getfile(self.__class__))
-        template_path = os.path.join(element_path, 'templates', self.TEMPLATE)
+        template_path = os.path.join(element_path, self.TEMPLATE)
         with open(template_path) as file:
              file_data = file.read()
              wrapped_template = tag_wrapper(file_data, self.root_element_name)
@@ -94,4 +95,4 @@ def tree_to_str(xml_tree: Element, hashtree: bool = False):
         xml_data += tostring(element).decode('utf-8')
     if hashtree:
         xml_data += '<hashTree/>'
-    return unescape(xml_data).replace('><', '>\n<')
+    return unescape(xml_data)
