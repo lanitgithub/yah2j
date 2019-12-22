@@ -1,74 +1,73 @@
-from jmeter_api.listeners.elements import BackendListener
+from jmeter_api.listeners.backend.elements import BackendListener
 from jmeter_api.basics.utils import tag_wrapper
 import xmltodict
 import pytest
 
 
-class TestBackendListener:
-    class TestHttpRequestArgsTypes:
-        # name type check
-        def test_name(self):
-            with pytest.raises(TypeError):
-                BackendListener(name=123)
-        # comments type check
+class TestHttpRequestArgsTypes:
+    # name type check
+    def test_name(self):
+        with pytest.raises(TypeError):
+            BackendListener(name=123)
+    # comments type check
 
-        def test_comments(self):
-            with pytest.raises(TypeError):
-                BackendListener(comments=123)
-        # is_enabled type check
+    def test_comments(self):
+        with pytest.raises(TypeError):
+            BackendListener(comments=123)
+    # is_enabled type check
 
-        def test_enabled(self):
-            with pytest.raises(TypeError):
-                BackendListener(is_enabled="True")
+    def test_enabled(self):
+        with pytest.raises(TypeError):
+            BackendListener(is_enabled="True")
 
-        def test_async_queue_size(self):
-            with pytest.raises(TypeError):
-                BackendListener(async_queue_size='1')
-        # path type check (non string data input)
+    def test_async_queue_size(self):
+        with pytest.raises(TypeError):
+            BackendListener(async_queue_size='1')
+    # path type check (non string data input)
 
-        def test_influx_db_url(self):
-            with pytest.raises(TypeError):
-                BackendListener(influx_db_url=13)
-        # method type check (non Method data input)
+    def test_influx_db_url(self):
+        with pytest.raises(TypeError):
+            BackendListener(influx_db_url=13)
+    # method type check (non Method data input)
 
-        def test_application(self):
-            with pytest.raises(TypeError):
-                BackendListener(application=123)
+    def test_application(self):
+        with pytest.raises(TypeError):
+            BackendListener(application=123)
 
-        def test_measurement(self):
-            with pytest.raises(TypeError):
-                BackendListener(measurement=2)
+    def test_measurement(self):
+        with pytest.raises(TypeError):
+            BackendListener(measurement=2)
 
-        def test_summary_only(self):
-            with pytest.raises(TypeError):
-                BackendListener(summary_only='True')
+    def test_summary_only(self):
+        with pytest.raises(TypeError):
+            BackendListener(summary_only='True')
 
-        def test_samplers_regexp(self):
-            with pytest.raises(Exception):
-                BackendListener(samplers_regexp='[')
+    def test_samplers_regexp(self):
+        with pytest.raises(Exception):
+            BackendListener(samplers_regexp='[')
 
-        def test_samplers_regexp2(self):
-            with pytest.raises(TypeError):
-                BackendListener(samplers_regexp=123)
+    def test_samplers_regexp2(self):
+        with pytest.raises(TypeError):
+            BackendListener(samplers_regexp=123)
 
-        def test_percentilies(self):
-            with pytest.raises(TypeError):
-                BackendListener(percentilies=-1)
+    def test_percentilies(self):
+        with pytest.raises(TypeError):
+            BackendListener(percentilies=-1)
 
-        def test_percentilies2(self):
-            with pytest.raises(Exception):
-                BackendListener(percentilies='102;100')
+    def test_percentilies2(self):
+        with pytest.raises(Exception):
+            BackendListener(percentilies='102;100')
 
-        def test_test_title(self):
-            with pytest.raises(TypeError):
-                BackendListener(BackendListener=-1)
+    def test_test_title(self):
+        with pytest.raises(TypeError):
+            BackendListener(BackendListener=-1)
 
-        def test_event_tags(self):
-            with pytest.raises(TypeError):
-                BackendListener(event_tags=5)
+    def test_event_tags(self):
+        with pytest.raises(TypeError):
+            BackendListener(event_tags=5)
 
 
-class TestRenderBackendListner:
+class TestBackendListenerRender:
     root_tag = BackendListener.root_element_name
 
     def test_render_name(self):
