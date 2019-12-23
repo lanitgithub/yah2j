@@ -56,11 +56,4 @@ class ConstantTimer(BasicTimer, Renderable):
                     element.text = str(self.delay)
             except KeyError:
                 continue
-        return tree_to_str(xml_tree)
-
-
-t = ConstantTimer()
-
-path = 'C:\\Users\\nikit\\PycharmProjects\\yah2j\\jmeter_api\\timers\\constant_timer\\template.xml'
-tree = ElementTree(file=path)
-print(t.to_xml())
+        return tree_to_str(xml_tree, hashtree=True)

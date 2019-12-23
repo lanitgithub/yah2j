@@ -209,4 +209,4 @@ class TestCsvDataSetConfigRender:
         element = CsvDataSetConfig(file_path='main.py',
                                    variable_names=['var1', 'var2'],)
         rendered_doc = tag_wrapper(element.to_xml(), 'result')
-        assert '<hashTree />' in rendered_doc
+        assert '<hashTree/>' in rendered_doc

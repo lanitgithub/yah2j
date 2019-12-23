@@ -1,9 +1,15 @@
-from jmeter_api.basics.sampler.elements import BasicSampler
-from jmeter_api.basics.sampler.elements import FileUpload, UserDefinedVariables
+from jmeter_api.basics.sampler.file_upload.elements import BasicSampler
+from jmeter_api.basics.timer.elements import BasicTimer
+from jmeter_api.basics.post_processor.elements import BasicPostProcessor
+from jmeter_api.basics.config.elements import BasicConfig
+from jmeter_api.basics.sampler.file_upload.elements import FileUpload
+from jmeter_api.basics.sampler.userdefined_vars.elements import UserDefinedVariables
 from jmeter_api.basics.utils import IncludesElements, Renderable, tree_to_str
+from jmeter_api.timers.constant_timer.elements import ConstantTimer
 
 from xml.etree.ElementTree import tostring, SubElement
 from xml.sax.saxutils import unescape
+from jmeter_api.basics.utils import CheckCanIncludeMeta
 from typing import Union, List
 import logging
 from enum import Enum
@@ -51,8 +57,7 @@ class Implement(Enum):
 
 
 class HttpRequest(BasicSampler, IncludesElements, Renderable):
-
-    root_element_name = 'HTTPSamplerProxy'
+    can_include = (BasicTimer, BasicPostProcessor, BasicConfig,)
 
     def __init__(self, *,
                  name: str = 'HTTP Request',
@@ -85,7 +90,6 @@ class HttpRequest(BasicSampler, IncludesElements, Renderable):
                  is_enabled: bool = True
                  ):
         """
-
         :type source_type: object
         """
         IncludesElements.__init__(self)
@@ -420,7 +424,8 @@ class HttpRequest(BasicSampler, IncludesElements, Renderable):
 
     def _render_upload(self) -> str:
         xml_tree = self.get_template()
-        elem_prop = SubElement(xml_tree, 'elementProp')
+        root = xml_tree.getroot()
+        elem_prop = SubElement(root, 'elementProp')
         elem_prop.set('name', 'HTTPsampler.Files')
         elem_prop.set('elementType', 'HTTPFileArgs')
         col_prop = SubElement(elem_prop, 'collectionProp')
@@ -449,7 +454,9 @@ class HttpRequest(BasicSampler, IncludesElements, Renderable):
         :return: xml in string format
         """
         # default name and stuff setup
+
         element_root, xml_tree = super()._add_basics()
+        # element_root = super()._add_hashtree(element_root)
         for element in list(element_root):
             try:
                 if element.attrib['name'] == 'HTTPSampler.domain':
@@ -576,23 +583,23 @@ class HttpRequest(BasicSampler, IncludesElements, Renderable):
 
         # render inner renderable elements
 
-        if len(self) == 1:
-            content_root = xml_tree.find('hashTree')
-            content_root.text = self._render_inner_elements().replace('<hashTree />', '')
-        elif len(self) > 1:
-            content_root = xml_tree.find('hashTree')
-            content_root.text = self._render_inner_elements()
+        # if len(self) == 1:
+        #     # content_root = xml_tree.find('hashTree')
+        #     content_root = self._render_inner_elements().replace('<hashTree/>', '')
+        # elif len(self) > 1:
+            # content_root = xml_tree.find('hashTree')
+        xml_inner = self._render_inner_elements()
 
         # render upload files
         if self.get_len_upload_files():
-            content_root = xml_tree[0]
+            content_root = element_root[0]
             content_root.text = self._render_upload()
 
         if not self.text:
-            content_root = xml_tree[0][0][0]  # to get collectionProp tag
+            content_root = element_root[0][0]  # to get collectionProp tag # todo redo on [0][0]
             content_root.text = self._render_user_variables()
         else:
-            content_root = xml_tree[0][0][0]
+            content_root = element_root[0][0] # todo redo on [0][0]
             body_data = UserDefinedVariables(value=self.text)
             content_root.text = body_data.to_xml()
-        return tree_to_str(xml_tree)
+        return (tree_to_str(xml_tree) + xml_inner).replace('><', '>\n<')

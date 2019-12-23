@@ -1,6 +1,6 @@
 from jmeter_api.basics.element.elements import BasicElement
 from jmeter_api.basics.config.elements import BasicConfig
-from jmeter_api.basics.sampler.elements import BasicSampler
+from jmeter_api.basics.sampler.file_upload.elements import BasicSampler
 from jmeter_api.basics.timer.elements import BasicTimer
 from jmeter_api.basics.controller.elements import BasicController
 from jmeter_api.basics.utils import IncludesElements

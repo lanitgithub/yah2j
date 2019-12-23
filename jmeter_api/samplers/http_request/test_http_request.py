@@ -1,4 +1,5 @@
 from jmeter_api.samplers.http_request.elements import HttpRequest, Method, Protocol, Implement, Source
+from jmeter_api.basics.utils import tag_wrapper
 import xmltodict
 import pytest
 
@@ -150,37 +151,42 @@ class TestHttpRequestArgsTypes:
 class TestHttpRequestRender:
     def test_name(self):
         element = HttpRequest(name='My http')
-        rendered_doc = element.to_xml().replace('<hashTree />', '')
+        rendered_doc = element.to_xml()
+        rendered_doc = tag_wrapper(rendered_doc, 'root')
         parsed_doc = xmltodict.parse(rendered_doc)
-        assert parsed_doc['HTTPSamplerProxy']['@testname'] == 'My http'
+        assert parsed_doc['root']['HTTPSamplerProxy']['@testname'] == 'My http'
 
     def test_comments(self):
         element = HttpRequest(comments='My http')
-        rendered_doc = element.to_xml().replace('<hashTree />', '')
+        rendered_doc = element.to_xml()
+        rendered_doc = tag_wrapper(rendered_doc, 'root')
         parsed_doc = xmltodict.parse(rendered_doc)
-        for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
+        for tag in parsed_doc['root']['HTTPSamplerProxy']['stringProp']:
             if tag['@name'] == 'TestPlan.comments':
                 assert tag['#text'] == 'My http'
 
     def test_is_enabled(self):
         element = HttpRequest(is_enabled=False)
-        rendered_doc = element.to_xml().replace('<hashTree />', '')
+        rendered_doc = element.to_xml()
+        rendered_doc = tag_wrapper(rendered_doc, 'root')
         parsed_doc = xmltodict.parse(rendered_doc)
-        assert parsed_doc['HTTPSamplerProxy']['@enabled'] == 'false'
+        assert parsed_doc['root']['HTTPSamplerProxy']['@enabled'] == 'false'
 
     def test_host(self):
         element = HttpRequest(host='localhost')
-        rendered_doc = element.to_xml().replace('<hashTree />', '')
+        rendered_doc = element.to_xml()
+        rendered_doc = tag_wrapper(rendered_doc, 'root')
         parsed_doc = xmltodict.parse(rendered_doc)
-        for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
+        for tag in parsed_doc['root']['HTTPSamplerProxy']['stringProp']:
             if tag['@name'] == 'HTTPSampler.domain':
                 assert tag['#text'] == 'localhost'
 
     def test_path(self):
         element = HttpRequest(path='/search')
-        rendered_doc = element.to_xml().replace('<hashTree />', '')
+        rendered_doc = element.to_xml()
+        rendered_doc = tag_wrapper(rendered_doc, 'root')
         parsed_doc = xmltodict.parse(rendered_doc)
-        for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
+        for tag in parsed_doc['root']['HTTPSamplerProxy']['stringProp']:
             if tag['@name'] == 'HTTPSampler.path':
                 assert tag['#text'] == '/search'
 

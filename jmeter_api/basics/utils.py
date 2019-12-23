@@ -1,4 +1,4 @@
-from xml.etree.ElementTree import Element, ElementTree, tostring, fromstring
+from xml.etree.ElementTree import Element, ElementTree, tostring, fromstring, SubElement
 from xml.sax.saxutils import unescape
 from abc import ABC, abstractmethod
 from settings import logging
@@ -8,16 +8,22 @@ import inspect
 import os
 
 
+class CheckCanIncludeMeta(type):
+
+    def __new__(cls, name, bases, dct, *args, **kwargs):
+        print("METAAA")
+        if 'can_include' not in dct.keys():
+            raise ValueError(f'Please add "can_include" variable (tuple) to your class.')
+        return super().__new__(cls, name, bases, dct)
+
+
 class Renderable(ABC):
 
-    root_element_name = 'BasicElement'
     TEMPLATE = 'template.xml'
 
     def get_template(self) -> Element:
         element_path = os.path.dirname(inspect.getfile(self.__class__))
-        template_path = os.path.join(element_path, self.TEMPLATE).replace('/', '\\')
-        # print(template_path)
-        # wrapped_template = tag_wrapper(file_data, self.root_element_name)
+        template_path = os.path.join(element_path, self.TEMPLATE)
         template_as_element_tree = ElementTree(file=template_path)
         return template_as_element_tree
 
@@ -25,10 +31,10 @@ class Renderable(ABC):
     def to_xml(self):
         pass
 
-    def _add_basics(self) -> (Element, Element):
+    def _add_basics(self) -> (Element, ElementTree):
         logging.info(f'{type(self).__name__} | Render started')
-        xml_tree: Optional[Element] = self.get_template()
-        element_root = xml_tree.find(self.root_element_name)
+        xml_tree: Optional[ElementTree] = self.get_template()
+        element_root = xml_tree.getroot()
         element_root.set('enabled', str(self.is_enabled).lower())
         element_root.set('testname', self.name)
         element_root.set('element_type', str(type(self).__name__))
@@ -52,11 +58,20 @@ class IncludesElements(ABC):
             raise TypeError(f'You can only add Renderable objects.')
         self._elements.append(new_element)
 
+    def _add_hashtree(self, element_root: Element):
+        root_name = element_root.tag
+        hash_tree = Element('hashTree')
+        temp_root = Element('root')
+        temp_root.append(element_root)
+        temp_root.append(hash_tree)
+        return temp_root
+
     def _render_inner_elements(self) -> str:
         logging.info(f'{type(self).__name__} | Render inner elements started')
-        xml_data = ''
+        xml_data = '\n<hashTree>\n'
         for element in self._elements:
             xml_data += element.to_xml()
+        xml_data += '\n</hashTree>'
         return xml_data
 
     def __len__(self):
@@ -88,10 +103,12 @@ def test_plan_wrapper(xml_data_text: str) -> str:
     footer = '</hashTree></jmeterTestPlan>'
     return f'{header}{xml_data_text}{footer}'
 
-def tree_to_str(xml_tree: Element, hashtree: bool = False):
-    xml_data = ''
-    for element in list(xml_tree):
-        xml_data += tostring(element).decode('utf-8')
+
+def tree_to_str(xml_tree: ElementTree, hashtree: bool = False):
+    xml_data = tostring(xml_tree.getroot()).decode('utf-8')
     if hashtree:
-        xml_data += '<hashTree/>'
+        xml_data += '\n<hashTree/>'
     return unescape(xml_data)
+
+
+

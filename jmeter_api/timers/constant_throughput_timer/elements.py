@@ -69,4 +69,4 @@ class ConstantThroughputTimer(BasicTimer, Renderable):
         double_prop_value = double_prop.find('value')
         double_prop_value.text = str(self.targ_throughput)
 
-        return tree_to_str(xml_tree)
+        return tree_to_str(xml_tree, hashtree=True)

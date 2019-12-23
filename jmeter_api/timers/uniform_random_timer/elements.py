@@ -73,4 +73,4 @@ class UniformRandTimer(BasicTimer, Renderable):
                     element.text = str(self.offset_delay)
             except KeyError:
                 continue
-        return tree_to_str(xml_tree)
+        return tree_to_str(xml_tree, hashtree=True)

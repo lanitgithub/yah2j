@@ -186,4 +186,4 @@ class RegExpPost(BasicPostProcessor, Renderable):
                     flag = False
             except KeyError:
                 logging.error(f'Unable to render XML')
-        return tree_to_str(xml_tree)
+        return tree_to_str(xml_tree, hashtree=True)

@@ -71,4 +71,4 @@ class HTTPCacheManager(BasicConfig, Renderable):
             except KeyError:
                 logging.error(
                     f'Unable to properly convert {self.__class__} to xml.')
-        return tree_to_str(xml_tree)
+        return tree_to_str(xml_tree, hashtree=True)

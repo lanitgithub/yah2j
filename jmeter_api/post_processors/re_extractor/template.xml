@@ -6,5 +6,4 @@
         <stringProp name="RegexExtractor.template"></stringProp>
         <stringProp name="RegexExtractor.default"></stringProp>
         <stringProp name="RegexExtractor.match_number"></stringProp>
-    </RegexExtractor>
-<hashTree/>
+</RegexExtractor>

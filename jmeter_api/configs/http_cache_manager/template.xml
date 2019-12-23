@@ -3,4 +3,3 @@
   <boolProp name="useExpires">true</boolProp>
   <intProp name="maxSize"></intProp>
 </CacheManager>
-<hashTree/>
