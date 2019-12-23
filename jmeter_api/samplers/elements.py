@@ -54,6 +54,7 @@ class HttpRequest(BasicSampler, IncludesElements, Renderable):
 
     root_element_name = 'HTTPSamplerProxy'
     TEMPLATE = 'http_request_template.xml'
+    _can_include = (ConstantTimer)
 
     def __init__(self, *,
                  name: str = 'HTTP Request',

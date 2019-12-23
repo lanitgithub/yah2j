@@ -48,7 +48,7 @@ class IncludesElements(ABC):
         self._elements: List[Renderable] = []
 
     def append(self, new_element: Renderable):
-        if not isinstance(new_element, Renderable):
+        if not isinstance(new_element, self.can_include):
             raise TypeError(f'You can only add Renderable objects.')
         self._elements.append(new_element)
 
