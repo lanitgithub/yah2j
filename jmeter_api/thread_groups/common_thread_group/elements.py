@@ -12,7 +12,6 @@ import os
 class CommonThreadGroup(BasicThreadGroup, IncludesElements, Renderable):
 
     root_element_name = 'ThreadGroup'
-    TEMPLATE = 'common_thread_group_template.xml'
 
     def __init__(self, *,
                  continue_forever: bool,
@@ -72,25 +71,25 @@ class CommonThreadGroup(BasicThreadGroup, IncludesElements, Renderable):
 
     @property
     def sheduler_duration(self):
-        return self._loops
+        return self._sheduler_duration
 
     @sheduler_duration.setter
     def sheduler_duration(self, value: int):
         if not isinstance(value, int) or value < 0:
             raise TypeError(
                 f'arg: sheduler_duration should be positive int. {type(value).__name__} was given')
-        self._loops = value
+        self._sheduler_duration = value
 
     @property
     def sheduler_delay(self):
-        return self._loops
+        return self._sheduler_delay
 
     @sheduler_delay.setter
     def sheduler_delay(self, value: int):
         if not isinstance(value, int) or value < 0:
             raise TypeError(
                 f'arg: sheduler_delay should be positive int. {type(value).__name__} was given')
-        self._loops = value
+        self._sheduler_delay = value
 
     def to_xml(self) -> str:
         element_root, xml_tree = super()._add_basics()

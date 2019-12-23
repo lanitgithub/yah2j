@@ -7,7 +7,7 @@ from typing import List, Optional
 
 class TestPlan(NonTestElements, IncludesElements, Renderable):
     root_element_name = 'TestPlan'
-    TEMPLATE = 'test_plan_template.xml'
+
     def __init__(self,
                  functional_mode: bool = False,
                  teardown_on_shutdown: bool = True,
