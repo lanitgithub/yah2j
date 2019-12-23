@@ -15,11 +15,10 @@ class Renderable(ABC):
 
     def get_template(self) -> Element:
         element_path = os.path.dirname(inspect.getfile(self.__class__))
-        template_path = os.path.join(element_path, self.TEMPLATE)
-        with open(template_path) as file:
-             file_data = file.read()
-             wrapped_template = tag_wrapper(file_data, self.root_element_name)
-        template_as_element_tree = fromstring(wrapped_template)
+        template_path = os.path.join(element_path, self.TEMPLATE).replace('/', '\\')
+        # print(template_path)
+        # wrapped_template = tag_wrapper(file_data, self.root_element_name)
+        template_as_element_tree = ElementTree(file=template_path)
         return template_as_element_tree
 
     @abstractmethod

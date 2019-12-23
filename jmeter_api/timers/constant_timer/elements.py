@@ -1,4 +1,4 @@
-from xml.etree.ElementTree import Element, ElementTree, tostring
+from xml.etree.ElementTree import Element, ElementTree, tostring, parse
 from jmeter_api.basics.timer.elements import BasicTimer
 from jmeter_api.basics.utils import Renderable, tree_to_str
 from typing import Optional, Union
@@ -57,3 +57,10 @@ class ConstantTimer(BasicTimer, Renderable):
             except KeyError:
                 continue
         return tree_to_str(xml_tree)
+
+
+t = ConstantTimer()
+
+path = 'C:\\Users\\nikit\\PycharmProjects\\yah2j\\jmeter_api\\timers\\constant_timer\\template.xml'
+tree = ElementTree(file=path)
+print(t.to_xml())
