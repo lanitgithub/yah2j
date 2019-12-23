@@ -490,5 +490,68 @@
   </doubleProp>
   <stringProp name="TestPlan.comments" />
 </ConstantThroughputTimer>
+<hashTree /></hashTree><ThreadGroup element_type="CommonThreadGroup" enabled="true" guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="ThirdThreadGroup">
+  <stringProp name="TestPlan.comments" />
+  <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+  <elementProp elementType="LoopController" enabled="true" guiclass="LoopControlPanel" name="ThreadGroup.main_controller" testclass="LoopController" testname="Loop Controller">
+    <boolProp name="LoopController.continue_forever">true</boolProp>
+    <stringProp name="LoopController.loops">1</stringProp>
+  </elementProp>
+  <stringProp name="ThreadGroup.num_threads">1</stringProp>
+  <stringProp name="ThreadGroup.ramp_time">0</stringProp>
+  <boolProp name="ThreadGroup.scheduler">false</boolProp>
+  <stringProp name="ThreadGroup.duration">0</stringProp>
+  <stringProp name="ThreadGroup.delay">0</stringProp>
+</ThreadGroup>
+<hashTree><LoopController element_type="LoopController" enabled="true" guiclass="LoopControlPanel" testclass="LoopController" testname="loop3">
+    <boolProp name="LoopController.continue_forever">false</boolProp>
+    <stringProp name="LoopController.loops">3</stringProp>
+</LoopController>
+<hashTree><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request">
+    <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
+        <collectionProp name="Arguments.arguments" />
+    </elementProp>
+    <stringProp name="HTTPSampler.domain">www.google.com</stringProp>
+    <stringProp name="HTTPSampler.port" />
+    <stringProp name="HTTPSampler.protocol">http</stringProp>
+    <stringProp name="HTTPSampler.contentEncoding" />
+    <stringProp name="HTTPSampler.path">/</stringProp>
+    <stringProp name="HTTPSampler.method">GET</stringProp>
+    <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+    <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+    <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+    <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+    <stringProp name="HTTPSampler.embedded_url_re" />
+    <stringProp name="HTTPSampler.connect_timeout" />
+    <stringProp name="HTTPSampler.response_timeout" />
+    <stringProp name="TestPlan.comments" />
+<stringProp name="HTTPSampler.proxyPort" /></HTTPSamplerProxy>
+<hashTree /><LoopController element_type="LoopController" enabled="true" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">
+    <boolProp name="LoopController.continue_forever">true</boolProp>
+    <stringProp name="LoopController.loops">-1</stringProp>
+</LoopController>
+<hashTree><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request">
+    <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
+        <collectionProp name="Arguments.arguments" />
+    </elementProp>
+    <stringProp name="HTTPSampler.domain">www.google.com</stringProp>
+    <stringProp name="HTTPSampler.port" />
+    <stringProp name="HTTPSampler.protocol">http</stringProp>
+    <stringProp name="HTTPSampler.contentEncoding" />
+    <stringProp name="HTTPSampler.path">/</stringProp>
+    <stringProp name="HTTPSampler.method">GET</stringProp>
+    <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+    <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+    <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+    <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+    <stringProp name="HTTPSampler.embedded_url_re" />
+    <stringProp name="HTTPSampler.connect_timeout" />
+    <stringProp name="HTTPSampler.response_timeout" />
+    <stringProp name="TestPlan.comments" />
+<stringProp name="HTTPSampler.proxyPort" /></HTTPSamplerProxy>
+<hashTree /></hashTree></hashTree><LoopController element_type="LoopController" enabled="true" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">
+    <boolProp name="LoopController.continue_forever">false</boolProp>
+    <stringProp name="LoopController.loops">1</stringProp>
+</LoopController>
 <hashTree /></hashTree></hashTree>
 </hashTree></jmeterTestPlan>
