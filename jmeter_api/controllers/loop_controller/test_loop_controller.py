@@ -23,7 +23,7 @@ class TestLoopController:
                 LoopController(continue_forever=True, loops=1)
         def test_check2(self):
             with pytest.raises(ValueError):
-                LoopController(continue_forever=False, loops=-1)
+                LoopController(loops=-1)
 
     class TestLoops:
         def test_check(self):
@@ -39,9 +39,6 @@ class TestLoopController:
 
         def test_zero(self):
             LoopController(loops=0)
-
-        def test_continue_forever(self):
-            LoopController(loops=-1)
 
         def test_negative(self):
             with pytest.raises(TypeError):
