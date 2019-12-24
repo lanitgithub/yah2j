@@ -92,4 +92,7 @@ class FlowControlAction(BasicSampler, IncludesElements, Renderable):
             except Exception:
                 logging.error(
                     f'Unable to render xml from {type(self).__class__}')
-        return tree_to_str(xml_tree, hashtree=True)
+        return tree_to_str(xml_tree)
+
+a = FlowControlAction()
+print(a.to_xml())

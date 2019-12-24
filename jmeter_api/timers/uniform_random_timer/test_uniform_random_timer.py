@@ -80,11 +80,3 @@ class TestUniformRandTimerXML:
         parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc, 'test_results'))
         assert parsed_doc['test_results']['UniformRandomTimer']['stringProp'][2]['#text'] == 'My comments'
 
-    def test_render_hashtree_contain(self) -> str:
-        element = UniformRandTimer(name='My timer',
-                                   comments='My comments',
-                                   offset_delay=123,
-                                   rand_delay=321,
-                                   is_enabled=False)
-        rendered_doc = element.to_xml()
-        assert '<hashTree />' in rendered_doc

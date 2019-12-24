@@ -5,7 +5,7 @@ from typing import Union
 from abc import ABC
 
 
-class UserDefinedVariables(Renderable):
+class UserDefinedVariable(Renderable):
 
     TEMPLATE = 'template'
 

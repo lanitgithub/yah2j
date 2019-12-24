@@ -60,10 +60,3 @@ class TestConstantTimerRender:
         parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc, 'test_results'))
         assert parsed_doc['test_results']['ConstantTimer']['stringProp'][1]['#text'] == '123'
 
-    def test_hashtree_contain(self):
-        element = ConstantTimer(name='My timer',
-                                comments='My comments',
-                                delay=123,
-                                is_enabled=False)
-        rendered_doc = element.to_xml()
-        assert '<hashTree />' in rendered_doc

@@ -1,4 +1,7 @@
 from jmeter_api.samplers.http_request.elements import HttpRequest, Method, Protocol, Implement, Source
+from jmeter_api.timers.constant_throughput_timer.elements import ConstantThroughputTimer
+from jmeter_api.basics.sampler.file_upload.elements import FileUpload
+from jmeter_api.basics.sampler.userdefined_vars.elements import UserDefinedVariable
 from jmeter_api.basics.utils import tag_wrapper
 import xmltodict
 import pytest
@@ -192,226 +195,278 @@ class TestHttpRequestRender:
 
     def test_method(self):
         element = HttpRequest(method=Method.HEAD)
-        rendered_doc = element.to_xml().replace('<hashTree />', '')
+        rendered_doc = element.to_xml()
+        rendered_doc = tag_wrapper(rendered_doc, 'root')
         parsed_doc = xmltodict.parse(rendered_doc)
-        for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
+        for tag in parsed_doc['root']['HTTPSamplerProxy']['stringProp']:
             if tag['@name'] == 'HTTPSampler.method':
                 assert tag['#text'] == 'HEAD'
 
     def test_protocol(self):
         element = HttpRequest(protocol=Protocol.FTP)
-        rendered_doc = element.to_xml().replace('<hashTree />', '')
+        rendered_doc = element.to_xml()
+        rendered_doc = tag_wrapper(rendered_doc, 'root')
         parsed_doc = xmltodict.parse(rendered_doc)
-        for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
+        for tag in parsed_doc['root']['HTTPSamplerProxy']['stringProp']:
             if tag['@name'] == 'HTTPSampler.protocol':
                 assert tag['#text'] == 'ftp'
 
     def test_port(self):
         element = HttpRequest(port=123)
-        rendered_doc = element.to_xml().replace('<hashTree />', '')
+        rendered_doc = element.to_xml()
+        rendered_doc = tag_wrapper(rendered_doc, 'root')
         parsed_doc = xmltodict.parse(rendered_doc)
-        for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
+        for tag in parsed_doc['root']['HTTPSamplerProxy']['stringProp']:
             if tag['@name'] == 'HTTPSampler.port':
                 assert tag['#text'] == '123'
 
     def test_port2(self):
         element = HttpRequest(port=None)
-        rendered_doc = element.to_xml().replace('<hashTree />', '')
+        rendered_doc = element.to_xml()
+        rendered_doc = tag_wrapper(rendered_doc, 'root')
         parsed_doc = xmltodict.parse(rendered_doc)
-        for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
+        for tag in parsed_doc['root']['HTTPSamplerProxy']['stringProp']:
             if tag['@name'] == 'HTTPSampler.port':
                 assert '#text' not in tag.keys()
 
     def test_content_encoding(self):
         element = HttpRequest(content_encoding='utf-8')
-        rendered_doc = element.to_xml().replace('<hashTree />', '')
+        rendered_doc = element.to_xml()
+        rendered_doc = tag_wrapper(rendered_doc, 'root')
         parsed_doc = xmltodict.parse(rendered_doc)
-        for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
+        for tag in parsed_doc['root']['HTTPSamplerProxy']['stringProp']:
             if tag['@name'] == 'HTTPSampler.contentEncoding':
                 assert tag['#text'] == 'utf-8'
 
     def test_auto_redirect(self):
         element = HttpRequest(auto_redirect=True)
-        rendered_doc = element.to_xml().replace('<hashTree />', '')
+        rendered_doc = element.to_xml()
+        rendered_doc = tag_wrapper(rendered_doc, 'root')
         parsed_doc = xmltodict.parse(rendered_doc)
-        for tag in parsed_doc['HTTPSamplerProxy']['boolProp']:
+        for tag in parsed_doc['root']['HTTPSamplerProxy']['boolProp']:
             if tag['@name'] == 'HTTPSampler.auto_redirects':
                 assert tag['#text'] == 'true'
 
     def test_keep_alive(self):
         element = HttpRequest(keep_alive=False)
-        rendered_doc = element.to_xml().replace('<hashTree />', '')
+        rendered_doc = element.to_xml()
+        rendered_doc = tag_wrapper(rendered_doc, 'root')
         parsed_doc = xmltodict.parse(rendered_doc)
-        for tag in parsed_doc['HTTPSamplerProxy']['boolProp']:
+        for tag in parsed_doc['root']['HTTPSamplerProxy']['boolProp']:
             if tag['@name'] == 'HTTPSampler.use_keepalive':
                 assert tag['#text'] == 'false'
 
     def test_do_multipart_post(self):
         element = HttpRequest(do_multipart_post=True)
-        rendered_doc = element.to_xml().replace('<hashTree />', '')
+        rendered_doc = element.to_xml()
+        rendered_doc = tag_wrapper(rendered_doc, 'root')
         parsed_doc = xmltodict.parse(rendered_doc)
-        for tag in parsed_doc['HTTPSamplerProxy']['boolProp']:
+        for tag in parsed_doc['root']['HTTPSamplerProxy']['boolProp']:
             if tag['@name'] == 'HTTPSampler.DO_MULTIPART_POST':
                 assert tag['#text'] == 'true'
 
     def test_browser_comp_headers(self):
         element = HttpRequest(browser_comp_headers=True)
-        rendered_doc = element.to_xml().replace('<hashTree />', '')
+        rendered_doc = element.to_xml()
+        rendered_doc = tag_wrapper(rendered_doc, 'root')
         parsed_doc = xmltodict.parse(rendered_doc)
-        for tag in parsed_doc['HTTPSamplerProxy']['boolProp']:
+        for tag in parsed_doc['root']['HTTPSamplerProxy']['boolProp']:
             if tag['@name'] == 'HTTPSampler.BROWSER_COMPATIBLE_MULTIPART':
                 assert tag['#text'] == 'true'
 
     def test_implementation(self):
         element = HttpRequest(implementation=Implement.JAVA)
-        rendered_doc = element.to_xml().replace('<hashTree />', '')
+        rendered_doc = element.to_xml()
+        rendered_doc = tag_wrapper(rendered_doc, 'root')
         parsed_doc = xmltodict.parse(rendered_doc)
-        for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
+        for tag in parsed_doc['root']['HTTPSamplerProxy']['stringProp']:
             if tag['@name'] == 'HTTPSampler.implementation':
                 assert tag['#text'] == 'Java'
 
     def test_connect_timeout(self):
         element = HttpRequest(connect_timeout=123)
-        rendered_doc = element.to_xml().replace('<hashTree />', '')
+        rendered_doc = element.to_xml()
+        rendered_doc = tag_wrapper(rendered_doc, 'root')
         parsed_doc = xmltodict.parse(rendered_doc)
-        for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
+        for tag in parsed_doc['root']['HTTPSamplerProxy']['stringProp']:
             if tag['@name'] == 'HTTPSampler.connect_timeout':
                 assert tag['#text'] == '123'
 
     def test_connect_timeout2(self):
         element = HttpRequest(connect_timeout=None)
-        rendered_doc = element.to_xml().replace('<hashTree />', '')
+        rendered_doc = element.to_xml()
+        rendered_doc = tag_wrapper(rendered_doc, 'root')
         parsed_doc = xmltodict.parse(rendered_doc)
-        for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
+        for tag in parsed_doc['root']['HTTPSamplerProxy']['stringProp']:
             if tag['@name'] == 'HTTPSampler.connect_timeout':
                 assert '#text' not in tag.keys()
 
     def test_response_timeout(self):
         element = HttpRequest(response_timeout=321)
-        rendered_doc = element.to_xml().replace('<hashTree />', '')
+        rendered_doc = element.to_xml()
+        rendered_doc = tag_wrapper(rendered_doc, 'root')
         parsed_doc = xmltodict.parse(rendered_doc)
-        for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
+        for tag in parsed_doc['root']['HTTPSamplerProxy']['stringProp']:
             if tag['@name'] == 'HTTPSampler.response_timeout':
                 assert tag['#text'] == '321'
 
     def test_response_timeout2(self):
         element = HttpRequest(response_timeout=None)
-        rendered_doc = element.to_xml().replace('<hashTree />', '')
+        rendered_doc = element.to_xml()
+        rendered_doc = tag_wrapper(rendered_doc, 'root')
         parsed_doc = xmltodict.parse(rendered_doc)
-        for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
+        for tag in parsed_doc['root']['HTTPSamplerProxy']['stringProp']:
             if tag['@name'] == 'HTTPSampler.response_timeout':
                 assert '#text' not in tag.keys()
 
     def test_retrieve_all_emb_resources(self):
         element = HttpRequest(
             retrieve_all_emb_resources=True)
-        rendered_doc = element.to_xml().replace('<hashTree />', '')
+        rendered_doc = element.to_xml()
+        rendered_doc = tag_wrapper(rendered_doc, 'root')
         parsed_doc = xmltodict.parse(rendered_doc)
-        for tag in parsed_doc['HTTPSamplerProxy']['boolProp']:
+        for tag in parsed_doc['root']['HTTPSamplerProxy']['boolProp']:
             if tag['@name'] == 'HTTPSampler.image_parser':
                 assert tag['#text'] == 'true'
 
     def test_parallel_downloads(self):
         element = HttpRequest(parallel_downloads=True)
-        rendered_doc = element.to_xml().replace('<hashTree />', '')
+        rendered_doc = element.to_xml()
+        rendered_doc = tag_wrapper(rendered_doc, 'root')
         parsed_doc = xmltodict.parse(rendered_doc)
-        for tag in parsed_doc['HTTPSamplerProxy']['boolProp']:
+        for tag in parsed_doc['root']['HTTPSamplerProxy']['boolProp']:
             if tag['@name'] == 'HTTPSampler.concurrentDwn':
                 assert tag['#text'] == 'true'
 
     def test_parallel_downloads_no(self):
         element = HttpRequest(parallel_downloads_no=6)
-        rendered_doc = element.to_xml().replace('<hashTree />', '')
+        rendered_doc = element.to_xml()
+        rendered_doc = tag_wrapper(rendered_doc, 'root')
         parsed_doc = xmltodict.parse(rendered_doc)
-        for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
+        for tag in parsed_doc['root']['HTTPSamplerProxy']['stringProp']:
             if tag['@name'] == 'HTTPSampler.concurrentPool':
                 assert tag['#text'] == '6'
 
     def test_parallel_downloads_no2(self):
         element = HttpRequest(parallel_downloads_no=None)
-        rendered_doc = element.to_xml().replace('<hashTree />', '')
+        rendered_doc = element.to_xml()
+        rendered_doc = tag_wrapper(rendered_doc, 'root')
         parsed_doc = xmltodict.parse(rendered_doc)
-        for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
+        for tag in parsed_doc['root']['HTTPSamplerProxy']['stringProp']:
             if tag['@name'] == 'HTTPSampler.concurrentPool':
                 assert '#text' not in tag.keys()
 
     def test_url_must_match(self):
         element = HttpRequest(url_must_match='url_match')
-        rendered_doc = element.to_xml().replace('<hashTree />', '')
+        rendered_doc = element.to_xml()
+        rendered_doc = tag_wrapper(rendered_doc, 'root')
         parsed_doc = xmltodict.parse(rendered_doc)
-        for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
+        for tag in parsed_doc['root']['HTTPSamplerProxy']['stringProp']:
             if tag['@name'] == 'HTTPSampler.embedded_url_re':
                 assert tag['#text'] == 'url_match'
 
     def test_source_type(self):
         element = HttpRequest(source_type=Source.IPV4)
-        rendered_doc = element.to_xml().replace('<hashTree />', '')
+        rendered_doc = element.to_xml()
+        rendered_doc = tag_wrapper(rendered_doc, 'root')
         parsed_doc = xmltodict.parse(rendered_doc)
-        assert parsed_doc['HTTPSamplerProxy']['intProp']['#text'] == '2'
+        assert parsed_doc['root']['HTTPSamplerProxy']['intProp']['#text'] == '2'
 
     def test_source_address(self):
         element = HttpRequest(source_address='test_source')
-        rendered_doc = element.to_xml().replace('<hashTree />', '')
+        rendered_doc = element.to_xml()
+        rendered_doc = tag_wrapper(rendered_doc, 'root')
         parsed_doc = xmltodict.parse(rendered_doc)
-        for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
+        for tag in parsed_doc['root']['HTTPSamplerProxy']['stringProp']:
             if tag['@name'] == 'HTTPSampler.ipSource':
                 assert tag['#text'] == 'test_source'
 
     def test_source_scheme(self):
         element = HttpRequest(proxy_scheme='test_scheme')
-        rendered_doc = element.to_xml().replace('<hashTree />', '')
+        rendered_doc = element.to_xml()
+        rendered_doc = tag_wrapper(rendered_doc, 'root')
         parsed_doc = xmltodict.parse(rendered_doc)
-        for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
+        for tag in parsed_doc['root']['HTTPSamplerProxy']['stringProp']:
             if tag['@name'] == 'HTTPSampler.proxyScheme':
                 assert tag['#text'] == 'test_scheme'
 
     def test_proxy_host(self):
         element = HttpRequest(proxy_host='proxy_localhost')
-        rendered_doc = element.to_xml().replace('<hashTree />', '')
+        rendered_doc = element.to_xml()
+        rendered_doc = tag_wrapper(rendered_doc, 'root')
         parsed_doc = xmltodict.parse(rendered_doc)
-        for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
+        for tag in parsed_doc['root']['HTTPSamplerProxy']['stringProp']:
             if tag['@name'] == 'HTTPSampler.proxyHost':
                 assert tag['#text'] == 'proxy_localhost'
 
     def test_proxy_port(self):
         element = HttpRequest(proxy_port=443)
-        rendered_doc = element.to_xml().replace('<hashTree />', '')
+        rendered_doc = element.to_xml()
+        rendered_doc = tag_wrapper(rendered_doc, 'root')
         parsed_doc = xmltodict.parse(rendered_doc)
-        for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
+        for tag in parsed_doc['root']['HTTPSamplerProxy']['stringProp']:
             if tag['@name'] == 'HTTPSampler.proxyPort':
                 assert tag['#text'] == '443'
 
     def test_proxy_port2(self):
         element = HttpRequest(proxy_port=None)
-        rendered_doc = element.to_xml().replace('<hashTree />', '')
+        rendered_doc = element.to_xml()
+        rendered_doc = tag_wrapper(rendered_doc, 'root')
         parsed_doc = xmltodict.parse(rendered_doc)
-        for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
+        for tag in parsed_doc['root']['HTTPSamplerProxy']['stringProp']:
             if tag['@name'] == 'HTTPSampler.proxyPort':
                 assert '#text' not in tag.keys()
 
     def test_proxy_username(self):
         element = HttpRequest(
             proxy_username='proxy_username')
-        rendered_doc = element.to_xml().replace('<hashTree />', '')
+        rendered_doc = element.to_xml()
+        rendered_doc = tag_wrapper(rendered_doc, 'root')
         parsed_doc = xmltodict.parse(rendered_doc)
-        for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
+        for tag in parsed_doc['root']['HTTPSamplerProxy']['stringProp']:
             if tag['@name'] == 'HTTPSampler.proxyUser':
                 assert tag['#text'] == 'proxy_username'
 
     def test_proxy_password(self):
         element = HttpRequest(proxy_password='pass')
-        rendered_doc = element.to_xml().replace('<hashTree />', '')
+        rendered_doc = element.to_xml()
+        rendered_doc = tag_wrapper(rendered_doc, 'root')
         parsed_doc = xmltodict.parse(rendered_doc)
-        for tag in parsed_doc['HTTPSamplerProxy']['stringProp']:
+        for tag in parsed_doc['root']['HTTPSamplerProxy']['stringProp']:
             if tag['@name'] == 'HTTPSampler.proxyPass':
                 assert tag['#text'] == 'pass'
 
-    def test_hashtree_contain(self):
-        element = HttpRequest(name='My http',
-                              host='localhost',
-                              path='/',
-                              method=Method.POST,
-                              comments='My comments',
-                              is_enabled=False)
-        rendered_doc = element.to_xml()
-        assert '<hashTree />' in rendered_doc
+
+class TestAppendableElements:
+    def test_append(self):
+        element = HttpRequest()
+        element.append(ConstantThroughputTimer())
+        assert len(element) == 1
+
+    def test_file_upload(self):
+        element = HttpRequest()
+        element.add_file_upload(FileUpload(param_name='test name'))
+        if element.get_len_upload_files():
+            rendered_doc = element.to_xml()
+            rendered_doc = tag_wrapper(rendered_doc, 'root')
+            parsed_doc = xmltodict.parse(rendered_doc)
+            parsed_doc = parsed_doc['root']['HTTPSamplerProxy']['elementProp'][0]['collectionProp']['elementProp']['stringProp']
+            for tag in parsed_doc:
+                if tag['@name'] == 'File.paramname':
+                    assert tag['#text'] == 'test name'
+        else:
+            raise Exception('No FileUpload elements was appended.')
+
+    def test_user_defined_variables(self):
+        element = HttpRequest()
+        element.add_user_variable(UserDefinedVariable(name='my var'))
+        if element.get_len_user_defined_vars():
+            rendered_doc = element.to_xml()
+            rendered_doc = tag_wrapper(rendered_doc, 'root')
+            parsed_doc = xmltodict.parse(rendered_doc)
+            parsed_doc = parsed_doc['root']['HTTPSamplerProxy']['elementProp']['collectionProp']['elementProp']['stringProp']
+            for tag in parsed_doc:
+                if tag['@name'] == 'Argument.name':
+                    assert tag['#text'] == 'my var'
+        else:
+            raise Exception('No UserDefinedVariable elements was appended.')

@@ -137,7 +137,3 @@ class TestRegExpPostRender:
         parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc, 'test_results'))
         assert parsed_doc['test_results']['RegexExtractor']['boolProp']['#text'] == 'true'
 
-    def test_hashtree_contain(self):
-        element = RegExpPost()
-        rendered_doc = tag_wrapper(element.to_xml(), 'result')
-        assert '<hashTree />' in rendered_doc

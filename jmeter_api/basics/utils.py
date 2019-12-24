@@ -50,6 +50,7 @@ class Renderable(ABC):
 
 
 class IncludesElements(ABC):
+
     def __init__(self):
         self._elements: List[Renderable] = []
 
@@ -57,14 +58,6 @@ class IncludesElements(ABC):
         if not isinstance(new_element, self.can_include):
             raise TypeError(f'You can only add Renderable objects.')
         self._elements.append(new_element)
-
-    def _add_hashtree(self, element_root: Element):
-        root_name = element_root.tag
-        hash_tree = Element('hashTree')
-        temp_root = Element('root')
-        temp_root.append(element_root)
-        temp_root.append(hash_tree)
-        return temp_root
 
     def _render_inner_elements(self) -> str:
         logging.info(f'{type(self).__name__} | Render inner elements started')

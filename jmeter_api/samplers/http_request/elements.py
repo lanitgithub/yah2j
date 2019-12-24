@@ -3,7 +3,7 @@ from jmeter_api.basics.timer.elements import BasicTimer
 from jmeter_api.basics.post_processor.elements import BasicPostProcessor
 from jmeter_api.basics.config.elements import BasicConfig
 from jmeter_api.basics.sampler.file_upload.elements import FileUpload
-from jmeter_api.basics.sampler.userdefined_vars.elements import UserDefinedVariables
+from jmeter_api.basics.sampler.userdefined_vars.elements import UserDefinedVariable
 from jmeter_api.basics.utils import IncludesElements, Renderable, tree_to_str
 from jmeter_api.timers.constant_timer.elements import ConstantTimer
 
@@ -122,7 +122,7 @@ class HttpRequest(BasicSampler, IncludesElements, Renderable):
         self.variables = ''
         self.text = ''
         self._upload_file_list: List[FileUpload] = []
-        self._user_defined_variables: List[UserDefinedVariables] = []
+        self._user_defined_variables: List[UserDefinedVariable] = []
 
     @property
     def host(self):
@@ -411,9 +411,9 @@ class HttpRequest(BasicSampler, IncludesElements, Renderable):
 
     def add_user_variable(self, *args) -> None:
         for element in args:
-            if not isinstance(element, UserDefinedVariables):
+            if not isinstance(element, UserDefinedVariable):
                 raise TypeError(
-                    f'You can add only UserDefinedVariables objects.')
+                    f'You can add only UserDefinedVariable objects.')
             self._user_defined_variables.append(element)
 
     def add_file_upload(self, *args):
@@ -445,6 +445,9 @@ class HttpRequest(BasicSampler, IncludesElements, Renderable):
     def get_len_upload_files(self) -> int:
         return len(self._upload_file_list)
 
+    def get_len_user_defined_vars(self) -> int:
+        return len(self._user_defined_variables)
+
     def add_body_data(self, text: str) -> None:
         self.text = text
 
@@ -456,7 +459,6 @@ class HttpRequest(BasicSampler, IncludesElements, Renderable):
         # default name and stuff setup
 
         element_root, xml_tree = super()._add_basics()
-        # element_root = super()._add_hashtree(element_root)
         for element in list(element_root):
             try:
                 if element.attrib['name'] == 'HTTPSampler.domain':
@@ -592,7 +594,7 @@ class HttpRequest(BasicSampler, IncludesElements, Renderable):
 
         # render upload files
         if self.get_len_upload_files():
-            content_root = element_root[0]
+            content_root = element_root
             content_root.text = self._render_upload()
 
         if not self.text:
@@ -600,6 +602,11 @@ class HttpRequest(BasicSampler, IncludesElements, Renderable):
             content_root.text = self._render_user_variables()
         else:
             content_root = element_root[0][0] # todo redo on [0][0]
-            body_data = UserDefinedVariables(value=self.text)
+
+            body_data = UserDefinedVariable(value=self.text)
             content_root.text = body_data.to_xml()
         return (tree_to_str(xml_tree) + xml_inner).replace('><', '>\n<')
+
+h = HttpRequest()
+h.add_file_upload(FileUpload(param_name='TEST', file_path='path'))
+print(h.to_xml())

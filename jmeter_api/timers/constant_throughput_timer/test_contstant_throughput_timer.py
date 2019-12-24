@@ -83,11 +83,3 @@ class TestConstantThroughputTimerRender:
         parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc, 'test_results'))
         assert parsed_doc['test_results']['ConstantThroughputTimer']['stringProp']['#text'] == 'My comments'
 
-    def test_hashtree_contain(self):
-        element = ConstantThroughputTimer(name='My tp timer',
-                                          targ_throughput=2,
-                                          based_on=BasedOn.THIS_THREAD_ONLY,
-                                          comments='My comments',
-                                          is_enabled=False)
-        rendered_doc = element.to_xml()
-        assert '<hashTree />' in rendered_doc
