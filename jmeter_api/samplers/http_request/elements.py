@@ -607,6 +607,3 @@ class HttpRequest(BasicSampler, IncludesElements, Renderable):
             content_root.text = body_data.to_xml()
         return (tree_to_str(xml_tree) + xml_inner).replace('><', '>\n<')
 
-h = HttpRequest()
-h.add_file_upload(FileUpload(param_name='TEST', file_path='path'))
-print(h.to_xml())
