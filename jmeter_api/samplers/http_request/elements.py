@@ -5,7 +5,6 @@ from jmeter_api.basics.config.elements import BasicConfig
 from jmeter_api.basics.sampler.file_upload.elements import FileUpload
 from jmeter_api.basics.sampler.userdefined_vars.elements import UserDefinedVariable
 from jmeter_api.basics.utils import IncludesElements, Renderable, tree_to_str
-from jmeter_api.timers.constant_timer.elements import ConstantTimer
 
 from xml.etree.ElementTree import tostring, SubElement
 from xml.sax.saxutils import unescape

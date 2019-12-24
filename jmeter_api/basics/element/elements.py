@@ -1,5 +1,3 @@
-from xml.etree.ElementTree import Element, tostring
-from jmeter_api.basics.utils import Renderable
 from settings import logging
 from abc import ABC
 
