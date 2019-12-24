@@ -9,7 +9,6 @@ from jmeter_api.timers.constant_timer.elements import ConstantTimer
 
 from xml.etree.ElementTree import tostring, SubElement
 from xml.sax.saxutils import unescape
-from jmeter_api.basics.utils import CheckCanIncludeMeta
 from typing import Union, List
 import logging
 from enum import Enum
@@ -57,6 +56,7 @@ class Implement(Enum):
 
 
 class HttpRequest(BasicSampler, IncludesElements, Renderable):
+
     can_include = (BasicTimer, BasicPostProcessor, BasicConfig,)
 
     def __init__(self, *,
@@ -606,4 +606,3 @@ class HttpRequest(BasicSampler, IncludesElements, Renderable):
             body_data = UserDefinedVariable(value=self.text)
             content_root.text = body_data.to_xml()
         return (tree_to_str(xml_tree) + xml_inner).replace('><', '>\n<')
-

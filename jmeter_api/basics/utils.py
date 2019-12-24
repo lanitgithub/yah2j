@@ -8,15 +8,6 @@ import inspect
 import os
 
 
-class CheckCanIncludeMeta(type):
-
-    def __new__(cls, name, bases, dct, *args, **kwargs):
-        print("METAAA")
-        if 'can_include' not in dct.keys():
-            raise ValueError(f'Please add "can_include" variable (tuple) to your class.')
-        return super().__new__(cls, name, bases, dct)
-
-
 class Renderable(ABC):
 
     TEMPLATE = 'template.xml'
@@ -56,7 +47,7 @@ class IncludesElements(ABC):
 
     def append(self, new_element: Renderable):
         if not isinstance(new_element, self.can_include):
-            raise TypeError(f'You can only add Renderable objects.')
+            raise TypeError(f'You can only add alowed objects.')
         self._elements.append(new_element)
 
     def _render_inner_elements(self) -> str:
