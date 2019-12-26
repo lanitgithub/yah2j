@@ -1,8 +1,8 @@
 from settings import logging
-from abc import ABC
+from abc import ABCMeta
 
 
-class BasicElement(ABC):
+class BasicElement(ABCMeta):
 
     root_element_name = 'Arguments'
 

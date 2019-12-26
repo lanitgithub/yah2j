@@ -605,3 +605,5 @@ class HttpRequest(BasicSampler, IncludesElements, Renderable):
             body_data = UserDefinedVariable(value=self.text)
             content_root.text = body_data.to_xml()
         return (tree_to_str(xml_tree) + xml_inner).replace('><', '>\n<')
+
+h = HttpRequest()

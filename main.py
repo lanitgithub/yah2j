@@ -116,7 +116,10 @@ def set_times_in_entries(entries_data):
                 group_start_epoch = current_entry.started_date_time.timestamp()
             if current_entry.started_date_time.timestamp() > group_end_epoch:
                 group_end_epoch = current_entry.started_date_time.timestamp()
-            group_static_time_millisec += current_entry.time
+            try:
+                group_static_time_millisec += current_entry.time
+            except TypeError as error:
+                logging.error(error)
 
         group_non_static_time_millisec = 0
         for entry in entries_data['entries'][entry_group_name]['non-static']:
@@ -129,7 +132,10 @@ def set_times_in_entries(entries_data):
                 group_start_epoch = current_entry.started_date_time.timestamp()
             if current_entry.started_date_time.timestamp() > group_end_epoch:
                 group_end_epoch = current_entry.started_date_time.timestamp()
-            group_non_static_time_millisec += current_entry.time
+            try:
+                group_non_static_time_millisec += current_entry.time
+            except TypeError as error:
+                logging.error(error)
 
         group_total_time_millisec = group_static_time_millisec + \
             group_non_static_time_millisec
@@ -161,17 +167,19 @@ def set_times_in_entries(entries_data):
     entries_data['static_time_millisec'] = static_time_millisec
     entries_data['non_static_time_millisec'] = non_static_time_millisec
     entries_data['total_time_with_think_time'] = total_time_with_think_time
-
-    entries_data['minutes_on_one_iteration_with_think_time'] = entries_data['total_time_with_think_time'] / MILLISEC_IN_MUNUTE
-    entries_data['throughput_in_minute_with_think_time'] = MILLISEC_IN_MUNUTE / \
-        entries_data['total_time_with_think_time']
-    entries_data['minutes_on_one_iteration_with_out_think_time'] = entries_data['total_time_millisec'] / \
-        MILLISEC_IN_MUNUTE
-    entries_data['throughput_in_minute_with_out_think_time'] = MILLISEC_IN_MUNUTE / \
-        entries_data['total_time_millisec']
-    entries_data['minutes_on_one_iteration_non_static'] = entries_data['non_static_time_millisec'] / MILLISEC_IN_MUNUTE
-    entries_data['throughput_in_minute_non_static'] = MILLISEC_IN_MUNUTE / \
-        entries_data['non_static_time_millisec']
+    try:
+        entries_data['minutes_on_one_iteration_with_think_time'] = entries_data['total_time_with_think_time'] / MILLISEC_IN_MUNUTE
+        entries_data['throughput_in_minute_with_think_time'] = MILLISEC_IN_MUNUTE / \
+            entries_data['total_time_with_think_time']
+        entries_data['minutes_on_one_iteration_with_out_think_time'] = entries_data['total_time_millisec'] / \
+            MILLISEC_IN_MUNUTE
+        entries_data['throughput_in_minute_with_out_think_time'] = MILLISEC_IN_MUNUTE / \
+            entries_data['total_time_millisec']
+        entries_data['minutes_on_one_iteration_non_static'] = entries_data['non_static_time_millisec'] / MILLISEC_IN_MUNUTE
+        entries_data['throughput_in_minute_non_static'] = MILLISEC_IN_MUNUTE / \
+            entries_data['non_static_time_millisec']
+    except ZeroDivisionError:
+        logging.error(ZeroDivisionError)
     return entries_data
 
 
@@ -206,7 +214,7 @@ def write_entries_data(entries_data: dict, filename: str):
 
 
 def main():
-    filename = 'test5.har'
+    filename = 'C:\\Users\\nikit\\Desktop\\Лонит\\support.ecwid.com.har'
     with open(filename, encoding='utf-8-sig', errors='ignore') as file:
         json_data = json.load(file, strict=False)
         har_data = har_data_from_dict(json_data)
@@ -219,7 +227,6 @@ def main():
         entries_data = count_requests(entries_data)
         entries_data = set_times_in_entries(entries_data)
         write_entries_data(entries_data, filename)
-
 
 if __name__ == "__main__":
     main()

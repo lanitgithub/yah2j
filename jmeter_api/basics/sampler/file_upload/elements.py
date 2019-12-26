@@ -2,10 +2,10 @@ from jmeter_api.basics.element.elements import BasicElement
 from jmeter_api.basics.utils import Renderable, tree_to_str
 from xml.etree.ElementTree import tostring, SubElement
 from typing import Union
-from abc import ABC
+from abc import ABCMeta
 
 
-class BasicSampler(BasicElement, ABC):
+class BasicSampler(BasicElement, ABCMeta):
     def __init__(self,
                  name: str = 'BasicSampler',
                  comments: str = '',
