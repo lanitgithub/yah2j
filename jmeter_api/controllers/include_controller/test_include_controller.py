@@ -14,13 +14,18 @@ class TestIncludeController:
             with pytest.raises(OSError):
                 IncludeController(includePath = "wrong file")
 
+        def test_check2(self):
+            with pytest.raises(ValueError):
+                IncludeController(includePath = "jmeter_api/controllers/include_controller/elements.py")
+
         def test_positive(self):
-            IncludeController(includePath = "main.py")
+            IncludeController(includePath = "jmeter_api/controllers/include_controller/include_test.jmx")
 
 
 class TestSwitchControllerRender:
     def test_condition(self):
-        element = IncludeController(includePath = "main.py")
+        file = "jmeter_api/controllers/include_controller/include_test.jmx"
+        element = IncludeController(includePath = file)
         rendered_doc = element.to_xml()
         parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc, 'test_results'))
-        assert parsed_doc['test_results']['IncludeController']['stringProp']['#text'] == 'main.py'
+        assert parsed_doc['test_results']['IncludeController']['stringProp']['#text'] == file

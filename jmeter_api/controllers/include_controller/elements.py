@@ -31,7 +31,10 @@ class IncludeController(BasicController, IncludesElements, Renderable):
         if not isinstance(value, str):
             raise TypeError(f'switchValue must be str. switchValue {type(value)} = {value}')
         if not os.path.isfile(value):
-            raise OSError('File ' + value + ' not found') 
+            raise OSError('File ' + value + ' not found')
+        filename, file_extension = os.path.splitext(value)
+        if not file_extension == '.jmx':
+            raise ValueError('File must be a jmx file')
         else:
             self._includePath = value
 
