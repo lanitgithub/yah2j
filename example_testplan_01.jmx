@@ -549,10 +549,13 @@
     <stringProp name="HTTPSampler.response_timeout" />
     <stringProp name="TestPlan.comments" />
 <stringProp name="HTTPSampler.proxyPort" /></HTTPSamplerProxy>
-<hashTree /></hashTree></hashTree><IfController element_type="IfController" enabled="true" guiclass="IfControllerPanel" testclass="IfController" testname="If Controller">
-    <stringProp name="IfController.condition">True</stringProp>
-    <boolProp name="IfController.evaluateAll">false</boolProp>
-    <boolProp name="IfController.useExpression">true</boolProp>
-</IfController>
+<hashTree /></hashTree></hashTree><ModuleController element_type="ModuleController" enabled="true" guiclass="ModuleControllerGui" testclass="ModuleController" testname="Module Controller">
+	<collectionProp name="ModuleController.node_path">
+		<stringProp name="764597751">Test Plan</stringProp>
+	<stringProp name="5794764391">NewTestPlan</stringProp>
+	<stringProp name="2147838651">ThirdThreadGroup</stringProp>
+	<stringProp name="8236754751">loop3</stringProp>
+	</collectionProp>
+</ModuleController>
 <hashTree /></hashTree></hashTree>
 </hashTree></jmeterTestPlan>
