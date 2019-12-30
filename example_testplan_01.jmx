@@ -549,9 +549,10 @@
     <stringProp name="HTTPSampler.response_timeout" />
     <stringProp name="TestPlan.comments" />
 <stringProp name="HTTPSampler.proxyPort" /></HTTPSamplerProxy>
-<hashTree /></hashTree></hashTree><LoopController element_type="LoopController" enabled="true" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">
-    <boolProp name="LoopController.continue_forever">false</boolProp>
-    <stringProp name="LoopController.loops">1</stringProp>
-</LoopController>
+<hashTree /></hashTree></hashTree><IfController element_type="IfController" enabled="true" guiclass="IfControllerPanel" testclass="IfController" testname="If Controller">
+    <stringProp name="IfController.condition">True</stringProp>
+    <boolProp name="IfController.evaluateAll">false</boolProp>
+    <boolProp name="IfController.useExpression">true</boolProp>
+</IfController>
 <hashTree /></hashTree></hashTree>
 </hashTree></jmeterTestPlan>
