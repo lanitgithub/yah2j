@@ -47,7 +47,7 @@ class InterleaveController(BasicController, IncludesElements, Renderable):
         if not isinstance(value, bool):
             raise TypeError(f'ignoreSubControllers must be bool. ignoreSubControllers {type(value)} = {value}')
         else:
-            self._accrossThreads = str(value)
+            self._accrossThreads = str(value).lower()
 
     def to_xml(self) -> str:
         element_root, xml_tree = super()._add_basics()

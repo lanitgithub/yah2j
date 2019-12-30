@@ -75,10 +75,8 @@ class ThroughputController(BasicController, IncludesElements, Renderable):
         for element in list(element_root):
             try:
                 if element.tag == 'FloatProperty':
-                    print("FloatProperty")
                     for el in element:
                         if el.tag == 'value':
-                            print("value")
                             if self.throughputMode == ThroughputMode.PERCENT:
                                 el.text = str(self.throughput)
                             else:

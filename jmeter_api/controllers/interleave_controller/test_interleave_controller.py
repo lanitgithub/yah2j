@@ -1,4 +1,4 @@
-from jmeter_api.controllers.random_controller.elements import InterleaveController
+from jmeter_api.controllers.interleave_controller.elements import InterleaveController
 from jmeter_api.basics.utils import tag_wrapper
 import xmltodict
 import pytest
@@ -35,10 +35,10 @@ class TestInterleaveControllerRender:
         element = InterleaveController(ignoreSubControllers = True)
         rendered_doc = element.to_xml()
         parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc, 'test_results'))
-        assert parsed_doc['test_results']['InterleaveControll']['intProp']['#text'] == '0'
+        assert parsed_doc['test_results']['InterleaveControl']['intProp']['#text'] == '0'
 
     def test_accross_threads(self):
         element = InterleaveController(accrossThreads = True)
         rendered_doc = element.to_xml()
         parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc, 'test_results'))
-        assert parsed_doc['test_results']['InterleaveControll']['boolProp']['#text'] == 'true'
+        assert parsed_doc['test_results']['InterleaveControl']['boolProp']['#text'] == 'true'

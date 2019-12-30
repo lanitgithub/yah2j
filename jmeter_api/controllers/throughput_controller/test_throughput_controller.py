@@ -71,4 +71,4 @@ class TestThroughputControllerRender:
         element = ThroughputController(throughputMode = ThroughputMode.PERCENT, throughput = 80)
         rendered_doc = element.to_xml()
         parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc, 'test_results'))
-        assert parsed_doc['test_results']['ThroughputController']['FloatProperty']['value']['#text'] == '80'
+        assert parsed_doc['test_results']['ThroughputController']['FloatProperty']['value'] == '80.0'

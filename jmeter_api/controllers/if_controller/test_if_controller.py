@@ -20,26 +20,26 @@ class TestIfController:
     class TestEvaluateAll:
         def test_check(self):
             with pytest.raises(TypeError):
-                IfController(evaluateAll = "True")
+                IfController(condition = "True", evaluateAll = "True")
 
         def test_check2(self):
             with pytest.raises(TypeError):
-                IfController(evaluateAll = 1)
+                IfController(condition = "True", evaluateAll = 1)
 
         def test_positive(self):
-            IfController(evaluateAll = True)
+            IfController(condition = "True", evaluateAll = True)
 
     class TestUseExpression:
         def test_check(self):
             with pytest.raises(TypeError):
-                IfController(useExpression = "False")
+                IfController(condition = "True", useExpression = "False")
 
         def test_check2(self):
             with pytest.raises(TypeError):
-                IfController(useExpression = 0)
+                IfController(condition = "True", useExpression = 0)
 
         def test_positive(self):
-            IfController(useExpression = False)
+            IfController(condition = "True", useExpression = False)
             
 
 

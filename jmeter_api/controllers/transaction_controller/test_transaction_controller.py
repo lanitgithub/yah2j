@@ -8,26 +8,26 @@ class TestTransactionController:
     class TestIncludeTimers:
         def test_check(self):
             with pytest.raises(TypeError):
-                IfController(evaluateAll = "True")
+                TransactionController(includeTimers = "True")
 
         def test_check2(self):
             with pytest.raises(TypeError):
-                IfController(evaluateAll = 1)
+                TransactionController(includeTimers = 1)
 
         def test_positive(self):
-            IfController(evaluateAll = True)
+            TransactionController(includeTimers = True)
 
     class TestParent:
         def test_check(self):
             with pytest.raises(TypeError):
-                IfController(useExpression = "False")
+                TransactionController(parent = "False")
 
         def test_check2(self):
             with pytest.raises(TypeError):
-                IfController(useExpression = 0)
+                TransactionController(parent = 0)
 
         def test_positive(self):
-            IfController(useExpression = True)
+            TransactionController(parent = True)
             
 
 
@@ -37,4 +37,4 @@ class TestTransactionControllerRender:
         element = TransactionController()
         rendered_doc = element.to_xml()
         parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc, 'test_results'))
-        assert parsed_doc['test_results']['TransactionController']['boolProp']['#text'] == 'false'
+        assert parsed_doc['test_results']['TransactionController']['boolProp'][0]['#text'] == 'false'
