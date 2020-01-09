@@ -5,6 +5,7 @@ from jmeter_api.non_test_elements.test_plan.elements import TestPlan
 from jmeter_api.controllers.loop_controller.elements import LoopController
 from jmeter_api.controllers.module_controller.elements import ModuleController
 from jmeter_api.samplers.http_request.elements import HttpRequest
+from jmeter_api.samplers.JSR223.elements import JSR223
 from jmeter_api.thread_groups.common_thread_group.elements import CommonThreadGroup
 
 if __name__ == "__main__":
@@ -13,7 +14,7 @@ if __name__ == "__main__":
     test_plan.append(CommonThreadGroup(continue_forever=True, name='FirstThreadGroup')
                      .append(HttpRequest(host='www.google.com'))
                      .append(HttpRequest(host='www.google.com'))
-                     .append(HttpRequest(host='www.google.com'))
+                     .append(JSR223(filename='./README.md'))
                      .append(ConstantTimer(delay=1000))
                      )
     second_thread_group = CommonThreadGroup(continue_forever=True, name='SecondThreadGroup')
