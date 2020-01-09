@@ -490,19 +490,7 @@
   </doubleProp>
   <stringProp name="TestPlan.comments" />
 </ConstantThroughputTimer>
-<hashTree /></hashTree><ThreadGroup element_type="CommonThreadGroup" enabled="true" guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="ThirdThreadGroup">
-  <stringProp name="TestPlan.comments" />
-  <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
-  <elementProp elementType="LoopController" enabled="true" guiclass="LoopControlPanel" name="ThreadGroup.main_controller" testclass="LoopController" testname="Loop Controller">
-    <boolProp name="LoopController.continue_forever">true</boolProp>
-    <stringProp name="LoopController.loops">1</stringProp>
-  </elementProp>
-  <stringProp name="ThreadGroup.num_threads">1</stringProp>
-  <stringProp name="ThreadGroup.ramp_time">0</stringProp>
-  <boolProp name="ThreadGroup.scheduler">false</boolProp>
-  <stringProp name="ThreadGroup.duration">0</stringProp>
-  <stringProp name="ThreadGroup.delay">0</stringProp>
-</ThreadGroup>
+<hashTree /></hashTree><TestFragmentController element_type="TestFragment" enabled="true" guiclass="TestFragmentControllerGui" testclass="TestFragmentController" testname="Test Fragment" />
 <hashTree><LoopController element_type="LoopController" enabled="true" guiclass="LoopControlPanel" testclass="LoopController" testname="loop3">
     <boolProp name="LoopController.continue_forever">false</boolProp>
     <stringProp name="LoopController.loops">3</stringProp>
@@ -552,10 +540,7 @@
 <hashTree /></hashTree></hashTree><ModuleController element_type="ModuleController" enabled="true" guiclass="ModuleControllerGui" testclass="ModuleController" testname="Module Controller">
 	<collectionProp name="ModuleController.node_path">
 		<stringProp name="764597751">Test Plan</stringProp>
-	<stringProp name="5794764391">NewTestPlan</stringProp>
-	<stringProp name="2147838651">ThirdThreadGroup</stringProp>
-	<stringProp name="8236754751">loop3</stringProp>
-	</collectionProp>
+	<stringProp name="8712238733">NewTestPlan</stringProp><stringProp name="7805637930">Test Fragment</stringProp><stringProp name="5531644201">loop3</stringProp></collectionProp>
 </ModuleController>
 <hashTree /></hashTree></hashTree>
 </hashTree></jmeterTestPlan>
