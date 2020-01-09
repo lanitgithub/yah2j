@@ -22,7 +22,7 @@ class TestIncludeController:
             IncludeController(includePath = "jmeter_api/controllers/include_controller/include_test.jmx")
 
 
-class TestSwitchControllerRender:
+class TestIncludeControllerRender:
     def test_condition(self):
         file = "jmeter_api/controllers/include_controller/include_test.jmx"
         element = IncludeController(includePath = file)
