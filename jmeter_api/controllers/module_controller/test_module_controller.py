@@ -18,7 +18,7 @@ class TestModuleController:
             ModuleController(node_path = "TEST_PLAN/TEST_FRAGMENT/CONTROLLER")
 
 
-class TestSwitchControllerRender:
+class TestModuleControllerRender:
     def test_condition(self):
         controller = "TEST_PLAN/TEST_FRAGMENT/CONTROLLER"
         element = ModuleController(node_path = controller)
