@@ -65,25 +65,13 @@
     <stringProp name="HTTPSampler.response_timeout" />
     <stringProp name="TestPlan.comments" />
 <stringProp name="HTTPSampler.proxyPort" /></HTTPSamplerProxy>
-<hashTree /><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request">
-    <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
-        <collectionProp name="Arguments.arguments" />
-    </elementProp>
-    <stringProp name="HTTPSampler.domain">www.google.com</stringProp>
-    <stringProp name="HTTPSampler.port" />
-    <stringProp name="HTTPSampler.protocol">http</stringProp>
-    <stringProp name="HTTPSampler.contentEncoding" />
-    <stringProp name="HTTPSampler.path">/</stringProp>
-    <stringProp name="HTTPSampler.method">GET</stringProp>
-    <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-    <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-    <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-    <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-    <stringProp name="HTTPSampler.embedded_url_re" />
-    <stringProp name="HTTPSampler.connect_timeout" />
-    <stringProp name="HTTPSampler.response_timeout" />
-    <stringProp name="TestPlan.comments" />
-<stringProp name="HTTPSampler.proxyPort" /></HTTPSamplerProxy>
+<hashTree /><JSR223Sampler element_type="JSR223" enabled="true" guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler">
+	<stringProp name="cacheKey">true</stringProp>
+	<stringProp name="filename" />
+	<stringProp name="parameters" />
+	<stringProp name="script">vars.put("value",1)</stringProp>
+	<stringProp name="scriptLanguage">groovy</stringProp>
+</JSR223Sampler>
 <hashTree /><ConstantTimer element_type="ConstantTimer" enabled="true" guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer">
     <stringProp name="TestPlan.comments" />
     <stringProp name="ConstantTimer.delay">1000</stringProp>
@@ -540,7 +528,7 @@
 <hashTree /></hashTree></hashTree><ModuleController element_type="ModuleController" enabled="true" guiclass="ModuleControllerGui" testclass="ModuleController" testname="Module Controller">
 	<collectionProp name="ModuleController.node_path">
 		<stringProp name="764597751">Test Plan</stringProp>
-	<stringProp name="8712238733">NewTestPlan</stringProp><stringProp name="7805637930">Test Fragment</stringProp><stringProp name="5531644201">loop3</stringProp></collectionProp>
+	<stringProp name="8021690477">NewTestPlan</stringProp><stringProp name="7531923887">Test Fragment</stringProp><stringProp name="2092709960">loop3</stringProp></collectionProp>
 </ModuleController>
 <hashTree /></hashTree></hashTree>
 </hashTree></jmeterTestPlan>
