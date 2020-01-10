@@ -1,11 +1,12 @@
-from xml.etree.ElementTree import Element, ElementTree, tostring, fromstring
+import os
+import inspect
+
+from xml.etree.ElementTree import Element, tostring, fromstring
 from xml.sax.saxutils import unescape
 from abc import ABC, abstractmethod
 from settings import logging
 from enum import Enum
 from typing import List, Optional
-import inspect
-import os
 
 
 class Renderable(ABC):
@@ -17,8 +18,8 @@ class Renderable(ABC):
         element_path = os.path.dirname(inspect.getfile(self.__class__))
         template_path = os.path.join(element_path, self.TEMPLATE)
         with open(template_path) as file:
-             file_data = file.read()
-             wrapped_template = tag_wrapper(file_data, self.root_element_name)
+            file_data = file.read()
+            wrapped_template = tag_wrapper(file_data, self.root_element_name)
         template_as_element_tree = fromstring(wrapped_template)
         return template_as_element_tree
 
@@ -85,9 +86,11 @@ def tag_wrapper(xml_data_text: str, tag_name: str) -> str:
 
 
 def test_plan_wrapper(xml_data_text: str) -> str:
-    header = '<?xml version="1.0" encoding="UTF-8"?><jmeterTestPlan version="1.2" properties="5.0" jmeter="5.1.1 r1855137"><hashTree>'
+    header = '<?xml version="1.0" encoding="UTF-8"?>\
+    <jmeterTestPlan version="1.2" properties="5.0" jmeter="5.1.1 r1855137"><hashTree>'
     footer = '</hashTree></jmeterTestPlan>'
     return f'{header}{xml_data_text}{footer}'
+
 
 def tree_to_str(xml_tree: Element, hashtree: bool = False):
     xml_data = ''

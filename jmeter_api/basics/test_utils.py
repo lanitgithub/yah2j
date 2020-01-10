@@ -1,9 +1,9 @@
+import re
+import xmltodict
+
 from jmeter_api.configs.http_cache_manager.elements import HTTPCacheManager
 from jmeter_api.thread_groups.common_thread_group.elements import CommonThreadGroup
-from jmeter_api.basics.utils import tag_wrapper, IncludesElements
-import xmltodict
-import pytest
-import re
+from jmeter_api.basics.utils import tag_wrapper
 
 
 class TestUtils:

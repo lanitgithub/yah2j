@@ -1,35 +1,34 @@
-from jmeter_api.controllers.transaction_controller.elements import TransactionController
-from jmeter_api.basics.utils import tag_wrapper
 import xmltodict
 import pytest
+
+from jmeter_api.controllers.transaction_controller.elements import TransactionController
+from jmeter_api.basics.utils import tag_wrapper
 
 
 class TestTransactionController:
     class TestIncludeTimers:
         def test_check(self):
             with pytest.raises(TypeError):
-                TransactionController(includeTimers = "True")
+                TransactionController(includeTimers="True")
 
         def test_check2(self):
             with pytest.raises(TypeError):
-                TransactionController(includeTimers = 1)
+                TransactionController(includeTimers=1)
 
         def test_positive(self):
-            TransactionController(includeTimers = True)
+            TransactionController(includeTimers=True)
 
     class TestParent:
         def test_check(self):
             with pytest.raises(TypeError):
-                TransactionController(parent = "False")
+                TransactionController(parent="False")
 
         def test_check2(self):
             with pytest.raises(TypeError):
-                TransactionController(parent = 0)
+                TransactionController(parent=0)
 
         def test_positive(self):
-            TransactionController(parent = True)
-            
-
+            TransactionController(parent=True)
 
 
 class TestTransactionControllerRender:

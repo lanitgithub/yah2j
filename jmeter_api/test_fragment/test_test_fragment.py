@@ -1,7 +1,6 @@
-from jmeter_api.test_fragment.elements import TestFragment
-from jmeter_api.basics.utils import tag_wrapper
-import xmltodict
 import pytest
+
+from jmeter_api.test_fragment.elements import TestFragment
 
 
 class TestTestFragment:
@@ -14,4 +13,3 @@ class TestTestFragment:
 
         def test_positive(self):
             TestFragment()
-

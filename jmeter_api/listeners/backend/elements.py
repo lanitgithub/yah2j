@@ -1,7 +1,7 @@
+import re
+
 from jmeter_api.basics.listener.elements import BasicListener
 from jmeter_api.basics.utils import Renderable, tree_to_str
-
-import re
 
 
 class BackendListener(BasicListener, Renderable):

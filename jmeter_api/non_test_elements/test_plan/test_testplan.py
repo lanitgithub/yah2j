@@ -1,7 +1,6 @@
-from jmeter_api.non_test_elements.test_plan.elements import TestPlan
-from jmeter_api.basics.utils import tag_wrapper
-import xmltodict
 import pytest
+
+from jmeter_api.non_test_elements.test_plan.elements import TestPlan
 
 
 class TestTestPlanArgs:

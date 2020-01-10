@@ -1,5 +1,6 @@
-from jmeter_api.basics.thread_group.elements import BasicThreadGroup, ThreadGroupAction
 import pytest
+
+from jmeter_api.basics.thread_group.elements import BasicThreadGroup, ThreadGroupAction
 
 
 class TestBasicThreadGroopArgs:

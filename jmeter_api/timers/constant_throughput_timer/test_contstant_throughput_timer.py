@@ -1,8 +1,8 @@
-from jmeter_api.timers.constant_throughput_timer.elements import ConstantThroughputTimer, BasedOn
-from jmeter_api.basics.utils import tag_wrapper
 import xmltodict
 import pytest
-import logging
+
+from jmeter_api.timers.constant_throughput_timer.elements import ConstantThroughputTimer, BasedOn
+from jmeter_api.basics.utils import tag_wrapper
 
 
 class TestConstantThroughputTimerArgs:

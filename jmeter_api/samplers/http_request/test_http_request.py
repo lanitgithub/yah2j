@@ -1,6 +1,7 @@
-from jmeter_api.samplers.http_request.elements import HttpRequest, Method, Protocol, Implement, Source
 import xmltodict
 import pytest
+
+from jmeter_api.samplers.http_request.elements import HttpRequest, Method, Protocol, Implement, Source
 
 
 class TestHttpRequestArgsTypes:

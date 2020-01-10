@@ -1,6 +1,6 @@
-from jmeter_api.basics.element.elements import BasicElement
 from abc import ABC
-import logging
+
+from jmeter_api.basics.element.elements import BasicElement
 
 
 class BasicTimer(BasicElement, ABC):

@@ -1,7 +1,8 @@
-from jmeter_api.post_processors.re_extractor.elements import RegExpPost, Scope, Field
-from jmeter_api.basics.utils import tag_wrapper
 import xmltodict
 import pytest
+
+from jmeter_api.post_processors.re_extractor.elements import RegExpPost, Scope, Field
+from jmeter_api.basics.utils import tag_wrapper
 
 
 class TestTypeCheckArgs:

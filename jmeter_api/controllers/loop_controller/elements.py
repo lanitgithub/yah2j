@@ -1,11 +1,5 @@
 from jmeter_api.basics.controller.elements import BasicController
 from jmeter_api.basics.utils import Renderable, IncludesElements, tree_to_str
-from xml.etree.ElementTree import Element, ElementTree, tostring
-from xml.sax.saxutils import unescape
-from typing import List, Optional
-from xml.sax.saxutils import unescape
-from settings import logging
-import os
 
 
 class LoopController(BasicController, IncludesElements, Renderable):
@@ -45,8 +39,7 @@ class LoopController(BasicController, IncludesElements, Renderable):
             raise TypeError(f'continue_forever must be bool. continue_forever {type(value)} = {value}')
         else:
             self._continue_forever = str(value).lower()
-           
-    
+
     @property
     def loops(self):
         return self._loops

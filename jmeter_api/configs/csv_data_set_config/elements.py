@@ -1,10 +1,11 @@
-from jmeter_api.basics.config.elements import BasicConfig
-from jmeter_api.basics.utils import Renderable, FileEncoding, tree_to_str
-from xml.etree.ElementTree import tostring
+import os
 import logging
+
 from typing import List
 from enum import Enum
-import os
+
+from jmeter_api.basics.config.elements import BasicConfig
+from jmeter_api.basics.utils import Renderable, FileEncoding, tree_to_str
 
 
 class ShareMode(Enum):

@@ -1,11 +1,5 @@
 from jmeter_api.basics.controller.elements import BasicController
 from jmeter_api.basics.utils import Renderable, IncludesElements, tree_to_str
-from xml.etree.ElementTree import Element, ElementTree, tostring
-from xml.sax.saxutils import unescape
-from typing import List, Optional
-from xml.sax.saxutils import unescape
-from settings import logging
-import os
 
 
 class WhileController(BasicController, IncludesElements, Renderable):

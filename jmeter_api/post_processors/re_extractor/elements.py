@@ -1,11 +1,13 @@
-from jmeter_api.basics.post_processor.elements import BasicPostProcessor
-from jmeter_api.basics.element.elements import Renderable
-from jmeter_api.basics.utils import tree_to_str
-from xml.etree.ElementTree import Element, SubElement, tostring
-from enum import Enum
-from typing import Union, Optional
 import logging
 import re
+
+from xml.etree.ElementTree import SubElement
+from enum import Enum
+from typing import Union
+
+from jmeter_api.basics.post_processor.elements import BasicPostProcessor
+from jmeter_api.basics.utils import Renderable
+from jmeter_api.basics.utils import tree_to_str
 
 
 class Scope(Enum):

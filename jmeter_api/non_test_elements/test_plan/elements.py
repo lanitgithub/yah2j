@@ -1,8 +1,8 @@
+from xml.etree.ElementTree import tostring
+from xml.sax.saxutils import unescape
+
 from jmeter_api.basics.non_test_elements.elements import NonTestElements
 from jmeter_api.basics.utils import Renderable, IncludesElements, test_plan_wrapper
-from xml.etree.ElementTree import Element, ElementTree, tostring
-from xml.sax.saxutils import unescape
-from typing import List, Optional
 
 
 class TestPlan(NonTestElements, IncludesElements, Renderable):
@@ -19,8 +19,7 @@ class TestPlan(NonTestElements, IncludesElements, Renderable):
         self.teardown_on_shutdown = teardown_on_shutdown
         self.serialize_threadgroups = serialize_threadgroups
         IncludesElements.__init__(self)
-        NonTestElements.__init__(
-            self, name=name, comments=comments, is_enabled=is_enabled)
+        NonTestElements.__init__(self, name=name, comments=comments, is_enabled=is_enabled)
 
     @property
     def functional_mode(self):
