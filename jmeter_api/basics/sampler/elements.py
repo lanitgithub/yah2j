@@ -1,17 +1,32 @@
 from jmeter_api.basics.element.elements import BasicElement
+from jmeter_api.basics.pre_processor.elements import BasicPreProcessor
+from jmeter_api.basics.post_processor.elements import BasicPostProcessor
+from jmeter_api.basics.config.elements import BasicConfig
+from jmeter_api.basics.timer.elements import BasicTimer
+from jmeter_api.basics.assertion.elements import BasicAssertion
+from jmeter_api.basics.listener.elements import BasicListener
+from jmeter_api.basics.utils import IncludesElements
 from jmeter_api.basics.utils import Renderable, tree_to_str
 from xml.etree.ElementTree import tostring, SubElement
 from typing import Union
 from abc import ABC
 
 
-class BasicSampler(BasicElement, ABC):
+class BasicSampler(BasicElement, IncludesElements, ABC):
     def __init__(self,
                  name: str = 'BasicSampler',
                  comments: str = '',
                  is_enabled: bool = True
                  ):
+        IncludesElements.__init__(self)
         super().__init__(name=name, comments=comments, is_enabled=is_enabled)
+
+    def append(self, new_element: Union[BasicTimer, BasicConfig, BasicPreProcessor, BasicPostProcessor, BasicAssertion, BasicListener]):
+        if not isinstance(new_element, (BasicTimer, BasicConfig, BasicPreProcessor, BasicPostProcessor, BasicAssertion, BasicListener)):
+            raise TypeError(
+                f'new_element must be BasicTimer, BasicConfig, BasicPreProcessor, BasicPostProcessor, BasicAssertion or BasicListener. {type(new_element)} was given')
+        self._elements.append(new_element)
+        return self
 
 
 class FileUpload(Renderable):

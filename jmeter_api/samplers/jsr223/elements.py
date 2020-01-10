@@ -19,7 +19,7 @@ class ScriptLanguage(Enum):
     JEXL = 'jexl'
     JEXL2 = 'jexl2'
 
-class JSR223(BasicSampler, IncludesElements, Renderable):
+class JSR223(BasicSampler, Renderable):
 
     root_element_name = 'JSR223Sampler'
 
@@ -42,7 +42,6 @@ class JSR223(BasicSampler, IncludesElements, Renderable):
         self.parameters = parameters
         self.script = script
         self.scriptLanguage = scriptLanguage
-        IncludesElements.__init__(self)
         BasicSampler.__init__(
             self, name=name, comments=comments, is_enabled=is_enabled)
 
