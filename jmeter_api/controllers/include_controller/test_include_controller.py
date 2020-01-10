@@ -13,8 +13,11 @@ class TestIncludeController:
         def test_check2(self):
             with pytest.raises(OSError):
                 IncludeController(includePath = "wrong file")
+        def test_check4(self):
+            with pytest.raises(OSError):
+                IncludeController(includePath = "")
 
-        def test_check2(self):
+        def test_check3(self):
             with pytest.raises(ValueError):
                 IncludeController(includePath = "jmeter_api/controllers/include_controller/elements.py")
 
