@@ -9,7 +9,7 @@ from random import random
 import os
 
 
-class ModuleController(BasicController, IncludesElements, Renderable):
+class ModuleController(BasicController, Renderable):
 
     root_element_name = 'ModuleController'
     TEMPLATE = 'module_controller_template.xml'
@@ -20,7 +20,6 @@ class ModuleController(BasicController, IncludesElements, Renderable):
                  comments: str = '',
                  is_enabled: bool = True,):
         self.node_path = node_path
-        IncludesElements.__init__(self)
         BasicController.__init__(self, name=name, comments=comments, is_enabled=is_enabled)         
                        
     @property

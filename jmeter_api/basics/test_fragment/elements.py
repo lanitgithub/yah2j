@@ -17,6 +17,7 @@ class BasicTestFragment(BasicElement, IncludesElements, ABC):
                  name: str = 'BasicTestFragment',
                  comments: str = '',
                  is_enabled: bool = True):
+        IncludesElements.__init__(self)
         super().__init__(name=name,
                          comments=comments,
                          is_enabled=is_enabled)
