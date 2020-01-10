@@ -8,7 +8,7 @@ from settings import logging
 import os
 
 
-class OnceOnlyController(BasicController, IncludesElements, Renderable):
+class OnceOnlyController(BasicController, Renderable):
 
     root_element_name = 'OnceOnlyController'
     TEMPLATE = 'once_only_controller_template.xml'
@@ -17,7 +17,6 @@ class OnceOnlyController(BasicController, IncludesElements, Renderable):
                  name: str = 'Once Only Controller',
                  comments: str = '',
                  is_enabled: bool = True,):
-        IncludesElements.__init__(self)
         BasicController.__init__(self, name=name, comments=comments, is_enabled=is_enabled)         
 
 

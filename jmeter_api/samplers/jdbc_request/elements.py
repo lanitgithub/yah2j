@@ -25,7 +25,7 @@ class ResultSetHandler(Enum):
     EDIT = '${}'
 
 
-class JdbcRequest(BasicSampler, IncludesElements, Renderable):
+class JdbcRequest(BasicSampler, Renderable):
 
     root_element_name = 'JDBCSampler'
 
@@ -43,8 +43,6 @@ class JdbcRequest(BasicSampler, IncludesElements, Renderable):
                  comments: str = '',
                  is_enabled: bool = True
                  ):
-
-        IncludesElements.__init__(self)
         BasicSampler.__init__(self, name=name, comments=comments, is_enabled=is_enabled)
         self.handle_result_set = handle_result_set
         self.result_variable_name = result_variable_name

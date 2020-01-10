@@ -8,7 +8,7 @@ from settings import logging
 import os
 
 
-class IncludeController(BasicController, IncludesElements, Renderable):
+class IncludeController(BasicController, Renderable):
 
     root_element_name = 'IncludeController'
     TEMPLATE = 'include_controller_template.xml'
@@ -19,7 +19,6 @@ class IncludeController(BasicController, IncludesElements, Renderable):
                  comments: str = '',
                  is_enabled: bool = True,):
         self.includePath = includePath
-        IncludesElements.__init__(self)
         BasicController.__init__(self, name=name, comments=comments, is_enabled=is_enabled)         
                        
     @property

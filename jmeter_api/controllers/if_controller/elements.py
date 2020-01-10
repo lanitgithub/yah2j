@@ -8,7 +8,7 @@ from settings import logging
 import os
 
 
-class IfController(BasicController, IncludesElements, Renderable):
+class IfController(BasicController, Renderable):
 
     root_element_name = 'IfController'
     TEMPLATE = 'if_controller_template.xml'
@@ -23,7 +23,6 @@ class IfController(BasicController, IncludesElements, Renderable):
         self.condition = condition
         self.evaluateAll = evaluateAll
         self.useExpression = useExpression
-        IncludesElements.__init__(self)
         BasicController.__init__(self, name=name, comments=comments, is_enabled=is_enabled)         
     
     @property

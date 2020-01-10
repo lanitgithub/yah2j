@@ -8,7 +8,7 @@ from settings import logging
 import os
 
 
-class RandomController(BasicController, IncludesElements, Renderable):
+class RandomController(BasicController, Renderable):
 
     root_element_name = 'RandomController'
     TEMPLATE = 'random_controller_template.xml'
@@ -19,7 +19,6 @@ class RandomController(BasicController, IncludesElements, Renderable):
                  comments: str = '',
                  is_enabled: bool = True,):
         self.ignoreSubControllers = ignoreSubControllers
-        IncludesElements.__init__(self)
         BasicController.__init__(self, name=name, comments=comments, is_enabled=is_enabled)         
     
     @property

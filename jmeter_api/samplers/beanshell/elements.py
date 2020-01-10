@@ -1,12 +1,10 @@
 from jmeter_api.basics.sampler.elements import BasicSampler
 from jmeter_api.basics.utils import IncludesElements, Renderable, tree_to_str
-
-from xml.etree.ElementTree import tostring, SubElement
-from xml.sax.saxutils import unescape
 import logging
+from xml.etree.ElementTree import tostring, SubElement
 import os
 
-class BeanShell(BasicSampler, IncludesElements, Renderable):
+class BeanShell(BasicSampler, Renderable):
 
     root_element_name = 'BeanShellSampler'
 
@@ -27,7 +25,6 @@ class BeanShell(BasicSampler, IncludesElements, Renderable):
         self.filename = filename
         self.parameters = parameters
         self.query = query
-        IncludesElements.__init__(self)
         BasicSampler.__init__(
             self, name=name, comments=comments, is_enabled=is_enabled)
 

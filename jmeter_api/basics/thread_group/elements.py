@@ -2,7 +2,12 @@ from jmeter_api.basics.element.elements import BasicElement
 from jmeter_api.basics.config.elements import BasicConfig
 from jmeter_api.basics.sampler.elements import BasicSampler
 from jmeter_api.basics.timer.elements import BasicTimer
+from jmeter_api.basics.pre_processor.elements import BasicPreProcessor
+from jmeter_api.basics.post_processor.elements import BasicPostProcessor
 from jmeter_api.basics.controller.elements import BasicController
+from jmeter_api.basics.assertion.elements import BasicAssertion
+from jmeter_api.basics.listener.elements import BasicListener
+from jmeter_api.basics.test_fragment.elements import BasicTestFragment
 from jmeter_api.basics.utils import IncludesElements
 from abc import ABC
 from typing import Union
@@ -28,14 +33,17 @@ class BasicThreadGroup(BasicElement, IncludesElements, ABC):
         self.num_threads = num_threads
         self.ramp_time = ramp_time
         self.on_sample_error = on_sample_error
+        IncludesElements.__init__(self)
         super().__init__(name=name,
                          comments=comments,
                          is_enabled=is_enabled)
 
-    def append(self, new_element: Union[BasicSampler, BasicTimer, BasicConfig, BasicController]):
-        if not isinstance(new_element, (BasicSampler, BasicTimer, BasicConfig, BasicController)):
+    def append(self, new_element: Union[BasicSampler, BasicTimer, BasicConfig, BasicController, BasicListener,\
+                                        BasicPreProcessor, BasicPostProcessor, BasicAssertion, BasicTestFragment]):
+        if not isinstance(new_element, (BasicSampler, BasicTimer, BasicConfig, BasicController, BasicListener,\
+                                        BasicPreProcessor, BasicPostProcessor, BasicAssertion, BasicTestFragment)):
             raise TypeError(
-                f'new_element must be BasicSampler, BasicTimer, BasicConfig or BasicController. {type(new_element)} was given')
+                f'new_element must be BasicSampler, BasicTimer, BasicConfig, BasicListener, BasicPreProcessor, BasicPostProcessor, BasicAssertion, BasicTestFragment or BasicController. {type(new_element)} was given')
         self._elements.append(new_element)
         return self
 
