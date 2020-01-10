@@ -1,6 +1,6 @@
 from jmeter_api.basics.sampler.elements import BasicSampler
 from jmeter_api.basics.utils import IncludesElements, Renderable, tree_to_str
-
+import logging
 from xml.etree.ElementTree import tostring, SubElement
 import os
 
