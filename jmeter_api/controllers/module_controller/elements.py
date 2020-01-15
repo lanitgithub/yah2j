@@ -1,12 +1,8 @@
+from random import random
+from xml.etree.ElementTree import Element
+
 from jmeter_api.basics.controller.elements import BasicController
 from jmeter_api.basics.utils import Renderable, IncludesElements, tree_to_str
-from xml.etree.ElementTree import Element, ElementTree, tostring
-from xml.sax.saxutils import unescape
-from typing import List, Optional
-from xml.sax.saxutils import unescape
-from settings import logging
-from random import random
-import os
 
 
 class ModuleController(BasicController, Renderable):
@@ -20,7 +16,10 @@ class ModuleController(BasicController, Renderable):
                  comments: str = '',
                  is_enabled: bool = True,):
         self.node_path = node_path
-        BasicController.__init__(self, name=name, comments=comments, is_enabled=is_enabled)         
+        BasicController.__init__(self, name=name, comments=comments, is_enabled=is_enabled)
+
+    def append(self, new_element):
+        raise RuntimeError("ModuleController cannot append elements")
                        
     @property
     def node_path(self):
@@ -31,7 +30,8 @@ class ModuleController(BasicController, Renderable):
         if not isinstance(value, str):
             raise TypeError(f'switchValue must be str. switchValue {type(value)} = {value}')
         if len(value.split('/')) < 3:
-            raise ValueError('node_path must be like TEST_PLAN_NAME/THREAD_GRUOP_OR_TEST_FRAGMENT_NAME(/CONTROLLER_NAME)+')
+            raise ValueError('node_path must be like TEST_PLAN_NAME/THREAD_\
+                            GRUOP_OR_TEST_FRAGMENT_NAME(/CONTROLLER_NAME)+')
         else:
             self._node_path = value
 
@@ -43,7 +43,7 @@ class ModuleController(BasicController, Renderable):
                 if element.attrib['name'] == 'ModuleController.node_path':
                     names = self.node_path.split('/')
                     for name in names:
-                        el = Element("stringProp", attrib={"name":str(int(random()*10000000000))})
+                        el = Element("stringProp", attrib={"name": str(int(random()*10000000000))})
                         el.text = str(name)
                         element.append(el)
             except KeyError:
