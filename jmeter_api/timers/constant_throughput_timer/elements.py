@@ -1,8 +1,8 @@
-from xml.etree.ElementTree import Element, ElementTree, tostring
+from typing import Union
+from enum import Enum
+
 from jmeter_api.basics.timer.elements import BasicTimer
 from jmeter_api.basics.utils import Renderable, tree_to_str
-from typing import Optional, Union
-from enum import Enum
 
 
 class BasedOn(Enum):

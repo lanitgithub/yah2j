@@ -1,3 +1,7 @@
+from abc import ABC
+from typing import Union
+from xml.etree.ElementTree import SubElement
+
 from jmeter_api.basics.element.elements import BasicElement
 from jmeter_api.basics.pre_processor.elements import BasicPreProcessor
 from jmeter_api.basics.post_processor.elements import BasicPostProcessor
@@ -7,9 +11,6 @@ from jmeter_api.basics.assertion.elements import BasicAssertion
 from jmeter_api.basics.listener.elements import BasicListener
 from jmeter_api.basics.utils import IncludesElements
 from jmeter_api.basics.utils import Renderable, tree_to_str
-from xml.etree.ElementTree import tostring, SubElement
-from typing import Union
-from abc import ABC
 
 
 class BasicSampler(BasicElement, IncludesElements, ABC):

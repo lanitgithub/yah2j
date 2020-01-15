@@ -1,7 +1,8 @@
-from jmeter_api.samplers.flow_control.elements import FlowControlAction, ActionOnThread, Target
-from jmeter_api.basics.utils import tag_wrapper
 import xmltodict
 import pytest
+
+from jmeter_api.samplers.flow_control.elements import FlowControlAction, ActionOnThread, Target
+from jmeter_api.basics.utils import tag_wrapper
 
 
 class TestFlowControlAction:

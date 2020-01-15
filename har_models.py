@@ -1,7 +1,8 @@
+import dateutil.parser
+
 from typing import Optional, Any, List, TypeVar, Type, Callable, cast
 from enum import Enum
 from datetime import datetime
-import dateutil.parser
 
 
 T = TypeVar("T")

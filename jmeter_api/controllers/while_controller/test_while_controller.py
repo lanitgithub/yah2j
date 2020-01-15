@@ -1,21 +1,23 @@
-from jmeter_api.controllers.while_controller.elements import WhileController
-from jmeter_api.basics.utils import tag_wrapper
 import xmltodict
 import pytest
+
+from jmeter_api.controllers.while_controller.elements import WhileController
+from jmeter_api.basics.utils import tag_wrapper
 
 
 class TestWhileController:
     class TestCondition:
         def test_check(self):
             with pytest.raises(TypeError):
-                WhileController(condition = True)
+                WhileController(condition=True)
 
         def test_check2(self):
             with pytest.raises(TypeError):
-                WhileController(condition = 123)
+                WhileController(condition=123)
 
         def test_positive(self):
-            WhileController(condition = "True")
+            WhileController(condition="True")
+
 
 class TestWhileControllerRender:
     def test_condition(self):

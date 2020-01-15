@@ -1,47 +1,46 @@
-from jmeter_api.controllers.if_controller.elements import IfController
-from jmeter_api.basics.utils import tag_wrapper
 import xmltodict
 import pytest
+
+from jmeter_api.controllers.if_controller.elements import IfController
+from jmeter_api.basics.utils import tag_wrapper
 
 
 class TestIfController:
     class TestCondition:
         def test_check(self):
             with pytest.raises(TypeError):
-                IfController(condition = True)
+                IfController(condition=True)
 
         def test_check2(self):
             with pytest.raises(TypeError):
-                IfController(condition = 123)
+                IfController(condition=123)
 
         def test_positive(self):
-            IfController(condition = "True")
+            IfController(condition="True")
 
     class TestEvaluateAll:
         def test_check(self):
             with pytest.raises(TypeError):
-                IfController(condition = "True", evaluateAll = "True")
+                IfController(condition="True", evaluateAll="True")
 
         def test_check2(self):
             with pytest.raises(TypeError):
-                IfController(condition = "True", evaluateAll = 1)
+                IfController(condition="True", evaluateAll=1)
 
         def test_positive(self):
-            IfController(condition = "True", evaluateAll = True)
+            IfController(condition="True", evaluateAll=True)
 
     class TestUseExpression:
         def test_check(self):
             with pytest.raises(TypeError):
-                IfController(condition = "True", useExpression = "False")
+                IfController(condition="True", useExpression="False")
 
         def test_check2(self):
             with pytest.raises(TypeError):
-                IfController(condition = "True", useExpression = 0)
+                IfController(condition="True", useExpression=0)
 
         def test_positive(self):
-            IfController(condition = "True", useExpression = False)
-            
-
+            IfController(condition="True", useExpression=False)
 
 
 class TestIfControllerRender:

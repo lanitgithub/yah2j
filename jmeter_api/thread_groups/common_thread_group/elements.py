@@ -1,11 +1,5 @@
 from jmeter_api.basics.thread_group.elements import BasicThreadGroup, ThreadGroupAction
 from jmeter_api.basics.utils import Renderable, IncludesElements, tree_to_str
-from xml.etree.ElementTree import Element, ElementTree, tostring
-from xml.sax.saxutils import unescape
-from typing import List, Optional
-from settings import logging
-from enum import Enum
-import os
 
 
 class CommonThreadGroup(BasicThreadGroup, Renderable):
@@ -29,8 +23,11 @@ class CommonThreadGroup(BasicThreadGroup, Renderable):
         self.is_sheduler_enable = is_sheduler_enable
         self.sheduler_duration = sheduler_duration
         self.sheduler_delay = sheduler_delay
-        BasicThreadGroup.__init__(self, name=name, comments=comments, is_enabled=is_enabled,
-                                  num_threads=num_threads, ramp_time=ramp_time)
+        BasicThreadGroup.__init__(self, name=name,
+                                  comments=comments,
+                                  is_enabled=is_enabled,
+                                  num_threads=num_threads,
+                                  ramp_time=ramp_time)
 
     @property
     def continue_forever(self):

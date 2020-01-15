@@ -1,7 +1,9 @@
-from jmeter_api.configs.http_cache_manager.elements import HTTPCacheManager
-from jmeter_api.basics.utils import tag_wrapper
 import xmltodict
 import pytest
+
+from jmeter_api.configs.http_cache_manager.elements import HTTPCacheManager
+from jmeter_api.basics.utils import tag_wrapper
+
 
 class TestHTTPCacheManagerArgs:
     class TestClearCacheEachIteration:
@@ -17,7 +19,6 @@ class TestHTTPCacheManagerArgs:
             cache_manager = HTTPCacheManager(clear_each_iteration=True)
             assert cache_manager.clear_each_iteration is True
 
-
     class TestUseCacheControl:
         def test_check(self):
             with pytest.raises(TypeError):
@@ -30,7 +31,6 @@ class TestHTTPCacheManagerArgs:
         def test_positive(self):
             cache_manager = HTTPCacheManager(use_cache_control=False)
             assert cache_manager.use_cache_control is False
-
 
     class TestMaxElementsInCache:
         def test_check(self):

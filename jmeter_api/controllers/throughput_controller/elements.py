@@ -1,6 +1,7 @@
+from enum import Enum
+
 from jmeter_api.basics.controller.elements import BasicController
 from jmeter_api.basics.utils import Renderable, IncludesElements, tree_to_str
-from enum import Enum
 
 
 class ThroughputMode(Enum):
@@ -63,7 +64,8 @@ class ThroughputController(BasicController, Renderable):
             self._throughputTotal = int(value)
         else:
             if not isinstance(value, (float, int)):
-                raise TypeError(f'throughput for ThroughputMode.PERCENT should be float. {type(value).__name__} was given')
+                raise TypeError(f'throughput for ThroughputMode.\
+                PERCENT should be float. {type(value).__name__} was given')
             if value < 0 or value > 100:
                 raise ValueError(f'throughput for ThroughputMode.PERCENT should be positive and less then 100.')
             self._throughputPercent = float(value)

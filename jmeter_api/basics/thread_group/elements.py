@@ -1,3 +1,7 @@
+from abc import ABC
+from typing import Union
+from enum import Enum
+
 from jmeter_api.basics.element.elements import BasicElement
 from jmeter_api.basics.config.elements import BasicConfig
 from jmeter_api.basics.sampler.elements import BasicSampler
@@ -9,9 +13,6 @@ from jmeter_api.basics.assertion.elements import BasicAssertion
 from jmeter_api.basics.listener.elements import BasicListener
 from jmeter_api.basics.test_fragment.elements import BasicTestFragment
 from jmeter_api.basics.utils import IncludesElements
-from abc import ABC
-from typing import Union
-from enum import Enum
 
 
 class ThreadGroupAction(Enum):
@@ -43,7 +44,8 @@ class BasicThreadGroup(BasicElement, IncludesElements, ABC):
         if not isinstance(new_element, (BasicSampler, BasicTimer, BasicConfig, BasicController, BasicListener,\
                                         BasicPreProcessor, BasicPostProcessor, BasicAssertion, BasicTestFragment)):
             raise TypeError(
-                f'new_element must be BasicSampler, BasicTimer, BasicConfig, BasicListener, BasicPreProcessor, BasicPostProcessor, BasicAssertion, BasicTestFragment or BasicController. {type(new_element)} was given')
+                f'new_element must be BasicSampler, BasicTimer, BasicConfig, BasicListener, BasicPreProcessor,\
+                BasicPostProcessor, BasicAssertion, BasicTestFragment or BasicController. {type(new_element)} was given')
         self._elements.append(new_element)
         return self
 
@@ -87,5 +89,6 @@ class BasicThreadGroup(BasicElement, IncludesElements, ABC):
                 f'on_sample_error must be ThreadGroupAction. on_sample_error {type(value)} = {value}')
         else:
             self._on_sample_error = value
+
 
 print.__call__()

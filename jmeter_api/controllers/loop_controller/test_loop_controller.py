@@ -1,7 +1,8 @@
-from jmeter_api.controllers.loop_controller.elements import LoopController
-from jmeter_api.basics.utils import tag_wrapper
 import xmltodict
 import pytest
+
+from jmeter_api.controllers.loop_controller.elements import LoopController
+from jmeter_api.basics.utils import tag_wrapper
 
 
 class TestLoopController:
@@ -21,6 +22,7 @@ class TestLoopController:
         def test_check(self):
             with pytest.raises(ValueError):
                 LoopController(continue_forever=True, loops=1)
+
         def test_check2(self):
             with pytest.raises(ValueError):
                 LoopController(loops=-1)
@@ -43,7 +45,6 @@ class TestLoopController:
         def test_negative(self):
             with pytest.raises(TypeError):
                 LoopController(loops=-4)
-
 
 
 class TestLoopControllerRender:

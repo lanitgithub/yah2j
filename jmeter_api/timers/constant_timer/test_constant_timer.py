@@ -1,7 +1,8 @@
-from jmeter_api.timers.constant_timer.elements import ConstantTimer
-from jmeter_api.basics.utils import tag_wrapper
 import xmltodict
 import pytest
+
+from jmeter_api.timers.constant_timer.elements import ConstantTimer
+from jmeter_api.basics.utils import tag_wrapper
 
 
 class TestConstantTimerArgs:

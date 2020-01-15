@@ -1,7 +1,8 @@
-from jmeter_api.thread_groups.common_thread_group.elements import CommonThreadGroup
-from jmeter_api.basics.utils import tag_wrapper
 import xmltodict
 import pytest
+
+from jmeter_api.thread_groups.common_thread_group.elements import CommonThreadGroup
+from jmeter_api.basics.utils import tag_wrapper
 
 
 class TestCommonThreadGroopArgs:

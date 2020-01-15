@@ -1,7 +1,8 @@
-from jmeter_api.configs.csv_data_set_config.elements import CsvDataSetConfig, ShareMode
-from jmeter_api.basics.utils import FileEncoding, tag_wrapper
 import xmltodict
 import pytest
+
+from jmeter_api.configs.csv_data_set_config.elements import CsvDataSetConfig, ShareMode
+from jmeter_api.basics.utils import FileEncoding, tag_wrapper
 
 
 class TestCsvDataSetConfigArgs:
@@ -30,108 +31,124 @@ class TestCsvDataSetConfigArgs:
     class TestVariableNames:
         def test_type_check(self):
             with pytest.raises(TypeError, match=r".*variable_names must be List[str]*"):
-                CsvDataSetConfig(file_path='main.py', variable_names={
-                    'randkey': 'randvalue'})
+                CsvDataSetConfig(file_path='main.py',
+                                 variable_names={'randkey': 'randvalue'})
 
         def test_content_type_check(self):
             with pytest.raises(TypeError, match=r".*All elements must be str*"):
-                CsvDataSetConfig(file_path='main.py', variable_names=[
-                    'asdfg', 123, 'qwerty'])
+                CsvDataSetConfig(file_path='main.py',
+                                 variable_names=['asdfg', 123, 'qwerty'])
 
         def test_content_type_check2(self):
             with pytest.raises(TypeError, match=r".*must contain chars*"):
-                CsvDataSetConfig(file_path='main.py', variable_names=[
-                    'asdfg', '123', 'qwerty'])
+                CsvDataSetConfig(file_path='main.py',
+                                 variable_names=['asdfg', '123', 'qwerty'])
 
         def test_positive(self):
-            csvdata = CsvDataSetConfig(file_path='main.py', variable_names=[
-                'asdfg', 'vbn', 'qwerty'])
+            csvdata = CsvDataSetConfig(file_path='main.py',
+                                       variable_names=['asdfg', 'vbn', 'qwerty'])
             assert csvdata.variable_names == 'asdfg,vbn,qwerty'
 
     class TestDelimiter:
         def test_positive(self):
-            csvdata = CsvDataSetConfig(file_path='main.py', variable_names=[
-                'asdfg', 'vbn', 'qwerty'], delimiter='|')
+            csvdata = CsvDataSetConfig(file_path='main.py',
+                                       variable_names=['asdfg', 'vbn', 'qwerty'],
+                                       delimiter='|')
             assert csvdata.variable_names == 'asdfg|vbn|qwerty'
 
     class TestFileEncoding:
         def test_type_check(self):
             with pytest.raises(TypeError, match=r".*must be FileEncoding*"):
-                CsvDataSetConfig(file_path='main.py', variable_names=[
-                    'var1', 'var2'], file_encoding='UTF-8')
+                CsvDataSetConfig(file_path='main.py',
+                                 variable_names=['var1', 'var2'],
+                                 file_encoding='UTF-8')
 
         def test_type_check2(self):
             with pytest.raises(TypeError, match=r".*must be FileEncoding*"):
-                CsvDataSetConfig(file_path='main.py', variable_names=[
-                    'var1', 'var2'], file_encoding=100)
+                CsvDataSetConfig(file_path='main.py',
+                                 variable_names=['var1', 'var2'],
+                                 file_encoding=100)
 
         def test_positive(self):
-            csvdata = CsvDataSetConfig(file_path='main.py', variable_names=[
-                'var1', 'var2'], file_encoding=FileEncoding.ISO8859)
+            csvdata = CsvDataSetConfig(file_path='main.py',
+                                       variable_names=['var1', 'var2'],
+                                       file_encoding=FileEncoding.ISO8859)
             assert csvdata.file_encoding == FileEncoding.ISO8859
 
     class TestIgnoreFirstLine:
         def test_type_check(self):
             with pytest.raises(TypeError, match=r".*must be bool.*"):
-                CsvDataSetConfig(file_path='main.py', variable_names=[
-                    'var1', 'var2'], ignore_first_line='True')
+                CsvDataSetConfig(file_path='main.py',
+                                 variable_names=['var1', 'var2'],
+                                 ignore_first_line='True')
 
         def test_type_check2(self):
             with pytest.raises(TypeError, match=r".*must be bool.*"):
-                CsvDataSetConfig(file_path='main.py', variable_names=[
-                    'var1', 'var2'], ignore_first_line=123456)
+                CsvDataSetConfig(file_path='main.py',
+                                 variable_names=['var1', 'var2'],
+                                 ignore_first_line=123456)
 
         def test_positive(self):
-            csvdata = CsvDataSetConfig(file_path='main.py', variable_names=[
-                'var1', 'var2'], ignore_first_line=True)
+            csvdata = CsvDataSetConfig(file_path='main.py',
+                                       variable_names=['var1', 'var2'],
+                                       ignore_first_line=True)
             assert csvdata.ignore_first_line == True
 
     class TestRecycle:
         def test_type_check(self):
             with pytest.raises(TypeError, match=r".*must be bool.*"):
-                CsvDataSetConfig(file_path='main.py', variable_names=[
-                    'var1', 'var2'], recycle='True')
+                CsvDataSetConfig(file_path='main.py',
+                                 variable_names=['var1', 'var2'],
+                                 recycle='True')
 
         def test_type_check2(self):
             with pytest.raises(TypeError, match=r".*must be bool.*"):
-                CsvDataSetConfig(file_path='main.py', variable_names=[
-                    'var1', 'var2'], recycle=123456)
+                CsvDataSetConfig(file_path='main.py',
+                                 variable_names=['var1', 'var2'],
+                                 recycle=123456)
 
         def test_positive(self):
-            csvdata = CsvDataSetConfig(file_path='main.py', variable_names=[
-                'var1', 'var2'], recycle=True)
+            csvdata = CsvDataSetConfig(file_path='main.py',
+                                       variable_names=['var1', 'var2'],
+                                       recycle=True)
             assert csvdata.recycle == True
 
     class TestStopThread:
         def test_type_check(self):
             with pytest.raises(TypeError, match=r".*must be bool.*"):
-                CsvDataSetConfig(file_path='main.py', variable_names=[
-                    'var1', 'var2'], stop_thread='True')
+                CsvDataSetConfig(file_path='main.py',
+                                 variable_names=['var1', 'var2'],
+                                 stop_thread='True')
 
         def test_type_check2(self):
             with pytest.raises(TypeError, match=r".*must be bool.*"):
-                CsvDataSetConfig(file_path='main.py', variable_names=[
-                    'var1', 'var2'], stop_thread=123456)
+                CsvDataSetConfig(file_path='main.py',
+                                 variable_names=['var1', 'var2'],
+                                 stop_thread=123456)
 
         def test_positive(self):
-            csvdata = CsvDataSetConfig(file_path='main.py', variable_names=[
-                'var1', 'var2'], stop_thread=True)
+            csvdata = CsvDataSetConfig(file_path='main.py',
+                                       variable_names=['var1', 'var2'],
+                                       stop_thread=True)
             assert csvdata.stop_thread == True
 
     class TestSharedMode:
         def test_type_check(self):
             with pytest.raises(TypeError, match=r".*must be ShareMode*"):
-                CsvDataSetConfig(file_path='main.py', variable_names=[
-                    'var1', 'var2'], share_mode='True')
+                CsvDataSetConfig(file_path='main.py',
+                                 variable_names=['var1', 'var2'],
+                                 share_mode='True')
 
         def test_type_check2(self):
             with pytest.raises(TypeError, match=r".*must be ShareMode*"):
-                CsvDataSetConfig(file_path='main.py', variable_names=[
-                    'var1', 'var2'], share_mode=123456)
+                CsvDataSetConfig(file_path='main.py',
+                                 variable_names=['var1', 'var2'],
+                                 share_mode=123456)
 
         def test_positive(self):
-            csvdata = CsvDataSetConfig(file_path='main.py', variable_names=[
-                'var1', 'var2'], share_mode=ShareMode.ALL)
+            csvdata = CsvDataSetConfig(file_path='main.py',
+                                       variable_names=['var1', 'var2'],
+                                       share_mode=ShareMode.ALL)
             assert csvdata.share_mode == ShareMode.ALL
 
 

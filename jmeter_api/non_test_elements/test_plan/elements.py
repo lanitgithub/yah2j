@@ -1,3 +1,7 @@
+from typing import Union
+from xml.etree.ElementTree import tostring
+from xml.sax.saxutils import unescape
+
 from jmeter_api.basics.non_test_elements.elements import NonTestElements
 from jmeter_api.basics.pre_processor.elements import BasicPreProcessor
 from jmeter_api.basics.post_processor.elements import BasicPostProcessor
@@ -8,10 +12,6 @@ from jmeter_api.basics.timer.elements import BasicTimer
 from jmeter_api.basics.thread_group.elements import BasicThreadGroup
 from jmeter_api.basics.test_fragment.elements import BasicTestFragment
 from jmeter_api.basics.utils import Renderable, IncludesElements, test_plan_wrapper
-from xml.etree.ElementTree import Element, ElementTree, tostring
-from xml.sax.saxutils import unescape
-from typing import Union
-from typing import List, Optional
 
 
 class TestPlan(NonTestElements, IncludesElements, Renderable):
@@ -28,8 +28,7 @@ class TestPlan(NonTestElements, IncludesElements, Renderable):
         self.teardown_on_shutdown = teardown_on_shutdown
         self.serialize_threadgroups = serialize_threadgroups
         IncludesElements.__init__(self)
-        NonTestElements.__init__(
-            self, name=name, comments=comments, is_enabled=is_enabled)
+        NonTestElements.__init__(self, name=name, comments=comments, is_enabled=is_enabled)
         
     #Can include NonTestElemnts, with the exception of TestPlan
     def append(self, new_element: Union[BasicTimer, BasicConfig, BasicPreProcessor, BasicPostProcessor, BasicThreadGroup,\
@@ -37,7 +36,9 @@ class TestPlan(NonTestElements, IncludesElements, Renderable):
         if not isinstance(new_element, (BasicTimer, BasicConfig, BasicPreProcessor, BasicPostProcessor, BasicThreadGroup,\
                                         BasicAssertion, BasicListener, BasicTestFragment)):
             raise TypeError(
-                f'new_element must be BasicTimer, BasicConfig, BasicPreProcessor, BasicPostProcessor, BasicAssertion, BasicListener, BasicThreadGroup, BasicTestFragment or NonTestElemnts (with the exception of TestPlan). {type(new_element)} was given')
+                f'new_element must be BasicTimer, BasicConfig, BasicPreProcessor, BasicPostProcessor, BasicAssertion,\
+                BasicListener, BasicThreadGroup, BasicTestFragment or NonTestElemnts (with the exception of TestPlan).\
+                {type(new_element)} was given')
         self._elements.append(new_element)
         return self
 

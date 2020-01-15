@@ -1,7 +1,8 @@
-from jmeter_api.controllers.random_controller.elements import RandomController
-from jmeter_api.basics.utils import tag_wrapper
 import xmltodict
 import pytest
+
+from jmeter_api.controllers.random_controller.elements import RandomController
+from jmeter_api.basics.utils import tag_wrapper
 
 
 class TestRandomController:
@@ -16,7 +17,6 @@ class TestRandomController:
 
         def test_positive(self):
             RandomController(ignoreSubControllers = True)           
-
 
 
 class TestRandomControllerRender:

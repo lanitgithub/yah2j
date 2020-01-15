@@ -20,6 +20,7 @@ class TestIncludeController:
         def test_check2(self):
             with pytest.raises(OSError):
                 IncludeController(includePath="wrong file")
+                
         def test_check4(self):
             with pytest.raises(OSError):
                 IncludeController(includePath="")

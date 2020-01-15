@@ -1,5 +1,6 @@
-from jmeter_api.basics.element.elements import BasicElement
 from abc import ABC
+
+from jmeter_api.basics.element.elements import BasicElement
 
 
 class BasicListener(BasicElement, ABC):

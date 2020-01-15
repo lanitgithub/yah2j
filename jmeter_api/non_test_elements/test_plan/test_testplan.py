@@ -1,3 +1,5 @@
+import pytest
+
 from jmeter_api.non_test_elements.test_plan.elements import TestPlan
 from jmeter_api.basics.pre_processor.elements import BasicPreProcessor
 from jmeter_api.basics.post_processor.elements import BasicPostProcessor
@@ -10,8 +12,6 @@ from jmeter_api.basics.timer.elements import BasicTimer
 from jmeter_api.basics.thread_group.elements import BasicThreadGroup
 from jmeter_api.basics.test_fragment.elements import BasicTestFragment
 from jmeter_api.basics.utils import tag_wrapper
-import xmltodict
-import pytest
 
 
 class TestTestPlanArgs:

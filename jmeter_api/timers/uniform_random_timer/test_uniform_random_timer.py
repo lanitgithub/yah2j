@@ -1,7 +1,8 @@
-from jmeter_api.timers.uniform_random_timer.elements import UniformRandTimer
-from jmeter_api.basics.utils import tag_wrapper
 import xmltodict
 import pytest
+
+from jmeter_api.timers.uniform_random_timer.elements import UniformRandTimer
+from jmeter_api.basics.utils import tag_wrapper
 
 
 class TestUniformRandTimer:
