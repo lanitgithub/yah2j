@@ -6,7 +6,7 @@ from jmeter_api.basics.utils import tag_wrapper
 
 
 class TestCounter:
-    class TestFilevariable_name:
+    class TestVariableName:
         def test_type_check(self):
             with pytest.raises(TypeError):
                 Counter(variable_name=123)
@@ -91,7 +91,7 @@ class TestCounter:
             Counter(variable_name="var", per_user=True, reset_on_tg_iteration=True)
 
 
-class TestCsvDataSetConfigRender:
+class TestCounterRender:
     def test_variable_name(self):
         element = Counter(variable_name="var")
         rendered_doc = tag_wrapper(element.to_xml(), 'result')
