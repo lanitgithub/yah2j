@@ -20,7 +20,7 @@ class Target(Enum):
     ALL_THREAD = '2'
 
 
-class FlowControlAction(BasicSampler, IncludesElements, Renderable):
+class FlowControlAction(BasicSampler, Renderable):
 
     root_element_name = 'TestAction'
 
@@ -32,7 +32,7 @@ class FlowControlAction(BasicSampler, IncludesElements, Renderable):
                  comments: str = '',
                  is_enabled: bool = True
                  ):
-        super().__init__(name=name, comments=comments, is_enabled=is_enabled)
+        BasicSampler.__init__(self, name=name, comments=comments, is_enabled=is_enabled)
         self.logical_action_on_thread = logical_action_on_thread
         self.pause = pause
         self.target = target

@@ -2,7 +2,7 @@ from jmeter_api.basics.thread_group.elements import BasicThreadGroup, ThreadGrou
 from jmeter_api.basics.utils import Renderable, IncludesElements, tree_to_str
 
 
-class CommonThreadGroup(BasicThreadGroup, IncludesElements, Renderable):
+class CommonThreadGroup(BasicThreadGroup, Renderable):
 
     root_element_name = 'ThreadGroup'
 
@@ -23,9 +23,7 @@ class CommonThreadGroup(BasicThreadGroup, IncludesElements, Renderable):
         self.is_sheduler_enable = is_sheduler_enable
         self.sheduler_duration = sheduler_duration
         self.sheduler_delay = sheduler_delay
-        IncludesElements.__init__(self)
-        BasicThreadGroup.__init__(self,
-                                  name=name,
+        BasicThreadGroup.__init__(self, name=name,
                                   comments=comments,
                                   is_enabled=is_enabled,
                                   num_threads=num_threads,

@@ -9,7 +9,7 @@ class ThroughputMode(Enum):
     PERCENT = 'PercentExecution'
     
 
-class ThroughputController(BasicController, IncludesElements, Renderable):
+class ThroughputController(BasicController, Renderable):
 
     root_element_name = 'ThroughputController'
     TEMPLATE = 'throughput_controller_template.xml'
@@ -24,7 +24,6 @@ class ThroughputController(BasicController, IncludesElements, Renderable):
         self.throughputMode = throughputMode
         self.perThread = perThread
         self.throughput = throughput
-        IncludesElements.__init__(self)
         BasicController.__init__(self, name=name, comments=comments, is_enabled=is_enabled)         
     
     @property

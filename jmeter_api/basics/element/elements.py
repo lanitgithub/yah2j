@@ -1,6 +1,8 @@
 from abc import ABC
 from settings import logging
 
+from jmeter_api.basics.utils import Renderable
+
 
 class BasicElement(ABC):
 

@@ -51,7 +51,7 @@ class Implement(Enum):
     NONE = ''
 
 
-class HttpRequest(BasicSampler, IncludesElements, Renderable):
+class HttpRequest(BasicSampler, Renderable):
 
     root_element_name = 'HTTPSamplerProxy'
 
@@ -89,7 +89,6 @@ class HttpRequest(BasicSampler, IncludesElements, Renderable):
 
         :type source_type: object
         """
-        IncludesElements.__init__(self)
         BasicSampler.__init__(
             self, name=name, comments=comments, is_enabled=is_enabled)
         self.host = host

@@ -2,7 +2,7 @@ from jmeter_api.basics.controller.elements import BasicController
 from jmeter_api.basics.utils import Renderable, IncludesElements, tree_to_str
 
 
-class LoopController(BasicController, IncludesElements, Renderable):
+class LoopController(BasicController, Renderable):
 
     root_element_name = 'LoopController'
     TEMPLATE = 'loop_controller_template.xml'
@@ -26,7 +26,6 @@ class LoopController(BasicController, IncludesElements, Renderable):
             if loops > -1:
                 raise ValueError("continue_forever can't be true, while loops not equal -1")            
             self.loops = loops
-        IncludesElements.__init__(self)
         BasicController.__init__(self, name=name, comments=comments, is_enabled=is_enabled)         
     
     @property

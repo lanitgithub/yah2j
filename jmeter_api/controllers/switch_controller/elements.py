@@ -2,7 +2,7 @@ from jmeter_api.basics.controller.elements import BasicController
 from jmeter_api.basics.utils import Renderable, IncludesElements, tree_to_str
 
 
-class SwitchController(BasicController, IncludesElements, Renderable):
+class SwitchController(BasicController, Renderable):
 
     root_element_name = 'SwitchController'
     TEMPLATE = 'switch_controller_template.xml'
@@ -13,7 +13,6 @@ class SwitchController(BasicController, IncludesElements, Renderable):
                  comments: str = '',
                  is_enabled: bool = True,):
         self.switchValue = switchValue
-        IncludesElements.__init__(self)
         BasicController.__init__(self, name=name, comments=comments, is_enabled=is_enabled)         
                        
     @property

@@ -6,6 +6,12 @@ from jmeter_api.basics.utils import tag_wrapper
 
 
 class TestModuleController:
+    class TestAppend:
+        def test_check(self):
+            with pytest.raises(RuntimeError):
+                c = "TEST_PLAN/TEST_FRAGMENT/CONTROLLER"
+                ModuleController(node_path=c).append(ModuleController(node_path=c))
+                
     class TestNodePath:
         def test_check(self):
             with pytest.raises(TypeError):
@@ -19,7 +25,7 @@ class TestModuleController:
             ModuleController(node_path="TEST_PLAN/TEST_FRAGMENT/CONTROLLER")
 
 
-class TestSwitchControllerRender:
+class TestModuleControllerRender:
     def test_condition(self):
         controller = "TEST_PLAN/TEST_FRAGMENT/CONTROLLER"
         element = ModuleController(node_path=controller)

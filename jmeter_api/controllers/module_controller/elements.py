@@ -1,11 +1,11 @@
-from xml.etree.ElementTree import Element
 from random import random
+from xml.etree.ElementTree import Element
 
 from jmeter_api.basics.controller.elements import BasicController
 from jmeter_api.basics.utils import Renderable, IncludesElements, tree_to_str
 
 
-class ModuleController(BasicController, IncludesElements, Renderable):
+class ModuleController(BasicController, Renderable):
 
     root_element_name = 'ModuleController'
     TEMPLATE = 'module_controller_template.xml'
@@ -16,8 +16,10 @@ class ModuleController(BasicController, IncludesElements, Renderable):
                  comments: str = '',
                  is_enabled: bool = True,):
         self.node_path = node_path
-        IncludesElements.__init__(self)
-        BasicController.__init__(self, name=name, comments=comments, is_enabled=is_enabled)         
+        BasicController.__init__(self, name=name, comments=comments, is_enabled=is_enabled)
+
+    def append(self, new_element):
+        raise RuntimeError("ModuleController cannot append elements")
                        
     @property
     def node_path(self):
@@ -29,7 +31,7 @@ class ModuleController(BasicController, IncludesElements, Renderable):
             raise TypeError(f'switchValue must be str. switchValue {type(value)} = {value}')
         if len(value.split('/')) < 3:
             raise ValueError('node_path must be like TEST_PLAN_NAME/THREAD_\
-            GROUP_OR_TEST_FRAGMENT_NAME(/CONTROLLER_NAME)+')
+                            GRUOP_OR_TEST_FRAGMENT_NAME(/CONTROLLER_NAME)+')
         else:
             self._node_path = value
 

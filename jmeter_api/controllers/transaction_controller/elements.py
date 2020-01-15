@@ -2,7 +2,7 @@ from jmeter_api.basics.controller.elements import BasicController
 from jmeter_api.basics.utils import Renderable, IncludesElements, tree_to_str
 
 
-class TransactionController(BasicController, IncludesElements, Renderable):
+class TransactionController(BasicController, Renderable):
 
     root_element_name = 'TransactionController'
     TEMPLATE = 'transaction_controller_template.xml'
@@ -15,7 +15,6 @@ class TransactionController(BasicController, IncludesElements, Renderable):
                  is_enabled: bool = True,):
         self.includeTimers = includeTimers
         self.parent = parent
-        IncludesElements.__init__(self)
         BasicController.__init__(self, name=name, comments=comments, is_enabled=is_enabled)         
     
     @property

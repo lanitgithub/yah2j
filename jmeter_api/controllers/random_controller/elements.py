@@ -2,7 +2,7 @@ from jmeter_api.basics.controller.elements import BasicController
 from jmeter_api.basics.utils import Renderable, IncludesElements, tree_to_str
 
 
-class RandomController(BasicController, IncludesElements, Renderable):
+class RandomController(BasicController, Renderable):
 
     root_element_name = 'RandomController'
     TEMPLATE = 'random_controller_template.xml'
@@ -13,7 +13,6 @@ class RandomController(BasicController, IncludesElements, Renderable):
                  comments: str = '',
                  is_enabled: bool = True,):
         self.ignoreSubControllers = ignoreSubControllers
-        IncludesElements.__init__(self)
         BasicController.__init__(self, name=name, comments=comments, is_enabled=is_enabled)         
     
     @property

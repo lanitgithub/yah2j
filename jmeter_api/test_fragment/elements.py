@@ -2,7 +2,7 @@ from jmeter_api.basics.test_fragment.elements import BasicTestFragment
 from jmeter_api.basics.utils import Renderable, IncludesElements, tree_to_str
 
 
-class TestFragment(BasicTestFragment, IncludesElements, Renderable):
+class TestFragment(BasicTestFragment, Renderable):
 
     root_element_name = 'TestFragmentController'
     TEMPLATE = 'test_fragment_template.xml'
@@ -11,7 +11,6 @@ class TestFragment(BasicTestFragment, IncludesElements, Renderable):
                  name: str = 'Test Fragment',
                  comments: str = '',
                  is_enabled: bool = True,):
-        IncludesElements.__init__(self)
         BasicTestFragment.__init__(self, name=name, comments=comments, is_enabled=is_enabled)         
 
     def to_xml(self) -> str:

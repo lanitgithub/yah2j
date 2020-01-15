@@ -2,7 +2,7 @@ from jmeter_api.basics.controller.elements import BasicController
 from jmeter_api.basics.utils import Renderable, IncludesElements, tree_to_str
 
 
-class OnceOnlyController(BasicController, IncludesElements, Renderable):
+class OnceOnlyController(BasicController, Renderable):
 
     root_element_name = 'OnceOnlyController'
     TEMPLATE = 'once_only_controller_template.xml'
@@ -11,7 +11,6 @@ class OnceOnlyController(BasicController, IncludesElements, Renderable):
                  name: str = 'Once Only Controller',
                  comments: str = '',
                  is_enabled: bool = True,):
-        IncludesElements.__init__(self)
         BasicController.__init__(self, name=name, comments=comments, is_enabled=is_enabled)         
 
     def to_xml(self) -> str:

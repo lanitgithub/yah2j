@@ -6,7 +6,7 @@ from jmeter_api.basics.element.elements import BasicElement
 class BasicPostProcessor(BasicElement, ABC):
 
     def __init__(self,
-                 name: str = 'BasicElement',
+                 name: str = 'BasicPostProcessor',
                  comments: str = '',
                  is_enabled: bool = True
                  ):
