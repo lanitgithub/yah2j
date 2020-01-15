@@ -2,7 +2,6 @@ import os
 import logging
 
 from typing import List
-from enum import Enum
 
 from jmeter_api.basics.config.elements import BasicConfig
 from jmeter_api.basics.utils import Renderable, FileEncoding, tree_to_str
