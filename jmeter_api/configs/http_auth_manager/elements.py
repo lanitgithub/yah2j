@@ -3,7 +3,6 @@ import logging
 from typing import List, Optional
 from enum import Enum
 from xml.etree.ElementTree import Element
-from urllib.parse import urlparse
 
 from jmeter_api.basics.config.elements import BasicConfig
 from jmeter_api.basics.utils import Renderable, FileEncoding, tree_to_str
