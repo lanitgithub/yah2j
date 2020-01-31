@@ -10,7 +10,7 @@ class TestFragment(BasicTestFragment, Renderable):
     def __init__(self, *,
                  name: str = 'Test Fragment',
                  comments: str = '',
-                 is_enabled: bool = True,):
+                 is_enabled: bool = False,):
         BasicTestFragment.__init__(self, name=name, comments=comments, is_enabled=is_enabled)         
 
     def to_xml(self) -> str:
