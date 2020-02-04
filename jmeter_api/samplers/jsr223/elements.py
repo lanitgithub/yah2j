@@ -1,12 +1,10 @@
+import os
+import logging
+
+from enum import Enum
+
 from jmeter_api.basics.sampler.elements import BasicSampler
 from jmeter_api.basics.utils import IncludesElements, Renderable, tree_to_str
-
-from xml.etree.ElementTree import tostring, SubElement
-from xml.sax.saxutils import unescape
-from typing import Union, List
-import logging
-from enum import Enum
-import os
 
 
 class ScriptLanguage(Enum):
