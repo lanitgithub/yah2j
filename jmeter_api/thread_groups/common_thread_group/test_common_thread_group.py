@@ -1,107 +1,73 @@
 import xmltodict
 import pytest
 
-from jmeter_api.thread_groups.common_thread_group.elements import CommonThreadGroup
+from jmeter_api.thread_groups.common_thread_group.elements import CommonThreadGroup, ThreadGroupAction
 from jmeter_api.basics.utils import tag_wrapper
 
 
 class TestCommonThreadGroopArgs:
-    class TestContinueForever:
+    class TestDelayedStart:
         def test_check(self):
             with pytest.raises(TypeError):
-                CommonThreadGroup(continue_forever="True")
+                CommonThreadGroup(delayed_start="True")
 
         def test_check2(self):
             with pytest.raises(TypeError):
-                CommonThreadGroup(continue_forever="123")
+                CommonThreadGroup(delayed_start=1)
 
         def test_positive(self):
-            CommonThreadGroup(continue_forever=True)
-
-    class TestLoops:
-        def test_check(self):
-            with pytest.raises(TypeError):
-                CommonThreadGroup(continue_forever=True, loops="1")
-
-        def test_check2(self):
-            with pytest.raises(TypeError):
-                CommonThreadGroup(continue_forever=True, loops="a")
-
-        def test_positive(self):
-            CommonThreadGroup(continue_forever=True, loops=23)
-
-    class TestIsShedulerEnable:
-        def test_check(self):
-            with pytest.raises(TypeError):
-                CommonThreadGroup(continue_forever=True,
-                                  is_sheduler_enable="True")
-
-        def test_check2(self):
-            with pytest.raises(TypeError):
-                CommonThreadGroup(continue_forever=True,
-                                  is_sheduler_enable="123")
-
-        def test_positive(self):
-            CommonThreadGroup(continue_forever=True, is_sheduler_enable=True)
-
-    class TestLoops:
-        def test_check(self):
-            with pytest.raises(TypeError):
-                CommonThreadGroup(continue_forever=True, loops="1")
-
-        def test_check2(self):
-            with pytest.raises(TypeError):
-                CommonThreadGroup(continue_forever=True, loops="a")
-
-        def test_positive(self):
-            CommonThreadGroup(continue_forever=True, loops=23)
-
-    class TestShedulerDuration:
-        def test_check(self):
-            with pytest.raises(TypeError):
-                CommonThreadGroup(continue_forever=True, sheduler_duration="1")
-
-        def test_check2(self):
-            with pytest.raises(TypeError):
-                CommonThreadGroup(continue_forever=True, sheduler_duration="a")
-
-        def test_positive(self):
-            CommonThreadGroup(continue_forever=True, sheduler_duration=23)
-
-    class TestShedulerDelay:
-        def test_check(self):
-            with pytest.raises(TypeError):
-                CommonThreadGroup(continue_forever=True, sheduler_delay="1")
-
-        def test_check2(self):
-            with pytest.raises(TypeError):
-                CommonThreadGroup(continue_forever=True, sheduler_delay="a")
-
-        def test_positive(self):
-            CommonThreadGroup(continue_forever=True, sheduler_delay=23)
+            CommonThreadGroup(delayed_start=True)
 
 
 class TestCommonThreadGroopRender:
     def test_loops(self):
-        element = CommonThreadGroup(
-            continue_forever=True, loops=55, sheduler_duration=1000, sheduler_delay=2000)
+        element = CommonThreadGroup(loops=55)
         rendered_doc = element.to_xml()
-        parsed_doc = xmltodict.parse(
-            tag_wrapper(rendered_doc, 'test_results'))
+        parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc, 'test_results'))
         assert parsed_doc['test_results']['ThreadGroup']['elementProp']['stringProp']['#text'] == '55'
+        
+    def test_is_sheduler_enable(self):
+        element = CommonThreadGroup(is_sheduler_enable=True)
+        rendered_doc = element.to_xml()
+        parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc, 'test_results'))
+        assert parsed_doc['test_results']['ThreadGroup']['boolProp']['#text'] == 'true'
 
     def test_sheduler_duration(self):
-        element = CommonThreadGroup(
-            continue_forever=True, loops=55, sheduler_duration=1000, sheduler_delay=2000)
+        element = CommonThreadGroup(is_sheduler_enable=True, sheduler_duration=1000, sheduler_delay=2000)
         rendered_doc = element.to_xml()
-        parsed_doc = xmltodict.parse(
-            tag_wrapper(rendered_doc, 'test_results'))
-        assert parsed_doc['test_results']['ThreadGroup']['stringProp'][4]['#text'] == '1000'
+        parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc, 'test_results'))
+        for tag in parsed_doc['test_results']['ThreadGroup']['stringProp']:
+            if tag['@name'] == 'ThreadGroup.duration':
+                assert tag['#text'] == '1000'
 
     def test_sheduler_delay(self):
-        element = CommonThreadGroup(
-            continue_forever=True, loops=55, sheduler_duration=1000, sheduler_delay=2000)
+        element = CommonThreadGroup(is_sheduler_enable=True, sheduler_duration=1000, sheduler_delay=2000)
         rendered_doc = element.to_xml()
-        parsed_doc = xmltodict.parse(
-            tag_wrapper(rendered_doc, 'test_results'))
-        assert parsed_doc['test_results']['ThreadGroup']['stringProp'][5]['#text'] == '2000'
+        parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc, 'test_results'))
+        for tag in parsed_doc['test_results']['ThreadGroup']['stringProp']:
+            if tag['@name'] == 'ThreadGroup.delay':
+                assert tag['#text'] == '2000'
+
+    def test_ramp_time(self):
+        element = CommonThreadGroup(ramp_time=50)
+        rendered_doc = element.to_xml()
+        parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc, 'test_results'))
+        for tag in parsed_doc['test_results']['ThreadGroup']['stringProp']:
+            if tag['@name'] == 'ThreadGroup.ramp_time':
+                assert tag['#text'] == '50'
+
+    def test_num_threads(self):
+        element = CommonThreadGroup(num_threads=50)
+        rendered_doc = element.to_xml()
+        parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc, 'test_results'))
+        for tag in parsed_doc['test_results']['ThreadGroup']['stringProp']:
+            if tag['@name'] == 'ThreadGroup.num_threads':
+                assert tag['#text'] == '50'
+
+    def test_on_sample_error(self):
+        element = CommonThreadGroup(on_sample_error=ThreadGroupAction.CONTINUE)
+        rendered_doc = element.to_xml()
+        parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc, 'test_results'))
+        for tag in parsed_doc['test_results']['ThreadGroup']['stringProp']:
+            if tag['@name'] == 'ThreadGroup.on_sample_error':
+                assert tag['#text'] == 'continue'
