@@ -5,7 +5,7 @@ from jmeter_api.thread_groups.setup_thread_group.elements import SetupThreadGrou
 from jmeter_api.basics.utils import tag_wrapper
 
 
-class TestCommonThreadGroopRender:
+class TestSetupThreadGroupRender:
     def test_loops(self):
         element = SetupThreadGroup(loops=55)
         rendered_doc = element.to_xml()

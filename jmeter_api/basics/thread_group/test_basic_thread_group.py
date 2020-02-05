@@ -14,7 +14,7 @@ from jmeter_api.basics.non_test_elements.elements import NonTestElements
 from jmeter_api.basics.test_fragment.elements import BasicTestFragment
 
 
-class TestBasicThreadGroopArgs:
+class TestBasicThreadGroupArgs:
     class TestOnSampleError:
         def test_positive(self):
             btg = BasicThreadGroup(on_sample_error=ThreadGroupAction.CONTINUE)
