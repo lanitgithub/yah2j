@@ -181,4 +181,4 @@ class BasicStandartThreadGroup(BasicThreadGroup, ABC):
                 raise TypeError(
                     f'sheduler_delay must be positive int or zero. {type(value)} was given')
             self._sheduler_delay = str(value)
-    
+        
