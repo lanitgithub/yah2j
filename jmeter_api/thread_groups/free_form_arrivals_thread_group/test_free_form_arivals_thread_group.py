@@ -18,6 +18,14 @@ class TestFreeFormArrivalsThreadGroupArgs:
         def test_check3(self):
             with pytest.raises(TypeError):
                 FreeFormArrivalsThreadGroup(schedule=[{"start": "1", "end": 1, "duration": 1}])
+                
+        def test_check4(self):
+            with pytest.raises(TypeError):
+                FreeFormArrivalsThreadGroup(schedule=[{"start": -1, "end": 1, "duration": 1}])
+
+        def test_check5(self):
+            with pytest.raises(ValueError):
+                FreeFormArrivalsThreadGroup(schedule=[{"start": 1, "end": 1}])
 
         def test_positive(self):
             FreeFormArrivalsThreadGroup(schedule=[{"start": 1, "end": 1, "duration": 1}])

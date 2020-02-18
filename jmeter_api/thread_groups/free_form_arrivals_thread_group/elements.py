@@ -47,17 +47,12 @@ class FreeFormArrivalsThreadGroup(BasicBzmThreadGroup, Renderable):
                         f'schedule must be List[dict]. schedule {type(value)} = {value}')
                 if 'start' not in v or 'end' not in v or 'duration' not in v:
                     raise ValueError(
-                        f'schedule dict must contain start, end and duration feilds')
+                        f'schedule dict must contain "start", "end" and "duration" feilds')
                 else:
-                    if not isinstance(v['start'], int) or v['start'] < 0:
-                        raise TypeError(
-                            f"start must be positive int. start {type(v['start'])} = {v['start']}")
-                    if not isinstance(v['end'], int) or v['end'] < 0:
-                        raise TypeError(
-                            f"end must be positive int. end {type(v['end'])} = {v['end']}")
-                    if not isinstance(v['duration'], int) or v['duration'] < 0:
-                        raise TypeError(
-                            f"duration must be positive int. duration {type(v['duration'])} = {v['duration']}")
+                    for field in ("start", "end", "duration"):
+                        if not isinstance(v[field], int) or v[field] < 0:
+                                raise TypeError(
+                                    f"{field} must be positive int. {field} {type(v[field])} = {v[field]}")
             self._schedule = value
 
     @property
@@ -97,15 +92,10 @@ class FreeFormArrivalsThreadGroup(BasicBzmThreadGroup, Renderable):
                 elif element.attrib['name'] == 'Schedule':
                     for row in self.schedule:
                         el = Element("collectionProp", attrib={"name": str(int(random()*10000000000))})
-                        el_start = Element("stringProp", attrib={"name": "49"})
-                        el_start.text = str(row['start'])
-                        el.append(el_start)
-                        el_end = Element("stringProp", attrib={"name": "1567"})
-                        el_end.text = str(row['end'])
-                        el.append(el_end)
-                        el_duration = Element("stringProp", attrib={"name": "1722"})
-                        el_duration.text = str(row['duration'])
-                        el.append(el_duration)
+                        for field in ("start", "end", "duration"):
+                            sub_el = Element("stringProp", attrib={"name": str(int(random()*100000))})
+                            sub_el.text = str(row[field])
+                            el.append(sub_el)
                         element.append(el)
                 elif element.attrib['name'] == 'LogFilename':
                     element.text = self.log_filename
