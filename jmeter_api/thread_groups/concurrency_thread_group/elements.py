@@ -39,7 +39,7 @@ class ConcurrencyThreadGroup(BasicBzmThreadGroup, Renderable):
     def target_concurrency(self, value: int):
         if not isinstance(value, int) or value < 0:
             raise TypeError(
-                f'target_concurrency must be positive int. continue_forever {type(value)} = {value}')
+                f'target_concurrency must be positive int. target_concurrency {type(value)} = {value}')
         else:
             self._target_concurrency = str(value)
             
@@ -51,7 +51,7 @@ class ConcurrencyThreadGroup(BasicBzmThreadGroup, Renderable):
     def ramp_up(self, value: int):
         if not isinstance(value, int) or value < 0:
             raise TypeError(
-                f'ramp_up must be positive int. continue_forever {type(value)} = {value}')
+                f'ramp_up must be positive int. ramp_up {type(value)} = {value}')
         else:
             self._ramp_up = str(value)
             
@@ -63,7 +63,7 @@ class ConcurrencyThreadGroup(BasicBzmThreadGroup, Renderable):
     def steps(self, value: int):
         if not isinstance(value, int) or value < 0:
             raise TypeError(
-                f'steps must be positive int. continue_forever {type(value)} = {value}')
+                f'steps must be positive int. steps {type(value)} = {value}')
         else:
             self._steps = str(value)
             
@@ -75,7 +75,7 @@ class ConcurrencyThreadGroup(BasicBzmThreadGroup, Renderable):
     def hold(self, value: int):
         if not isinstance(value, int) or value < 0:
             raise TypeError(
-                f'hold must be positive int. continue_forever {type(value)} = {value}')
+                f'hold must be positive int. hold {type(value)} = {value}')
         else:
             self._hold = str(value)
 
@@ -89,7 +89,7 @@ class ConcurrencyThreadGroup(BasicBzmThreadGroup, Renderable):
             self._iterations = ""
         elif not isinstance(value, int) or value < 0:
             raise TypeError(
-                f'iterations must be positive int. continue_forever {type(value)} = {value}')
+                f'iterations must be positive int. iterations {type(value)} = {value}')
         else:
             self._iterations = str(value)
             

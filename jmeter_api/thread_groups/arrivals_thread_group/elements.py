@@ -41,7 +41,7 @@ class ArrivalsThreadGroup(BasicBzmThreadGroup, Renderable):
     def target_rate(self, value: int):
         if not isinstance(value, int) or value < 0:
             raise TypeError(
-                f'target_rate must be positive int. continue_forever {type(value)} = {value}')
+                f'target_rate must be positive int. target_rate {type(value)} = {value}')
         else:
             self._target_rate = str(value)
             
@@ -53,7 +53,7 @@ class ArrivalsThreadGroup(BasicBzmThreadGroup, Renderable):
     def ramp_up(self, value: int):
         if not isinstance(value, int) or value < 0:
             raise TypeError(
-                f'ramp_up must be positive int. continue_forever {type(value)} = {value}')
+                f'ramp_up must be positive int. ramp_up {type(value)} = {value}')
         else:
             self._ramp_up = str(value)
             
@@ -65,7 +65,7 @@ class ArrivalsThreadGroup(BasicBzmThreadGroup, Renderable):
     def steps(self, value: int):
         if not isinstance(value, int) or value < 0:
             raise TypeError(
-                f'steps must be positive int. continue_forever {type(value)} = {value}')
+                f'steps must be positive int. steps {type(value)} = {value}')
         else:
             self._steps = str(value)
             
@@ -77,7 +77,7 @@ class ArrivalsThreadGroup(BasicBzmThreadGroup, Renderable):
     def hold(self, value: int):
         if not isinstance(value, int) or value < 0:
             raise TypeError(
-                f'hold must be positive int. continue_forever {type(value)} = {value}')
+                f'hold must be positive int. hold {type(value)} = {value}')
         else:
             self._hold = str(value)
 
@@ -91,7 +91,7 @@ class ArrivalsThreadGroup(BasicBzmThreadGroup, Renderable):
             self._iterations = ""
         elif not isinstance(value, int) or value < 0:
             raise TypeError(
-                f'iterations must be positive int. continue_forever {type(value)} = {value}')
+                f'iterations must be positive int. iterations {type(value)} = {value}')
         else:
             self._iterations = str(value)
 
@@ -105,7 +105,7 @@ class ArrivalsThreadGroup(BasicBzmThreadGroup, Renderable):
             self._concurrency_limit = ""
         elif not isinstance(value, int) or value < 0:
             raise TypeError(
-                f'concurrency_limit must be positive int. continue_forever {type(value)} = {value}')
+                f'concurrency_limit must be positive int. concurrency_limit {type(value)} = {value}')
         else:
             self._concurrency_limit = str(value)
             
