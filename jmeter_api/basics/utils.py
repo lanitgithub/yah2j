@@ -81,6 +81,12 @@ class FileEncoding(Enum):
     ANCII = 'US-ASCII'
 
 
+class Scope(Enum):
+    MAIN_AND_SUB = 'all'
+    MAIN = 'main'
+    SUB = 'children'
+
+
 def tag_wrapper(xml_data_text: str, tag_name: str) -> str:
     return f"<{tag_name}>{xml_data_text}</{tag_name}>"
 

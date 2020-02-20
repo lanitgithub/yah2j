@@ -7,13 +7,7 @@ from typing import Union
 
 from jmeter_api.basics.post_processor.elements import BasicPostProcessor
 from jmeter_api.basics.utils import Renderable
-from jmeter_api.basics.utils import tree_to_str
-
-
-class Scope(Enum):
-    MAIN_AND_SUB = 'all'  # todo add tag Sample.scope
-    MAIN = ''
-    SUB = 'children'  # todo add tag Sample.scope
+from jmeter_api.basics.utils import tree_to_str, Scope
 
 
 class Field(Enum):
@@ -173,7 +167,7 @@ class RegExpPost(BasicPostProcessor, Renderable):
                         scope_elem = SubElement(element_root, 'stringProp')
                         scope_elem.set('name', 'Sample.scope')
                         scope_elem.text = self.scope
-                    elif self.scope != '':
+                    elif self.scope != 'main':
                         scope_elem = SubElement(element_root, 'stringProp')
                         scope_elem.set('name', 'Sample.scope')
                         scope_elem.text = 'variable'

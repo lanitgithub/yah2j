@@ -1,7 +1,8 @@
-from jmeter_api.post_processors.json_extractor.elements import JSONExtractor, Scope
-from jmeter_api.basics.utils import tag_wrapper
 import xmltodict
 import pytest
+
+from jmeter_api.post_processors.json_extractor.elements import JSONExtractor, Scope
+from jmeter_api.basics.utils import tag_wrapper
 
 
 class TestJSONExtractor:
@@ -67,6 +68,7 @@ class TestJSONExtractor:
 
         def test_positive(self):
             JSONExtractor(compute_concat=True)      
+
 
 class TestJSONExtractorRender:
     def test_scope(self):

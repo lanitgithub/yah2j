@@ -6,12 +6,8 @@ from xml.etree.ElementTree import Element, SubElement, tostring
 
 from jmeter_api.basics.post_processor.elements import BasicPostProcessor
 from jmeter_api.basics.element.elements import Renderable
-from jmeter_api.basics.utils import tree_to_str
+from jmeter_api.basics.utils import tree_to_str, Scope
 
-class Scope(Enum):
-    MAIN_AND_SUB = 'all'
-    MAIN = 'main'
-    SUB = 'children'
 
 class JSONExtractor(BasicPostProcessor, Renderable):
 
