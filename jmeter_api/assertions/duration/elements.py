@@ -13,7 +13,7 @@ class DurationAssertion(BasicAssertion, Renderable):
 
     def __init__(self, *,
                  duration: int,
-                 scope: Union[str, Scope] = Scope.MAIN,
+                 scope: Scope = Scope.MAIN,
                  name: str = 'Duration Assertion',
                  comments: str = '',
                  is_enabled: bool = True
@@ -22,14 +22,6 @@ class DurationAssertion(BasicAssertion, Renderable):
         self.scope = scope
         BasicAssertion.__init__(
             self, name=name, comments=comments, is_enabled=is_enabled)
-
-    @property
-    def variable(self):
-        return self._variable
-
-    @variable.setter
-    def variable(self, value):
-        self._variable = value
         
     @property
     def duration(self) -> str:
@@ -48,14 +40,10 @@ class DurationAssertion(BasicAssertion, Renderable):
 
     @scope.setter
     def scope(self, value):
-        if not isinstance(value, (str, Scope)):
+        if not isinstance(value, Scope):
             raise TypeError(
-                f'scope must be Scope or str. {type(value).__name__} was given')
-        if isinstance(value, str):
-            self._scope = "variable"
-            self.variable = value
-        elif isinstance(value, Scope):
-            self._scope = value.value
+                f'scope must be Scope. {type(value).__name__} was given')
+        self._scope = value.value
         
     def to_xml(self) -> str:
         element_root, xml_tree = super()._add_basics()
@@ -69,8 +57,4 @@ class DurationAssertion(BasicAssertion, Renderable):
             el = Element("stringProp", attrib={"name":"Sample.scope"})
             el.text = self.scope
             element_root.append(el)
-            if self.scope == 'variable':
-                el = Element("stringProp", attrib={"name":"Assertion.variable"})
-                el.text = self.variable
-                element_root.append(el)
         return tree_to_str(xml_tree)

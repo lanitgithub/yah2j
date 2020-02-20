@@ -15,8 +15,9 @@ class TestDurationAssertion:
             with pytest.raises(TypeError):
                 DurationAssertion(scope=True, duration=3)
 
-        def test_positive(self):
-            DurationAssertion(scope='Name', duration=3)
+        def test_check3(self):
+            with pytest.raises(TypeError):
+                DurationAssertion(scope='main', duration=3)
             
         def test_positive1(self):
             DurationAssertion(scope=Scope.MAIN, duration=3)
@@ -52,13 +53,3 @@ class TestDurationAssertionRender:
         for tag in parsed_doc['test_result']['DurationAssertion']['stringProp']:
             if tag['@name'] == 'Sample.scop':
                 assert tag['#text'] == 'all'
-                
-    def test_scope2(self):
-        element = DurationAssertion(scope='var_name', duration=3)
-        rendered_doc = element.to_xml()
-        parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc,'test_result'))
-        for tag in parsed_doc['test_result']['DurationAssertion']['stringProp']:
-            if tag['@name'] == 'Sample.scop':
-                assert tag['#text'] == 'variable'
-            if tag['@name'] == 'Scope.variable':
-                assert tag['#text'] == 'var_name' 
