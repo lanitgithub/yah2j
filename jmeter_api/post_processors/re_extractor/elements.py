@@ -1,7 +1,7 @@
 import logging
 import re
 
-from xml.etree.ElementTree import SubElement
+from xml.etree.ElementTree import SubElement, Element
 from enum import Enum
 from typing import Union
 
@@ -47,16 +47,25 @@ class RegExpPost(BasicPostProcessor, Renderable):
         self.default_val = default_val
 
     @property
+    def variable(self):
+        return self._variable
+
+    @variable.setter
+    def variable(self, value):
+        self._variable = value
+        
+    @property
     def scope(self):
         return self._scope
 
     @scope.setter
     def scope(self, value):
-        if not isinstance(value, str) and not isinstance(value, Scope):
+        if not isinstance(value, (str, Scope)):
             raise TypeError(
                 f'arg: scope should be str or Scope. {type(value).__name__} was given')
         if isinstance(value, str):
-            self._scope = value
+            self._scope = "variable"
+            self.variable = value
         elif isinstance(value, Scope):
             self._scope = value.value
 
@@ -163,17 +172,14 @@ class RegExpPost(BasicPostProcessor, Renderable):
                         element.text = str(self.match_no)
 
                 if flag:
-                    if self.scope in [Scope.MAIN_AND_SUB.value, Scope.SUB.value]:
-                        scope_elem = SubElement(element_root, 'stringProp')
-                        scope_elem.set('name', 'Sample.scope')
-                        scope_elem.text = self.scope
-                    elif self.scope != 'main':
-                        scope_elem = SubElement(element_root, 'stringProp')
-                        scope_elem.set('name', 'Sample.scope')
-                        scope_elem.text = 'variable'
-                        scope_elem = SubElement(element_root, 'stringProp')
-                        scope_elem.set('name', 'Scope.variable')
-                        scope_elem.text = self.scope
+                    if not self.scope == Scope.MAIN.value:
+                        el = Element("stringProp", attrib={"name":"Sample.scope"})
+                        el.text = self.scope
+                        element_root.append(el)
+                        if self.scope == 'variable':
+                            el = Element("stringProp", attrib={"name":"Scope.variable"})
+                            el.text = self.variable
+                            element_root.append(el)
 
                     if self.default_val == 'empty':
                         element = SubElement(element_root, 'boolProp')

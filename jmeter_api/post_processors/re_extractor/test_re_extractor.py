@@ -84,18 +84,31 @@ class TestRegExpPostRender:
         assert parsed_doc['test_results']['RegexExtractor']['stringProp'][0]['#text'] == 'My comment'
 
     def test_scope(self):
+        element = RegExpPost(scope=Scope.SUB)
+        rendered_doc = element.to_xml()
+        parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc,'test_result'))
+        for tag in parsed_doc['test_result']['RegexExtractor']['stringProp']:
+            if tag['@name'] == 'Sample.scope':
+                assert tag['#text'] == 'children'
+
+    def test_scope1(self):
         element = RegExpPost(scope=Scope.MAIN_AND_SUB)
         rendered_doc = element.to_xml()
-        parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc, 'test_results'))
-        assert parsed_doc['test_results']['RegexExtractor']['stringProp'][7]['#text'] == 'all'
-
-    def test_scope_var(self):
-        element = RegExpPost(scope='Variable_test')
+        parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc,'test_result'))
+        for tag in parsed_doc['test_result']['RegexExtractor']['stringProp']:
+            if tag['@name'] == 'Sample.scope':
+                assert tag['#text'] == 'all'
+                
+    def test_scope2(self):
+        element = RegExpPost(scope='var_name')
         rendered_doc = element.to_xml()
-        parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc, 'test_results'))
-        assert parsed_doc['test_results']['RegexExtractor']['stringProp'][7]['#text'] == 'variable'
-        assert parsed_doc['test_results']['RegexExtractor']['stringProp'][8]['#text'] == 'Variable_test'
-
+        parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc,'test_result'))
+        for tag in parsed_doc['test_result']['RegexExtractor']['stringProp']:
+            if tag['@name'] == 'Sample.scope':
+                assert tag['#text'] == 'variable'
+            if tag['@name'] == 'Scope.variable':
+                assert tag['#text'] == 'var_name'
+                
     def test_field_to_check(self):
         element = RegExpPost(field_to_check=Field.REQ_HEADERS)
         rendered_doc = element.to_xml()

@@ -76,7 +76,7 @@ class TestJSONExtractorRender:
         rendered_doc = element.to_xml()
         parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc,'test_result'))
         for tag in parsed_doc['test_result']['JSONPostProcessor']['stringProp']:
-            if tag['@name'] == 'Sample.scop':
+            if tag['@name'] == 'Sample.scope':
                 assert tag['#text'] == 'children'
 
     def test_scope1(self):
@@ -84,7 +84,7 @@ class TestJSONExtractorRender:
         rendered_doc = element.to_xml()
         parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc,'test_result'))
         for tag in parsed_doc['test_result']['JSONPostProcessor']['stringProp']:
-            if tag['@name'] == 'Sample.scop':
+            if tag['@name'] == 'Sample.scope':
                 assert tag['#text'] == 'all'
                 
     def test_scope2(self):
@@ -92,7 +92,7 @@ class TestJSONExtractorRender:
         rendered_doc = element.to_xml()
         parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc,'test_result'))
         for tag in parsed_doc['test_result']['JSONPostProcessor']['stringProp']:
-            if tag['@name'] == 'Sample.scop':
+            if tag['@name'] == 'Sample.scope':
                 assert tag['#text'] == 'variable'
             if tag['@name'] == 'Scope.variable':
                 assert tag['#text'] == 'var_name' 

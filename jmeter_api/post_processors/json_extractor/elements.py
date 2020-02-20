@@ -1,8 +1,7 @@
 import logging
 
-from enum import Enum
-from typing import Union, Optional
-from xml.etree.ElementTree import Element, SubElement, tostring
+from typing import Union
+from xml.etree.ElementTree import Element
 
 from jmeter_api.basics.post_processor.elements import BasicPostProcessor
 from jmeter_api.basics.element.elements import Renderable
@@ -130,7 +129,7 @@ class JSONExtractor(BasicPostProcessor, Renderable):
             el = Element("boolProp", attrib={"name":"JSONPostProcessor.compute_concat"})
             el.text = self.compute_concat
             element_root.append(el)
-        if not self.scope == 'main':
+        if not self.scope == Scope.MAIN.value:
             el = Element("stringProp", attrib={"name":"Sample.scope"})
             el.text = self.scope
             element_root.append(el)
