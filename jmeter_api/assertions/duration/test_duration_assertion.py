@@ -43,7 +43,7 @@ class TestDurationAssertionRender:
         rendered_doc = element.to_xml()
         parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc,'test_result'))
         for tag in parsed_doc['test_result']['DurationAssertion']['stringProp']:
-            if tag['@name'] == 'Sample.scop':
+            if tag['@name'] == 'Assertion.scope':
                 assert tag['#text'] == 'children'
 
     def test_scope1(self):
@@ -51,5 +51,5 @@ class TestDurationAssertionRender:
         rendered_doc = element.to_xml()
         parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc,'test_result'))
         for tag in parsed_doc['test_result']['DurationAssertion']['stringProp']:
-            if tag['@name'] == 'Sample.scop':
+            if tag['@name'] == 'Assertion.scope':
                 assert tag['#text'] == 'all'

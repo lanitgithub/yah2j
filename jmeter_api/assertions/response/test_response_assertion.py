@@ -168,5 +168,5 @@ class TestResponseAssertionRender:
         for tag in parsed_doc['test_result']['ResponseAssertion']['stringProp']:
             if tag['@name'] == 'Assertion.scope':
                 assert tag['#text'] == 'variable'
-            if tag['@name'] == 'Assertion.variable':
+            if tag['@name'] == 'Scope.variable':
                 assert tag['#text'] == 'var_name' 

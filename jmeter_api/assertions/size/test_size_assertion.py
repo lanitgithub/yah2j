@@ -73,7 +73,7 @@ class TestSizeAssertionRender:
         rendered_doc = element.to_xml()
         parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc,'test_result'))
         for tag in parsed_doc['test_result']['SizeAssertion']['stringProp']:
-            if tag['@name'] == 'Sample.scop':
+            if tag['@name'] == 'Assertion.scope':
                 assert tag['#text'] == 'children'
 
     def test_scope1(self):
@@ -81,7 +81,7 @@ class TestSizeAssertionRender:
         rendered_doc = element.to_xml()
         parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc,'test_result'))
         for tag in parsed_doc['test_result']['SizeAssertion']['stringProp']:
-            if tag['@name'] == 'Sample.scop':
+            if tag['@name'] == 'Assertion.scope':
                 assert tag['#text'] == 'all'
                 
     def test_scope2(self):
@@ -89,7 +89,7 @@ class TestSizeAssertionRender:
         rendered_doc = element.to_xml()
         parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc,'test_result'))
         for tag in parsed_doc['test_result']['SizeAssertion']['stringProp']:
-            if tag['@name'] == 'Sample.scop':
+            if tag['@name'] == 'Assertion.scope':
                 assert tag['#text'] == 'variable'
             if tag['@name'] == 'Scope.variable':
                 assert tag['#text'] == 'var_name' 
