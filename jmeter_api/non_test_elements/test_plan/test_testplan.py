@@ -1,4 +1,5 @@
 import pytest
+import xmltodict
 
 from jmeter_api.non_test_elements.test_plan.elements import TestPlan
 from jmeter_api.basics.pre_processor.elements import BasicPreProcessor
@@ -16,42 +17,84 @@ from jmeter_api.basics.utils import tag_wrapper
 
 class TestTestPlanArgs:
     # name type check
-    class TestContinueForever:
+    class TestFunctionalMode:
         def test_check(self):
             with pytest.raises(TypeError):
                 TestPlan(functional_mode="True")
 
         def test_check2(self):
             with pytest.raises(TypeError):
-                TestPlan(functional_mode="123")
+                TestPlan(functional_mode=1)
 
         def test_positive(self):
             TestPlan(functional_mode=True)
 
-    class TestContinueForever:
+    class TestVariables:
         def test_check(self):
             with pytest.raises(TypeError):
-                TestPlan(teardown_on_shutdown="True")
-
-        def test_check2(self):
-            with pytest.raises(TypeError):
-                TestPlan(teardown_on_shutdown="123")
+                TestPlan(variables="dict")
 
         def test_positive(self):
-            TestPlan(teardown_on_shutdown=False)
+            TestPlan(variables={"v1":"value1", "v2":"value2"})
 
-    class TestContinueForever:
+    class TestSerializeThreadgroups:
         def test_check(self):
             with pytest.raises(TypeError):
                 TestPlan(serialize_threadgroups="True")
 
         def test_check2(self):
             with pytest.raises(TypeError):
-                TestPlan(serialize_threadgroups="123")
+                TestPlan(serialize_threadgroups=1)
 
         def test_positive(self):
             TestPlan(serialize_threadgroups=True)
 
+    class TestTeardownOnShutdown:
+        def test_check(self):
+            with pytest.raises(TypeError):
+                TestPlan(teardown_on_shutdown="True")
+
+        def test_check2(self):
+            with pytest.raises(TypeError):
+                TestPlan(teardown_on_shutdown=1)
+
+        def test_positive(self):
+            TestPlan(teardown_on_shutdown=True)
+
+            
+class TestTestPlanRender:
+    def test_functional_mode(self):
+        element = TestPlan(functional_mode=True)
+        rendered_doc = element.to_xml().replace('<?xml version="1.0" encoding="UTF-8"?>','')
+        parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc, 'test_results'))
+        for tag in parsed_doc['test_results']['jmeterTestPlan']['hashTree']['TestPlan']['boolProp']:
+            if tag['@name'] == 'TestPlan.functional_mode':
+                assert tag['#text'] == 'true'
+
+    def test_teardown_on_shutdown(self):
+        element = TestPlan(teardown_on_shutdown=False)
+        rendered_doc = element.to_xml().replace('<?xml version="1.0" encoding="UTF-8"?>','')
+        parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc, 'test_results'))
+        for tag in parsed_doc['test_results']['jmeterTestPlan']['hashTree']['TestPlan']['boolProp']:
+            if tag['@name'] == 'TestPlan.tearDown_on_shutdown':
+                assert tag['#text'] == 'false'
+
+    def test_serialize_threadgroups(self):
+        element = TestPlan(serialize_threadgroups=False)
+        rendered_doc = element.to_xml().replace('<?xml version="1.0" encoding="UTF-8"?>','')
+        parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc, 'test_results'))
+        for tag in parsed_doc['test_results']['jmeterTestPlan']['hashTree']['TestPlan']['boolProp']:
+            if tag['@name'] == 'TestPlan.serialize_threadgroups':
+                assert tag['#text'] == 'false'
+
+    def test_variables(self):
+        element = TestPlan(variables={"v1": "value1"})
+        rendered_doc = element.to_xml().replace('<?xml version="1.0" encoding="UTF-8"?>','')
+        parsed_doc = xmltodict.parse(tag_wrapper(rendered_doc, 'test_results'))
+        assert parsed_doc['test_results']['jmeterTestPlan']['hashTree']['TestPlan']['elementProp']['collectionProp']['elementProp']['stringProp'][0]['#text'] == "v1"
+        assert parsed_doc['test_results']['jmeterTestPlan']['hashTree']['TestPlan']['elementProp']['collectionProp']['elementProp']['stringProp'][1]['#text'] == "value1"
+
+        
 class TestTestPlanAppend:
     def test_negative1(self):
         with pytest.raises(TypeError):

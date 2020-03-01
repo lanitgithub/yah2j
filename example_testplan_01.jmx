@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?><jmeterTestPlan version="1.2" properties="5.0" jmeter="5.1.1 r1855137"><hashTree><TestPlan element_type="TestPlan" enabled="true" guiclass="TestPlanGui" testclass="TestPlan" testname="NewTestPlan">
+<?xml version="1.0" encoding="UTF-8"?>    <jmeterTestPlan version="1.2" properties="5.0" jmeter="5.1.1 r1855137"><hashTree><TestPlan element_type="TestPlan" enabled="true" guiclass="TestPlanGui" testclass="TestPlan" testname="NewTestPlan">
   <stringProp name="TestPlan.comments" />
-  <boolProp name="TestPlan.functional_mode">False</boolProp>
-  <boolProp name="TestPlan.tearDown_on_shutdown">True</boolProp>
-  <boolProp name="TestPlan.serialize_threadgroups">False</boolProp>
+  <boolProp name="TestPlan.functional_mode">false</boolProp>
+  <boolProp name="TestPlan.tearDown_on_shutdown">true</boolProp>
+  <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
   <elementProp elementType="Arguments" enabled="true" guiclass="ArgumentsPanel" name="TestPlan.user_defined_variables" testclass="Arguments" testname="User Defined Variables">
-    <collectionProp name="Arguments.arguments" />
+    <collectionProp name="Arguments.arguments"><elementProp elementType="Argument" name="HOST"><stringProp name="Argument.name">HOST</stringProp><stringProp name="Argument.value">88.96.125.92</stringProp><stringProp name="Argument.metadata">=</stringProp></elementProp></collectionProp>
   </elementProp>
   <stringProp name="TestPlan.user_define_classpath" />
 </TestPlan>
@@ -15,17 +15,16 @@
 </CacheManager>
 <hashTree />
 <ThreadGroup element_type="CommonThreadGroup" enabled="true" guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="FirstThreadGroup">
-  <stringProp name="TestPlan.comments" />
-  <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
-  <elementProp elementType="LoopController" enabled="true" guiclass="LoopControlPanel" name="ThreadGroup.main_controller" testclass="LoopController" testname="Loop Controller">
-    <boolProp name="LoopController.continue_forever">true</boolProp>
-    <stringProp name="LoopController.loops">1</stringProp>
-  </elementProp>
-  <stringProp name="ThreadGroup.num_threads">1</stringProp>
-  <stringProp name="ThreadGroup.ramp_time">0</stringProp>
-  <boolProp name="ThreadGroup.scheduler">false</boolProp>
-  <stringProp name="ThreadGroup.duration">0</stringProp>
-  <stringProp name="ThreadGroup.delay">0</stringProp>
+	<stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+	<elementProp elementType="LoopController" enabled="true" guiclass="LoopControlPanel" name="ThreadGroup.main_controller" testclass="LoopController" testname="Loop Controller">
+		<boolProp name="LoopController.continue_forever">true</boolProp>
+		<stringProp name="LoopController.loops">-1</stringProp>
+	</elementProp>
+	<stringProp name="ThreadGroup.num_threads">1</stringProp>
+	<stringProp name="ThreadGroup.ramp_time">0</stringProp>
+	<boolProp name="ThreadGroup.scheduler">false</boolProp>
+	<stringProp name="ThreadGroup.duration" />
+	<stringProp name="ThreadGroup.delay" />
 </ThreadGroup>
 <hashTree><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request">
     <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
@@ -65,7 +64,7 @@
     <stringProp name="HTTPSampler.response_timeout" />
     <stringProp name="TestPlan.comments" />
 <stringProp name="HTTPSampler.proxyPort" /></HTTPSamplerProxy>
-<hashTree /><JSR223Sampler element_type="JSR223" enabled="true" guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler">
+<hashTree /><JSR223Sampler element_type="JSR223Sampler" enabled="true" guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler">
 	<stringProp name="cacheKey">true</stringProp>
 	<stringProp name="filename" />
 	<stringProp name="parameters" />
@@ -77,17 +76,16 @@
     <stringProp name="ConstantTimer.delay">1000</stringProp>
 </ConstantTimer>
 <hashTree /></hashTree><ThreadGroup element_type="CommonThreadGroup" enabled="true" guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="SecondThreadGroup">
-  <stringProp name="TestPlan.comments" />
-  <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
-  <elementProp elementType="LoopController" enabled="true" guiclass="LoopControlPanel" name="ThreadGroup.main_controller" testclass="LoopController" testname="Loop Controller">
-    <boolProp name="LoopController.continue_forever">true</boolProp>
-    <stringProp name="LoopController.loops">1</stringProp>
-  </elementProp>
-  <stringProp name="ThreadGroup.num_threads">1</stringProp>
-  <stringProp name="ThreadGroup.ramp_time">0</stringProp>
-  <boolProp name="ThreadGroup.scheduler">false</boolProp>
-  <stringProp name="ThreadGroup.duration">0</stringProp>
-  <stringProp name="ThreadGroup.delay">0</stringProp>
+	<stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+	<elementProp elementType="LoopController" enabled="true" guiclass="LoopControlPanel" name="ThreadGroup.main_controller" testclass="LoopController" testname="Loop Controller">
+		<boolProp name="LoopController.continue_forever">true</boolProp>
+		<stringProp name="LoopController.loops">-1</stringProp>
+	</elementProp>
+	<stringProp name="ThreadGroup.num_threads">1</stringProp>
+	<stringProp name="ThreadGroup.ramp_time">0</stringProp>
+	<boolProp name="ThreadGroup.scheduler">false</boolProp>
+	<stringProp name="ThreadGroup.duration" />
+	<stringProp name="ThreadGroup.delay" />
 </ThreadGroup>
 <hashTree><HTTPSamplerProxy element_type="HttpRequest" enabled="true" guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="NewSampler0">
     <elementProp elementType="Arguments" enabled="true" guiclass="HTTPArgumentsPanel" name="HTTPsampler.Arguments" testclass="Arguments" testname="User Defined Variables">
@@ -478,7 +476,7 @@
   </doubleProp>
   <stringProp name="TestPlan.comments" />
 </ConstantThroughputTimer>
-<hashTree /></hashTree><TestFragmentController element_type="TestFragment" enabled="true" guiclass="TestFragmentControllerGui" testclass="TestFragmentController" testname="Test Fragment" />
+<hashTree /></hashTree><TestFragmentController element_type="TestFragment" enabled="false" guiclass="TestFragmentControllerGui" testclass="TestFragmentController" testname="Test Fragment" />
 <hashTree><LoopController element_type="LoopController" enabled="true" guiclass="LoopControlPanel" testclass="LoopController" testname="loop3">
     <boolProp name="LoopController.continue_forever">false</boolProp>
     <stringProp name="LoopController.loops">3</stringProp>
@@ -528,7 +526,7 @@
 <hashTree /></hashTree></hashTree><ModuleController element_type="ModuleController" enabled="true" guiclass="ModuleControllerGui" testclass="ModuleController" testname="Module Controller">
 	<collectionProp name="ModuleController.node_path">
 		<stringProp name="764597751">Test Plan</stringProp>
-	<stringProp name="8021690477">NewTestPlan</stringProp><stringProp name="7531923887">Test Fragment</stringProp><stringProp name="2092709960">loop3</stringProp></collectionProp>
+	<stringProp name="8341644814">NewTestPlan</stringProp><stringProp name="6515862912">Test Fragment</stringProp><stringProp name="2011602100">loop3</stringProp></collectionProp>
 </ModuleController>
 <hashTree /></hashTree></hashTree>
 </hashTree></jmeterTestPlan>

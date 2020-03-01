@@ -1,5 +1,5 @@
 from typing import Union
-from xml.etree.ElementTree import tostring
+from xml.etree.ElementTree import tostring, Element
 from xml.sax.saxutils import unescape
 
 from jmeter_api.basics.non_test_elements.elements import NonTestElements
@@ -18,12 +18,14 @@ class TestPlan(NonTestElements, IncludesElements, Renderable):
     root_element_name = 'TestPlan'
 
     def __init__(self,
+                 variables: dict = {},
                  functional_mode: bool = False,
                  teardown_on_shutdown: bool = True,
                  serialize_threadgroups: bool = False,
                  name='BasicElement',
                  comments='',
                  is_enabled=True):
+        self.variables = variables
         self.functional_mode = functional_mode
         self.teardown_on_shutdown = teardown_on_shutdown
         self.serialize_threadgroups = serialize_threadgroups
@@ -42,6 +44,18 @@ class TestPlan(NonTestElements, IncludesElements, Renderable):
         self._elements.append(new_element)
         return self
 
+    @property
+    def variables(self):
+        return self._variables
+
+    @variables.setter
+    def variables(self, value: dict):
+        if not isinstance(value, dict):
+            raise TypeError(
+                f'variables must be bool. variables {type(value)} = {value}')
+        else:
+            self._variables = value
+            
     @property
     def functional_mode(self):
         return self._functional_mode
@@ -89,11 +103,24 @@ class TestPlan(NonTestElements, IncludesElements, Renderable):
                 if element.attrib['name'] == 'TestPlan.comments':
                     element.text = self.comments
                 elif element.attrib['name'] == 'TestPlan.functional_mode':
-                    element.text = str(self.functional_mode)
+                    element.text = str(self.functional_mode).lower()
                 elif element.attrib['name'] == 'TestPlan.tearDown_on_shutdown':
-                    element.text = str(self.teardown_on_shutdown)
+                    element.text = str(self.teardown_on_shutdown).lower()
                 elif element.attrib['name'] == 'TestPlan.serialize_threadgroups':
-                    element.text = str(self.serialize_threadgroups)
+                    element.text = str(self.serialize_threadgroups).lower()
+                elif element.attrib['name'] == 'TestPlan.user_defined_variables':
+                    for arg_name in self.variables:
+                        el_prop = Element("elementProp", attrib={"name": arg_name, "elementType": "Argument"})
+                        sub_el = Element("stringProp", attrib={"name": "Argument.name"})
+                        sub_el.text = arg_name
+                        el_prop.append(sub_el)
+                        sub_el = Element("stringProp", attrib={"name": "Argument.value"})
+                        sub_el.text = self.variables[arg_name]
+                        el_prop.append(sub_el)
+                        sub_el = Element("stringProp", attrib={"name": "Argument.metadata"})
+                        sub_el.text = "="
+                        el_prop.append(sub_el)
+                        element[0].append(el_prop)
             except KeyError:
                 continue
 
