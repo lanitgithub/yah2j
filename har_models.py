@@ -156,7 +156,8 @@ class PostData:
     def to_dict(self) -> dict:
         result: dict = {}
         result["text"] = from_union([from_str, from_none], self.text)
-        result["mimeType"] = from_union([lambda x: to_enum(MIMEType, x), from_none], self.mime_type)
+        result["mimeType"] = from_union(
+            [lambda x: to_enum(MIMEType, x), from_none], self.mime_type)
         return result
 
 
@@ -185,28 +186,41 @@ class Request:
     @staticmethod
     def from_dict(obj: Any) -> 'Request':
         assert isinstance(obj, dict)
-        headers_size = from_union([from_int, from_none], obj.get("headersSize"))
-        post_data = from_union([PostData.from_dict, from_none], obj.get("postData"))
-        query_string = from_union([lambda x: from_list(HeaderElement.from_dict, x), from_none], obj.get("queryString"))
-        headers = from_union([lambda x: from_list(HeaderElement.from_dict, x), from_none], obj.get("headers"))
+        headers_size = from_union(
+            [from_int, from_none], obj.get("headersSize"))
+        post_data = from_union(
+            [PostData.from_dict, from_none], obj.get("postData"))
+        query_string = from_union([lambda x: from_list(
+            HeaderElement.from_dict, x), from_none], obj.get("queryString"))
+        headers = from_union([lambda x: from_list(
+            HeaderElement.from_dict, x), from_none], obj.get("headers"))
         body_size = from_union([from_int, from_none], obj.get("bodySize"))
         url = from_union([from_str, from_none], obj.get("url"))
-        cookies = from_union([lambda x: from_list(HeaderElement.from_dict, x), from_none], obj.get("cookies"))
+        cookies = from_union([lambda x: from_list(
+            HeaderElement.from_dict, x), from_none], obj.get("cookies"))
         method = from_union([Method, from_none], obj.get("method"))
-        http_version = from_union([HTTPVersion, from_none], obj.get("httpVersion"))
+        http_version = from_union(
+            [HTTPVersion, from_none], obj.get("httpVersion"))
         return Request(headers_size, post_data, query_string, headers, body_size, url, cookies, method, http_version)
 
     def to_dict(self) -> dict:
         result: dict = {}
-        result["headersSize"] = from_union([from_int, from_none], self.headers_size)
-        result["postData"] = from_union([lambda x: to_class(PostData, x), from_none], self.post_data)
-        result["queryString"] = from_union([lambda x: from_list(lambda x: to_class(HeaderElement, x), x), from_none], self.query_string)
-        result["headers"] = from_union([lambda x: from_list(lambda x: to_class(HeaderElement, x), x), from_none], self.headers)
+        result["headersSize"] = from_union(
+            [from_int, from_none], self.headers_size)
+        result["postData"] = from_union(
+            [lambda x: to_class(PostData, x), from_none], self.post_data)
+        result["queryString"] = from_union([lambda x: from_list(
+            lambda x: to_class(HeaderElement, x), x), from_none], self.query_string)
+        result["headers"] = from_union([lambda x: from_list(
+            lambda x: to_class(HeaderElement, x), x), from_none], self.headers)
         result["bodySize"] = from_union([from_int, from_none], self.body_size)
         result["url"] = from_union([from_str, from_none], self.url)
-        result["cookies"] = from_union([lambda x: from_list(lambda x: to_class(HeaderElement, x), x), from_none], self.cookies)
-        result["method"] = from_union([lambda x: to_enum(Method, x), from_none], self.method)
-        result["httpVersion"] = from_union([lambda x: to_enum(HTTPVersion, x), from_none], self.http_version)
+        result["cookies"] = from_union([lambda x: from_list(
+            lambda x: to_class(HeaderElement, x), x), from_none], self.cookies)
+        result["method"] = from_union(
+            [lambda x: to_enum(Method, x), from_none], self.method)
+        result["httpVersion"] = from_union(
+            [lambda x: to_enum(HTTPVersion, x), from_none], self.http_version)
         return result
 
 
@@ -240,11 +254,13 @@ class Content:
 
     def to_dict(self) -> dict:
         result: dict = {}
-        result["compression"] = from_union([from_int, from_none], self.compression)
+        result["compression"] = from_union(
+            [from_int, from_none], self.compression)
         result["text"] = from_union([from_str, from_none], self.text)
         result["size"] = from_union([from_int, from_none], self.size)
         result["mimeType"] = from_union([from_str, from_none], self.mime_type)
-        result["encoding"] = from_union([lambda x: to_enum(Encoding, x), from_none], self.encoding)
+        result["encoding"] = from_union(
+            [lambda x: to_enum(Encoding, x), from_none], self.encoding)
         return result
 
 
@@ -314,28 +330,42 @@ class Response:
     @staticmethod
     def from_dict(obj: Any) -> 'Response':
         assert isinstance(obj, dict)
-        headers_size = from_union([from_int, from_none], obj.get("headersSize"))
+        headers_size = from_union(
+            [from_int, from_none], obj.get("headersSize"))
         body_size = from_union([from_int, from_none], obj.get("bodySize"))
-        status_text = from_union([StatusText, from_none], obj.get("statusText"))
-        redirect_url = from_union([from_str, from_none], obj.get("redirectURL"))
+        status_text = from_union(
+            [StatusText, from_none], obj.get("statusText"))
+        redirect_url = from_union(
+            [from_str, from_none], obj.get("redirectURL"))
         status = from_union([from_int, from_none], obj.get("status"))
-        http_version = from_union([HTTPVersion, from_none], obj.get("httpVersion"))
-        cookies = from_union([lambda x: from_list(PurpleCooky.from_dict, x), from_none], obj.get("cookies"))
-        content = from_union([Content.from_dict, from_none], obj.get("content"))
-        headers = from_union([lambda x: from_list(HeaderElement.from_dict, x), from_none], obj.get("headers"))
+        http_version = from_union(
+            [HTTPVersion, from_none], obj.get("httpVersion"))
+        cookies = from_union([lambda x: from_list(
+            PurpleCooky.from_dict, x), from_none], obj.get("cookies"))
+        content = from_union(
+            [Content.from_dict, from_none], obj.get("content"))
+        headers = from_union([lambda x: from_list(
+            HeaderElement.from_dict, x), from_none], obj.get("headers"))
         return Response(headers_size, body_size, status_text, redirect_url, status, http_version, cookies, content, headers)
 
     def to_dict(self) -> dict:
         result: dict = {}
-        result["headersSize"] = from_union([from_int, from_none], self.headers_size)
+        result["headersSize"] = from_union(
+            [from_int, from_none], self.headers_size)
         result["bodySize"] = from_union([from_int, from_none], self.body_size)
-        result["statusText"] = from_union([lambda x: to_enum(StatusText, x), from_none], self.status_text)
-        result["redirectURL"] = from_union([from_str, from_none], self.redirect_url)
+        result["statusText"] = from_union(
+            [lambda x: to_enum(StatusText, x), from_none], self.status_text)
+        result["redirectURL"] = from_union(
+            [from_str, from_none], self.redirect_url)
         result["status"] = from_union([from_int, from_none], self.status)
-        result["httpVersion"] = from_union([lambda x: to_enum(HTTPVersion, x), from_none], self.http_version)
-        result["cookies"] = from_union([lambda x: from_list(lambda x: to_class(PurpleCooky, x), x), from_none], self.cookies)
-        result["content"] = from_union([lambda x: to_class(Content, x), from_none], self.content)
-        result["headers"] = from_union([lambda x: from_list(lambda x: to_class(HeaderElement, x), x), from_none], self.headers)
+        result["httpVersion"] = from_union(
+            [lambda x: to_enum(HTTPVersion, x), from_none], self.http_version)
+        result["cookies"] = from_union([lambda x: from_list(
+            lambda x: to_class(PurpleCooky, x), x), from_none], self.cookies)
+        result["content"] = from_union(
+            [lambda x: to_class(Content, x), from_none], self.content)
+        result["headers"] = from_union([lambda x: from_list(
+            lambda x: to_class(HeaderElement, x), x), from_none], self.headers)
         return result
 
 
@@ -407,12 +437,17 @@ class Entry:
     def from_dict(obj: Any) -> 'Entry':
         assert isinstance(obj, dict)
         time = from_union([from_int, from_none], obj.get("time"))
-        server_ip_address = from_union([from_str, from_none], obj.get("serverIPAddress"))
+        server_ip_address = from_union(
+            [from_str, from_none], obj.get("serverIPAddress"))
         connection = from_union([from_str, from_none], obj.get("connection"))
-        request = from_union([Request.from_dict, from_none], obj.get("request"))
-        timings = from_union([Timings.from_dict, from_none], obj.get("timings"))
-        response = from_union([Response.from_dict, from_none], obj.get("response"))
-        started_date_time = from_union([from_datetime, from_none], obj.get("startedDateTime"))
+        request = from_union(
+            [Request.from_dict, from_none], obj.get("request"))
+        timings = from_union(
+            [Timings.from_dict, from_none], obj.get("timings"))
+        response = from_union(
+            [Response.from_dict, from_none], obj.get("response"))
+        started_date_time = from_union(
+            [from_datetime, from_none], obj.get("startedDateTime"))
         cache = from_union([Cache.from_dict, from_none], obj.get("cache"))
         comment = from_union([from_str, from_none], obj.get("comment"))
         return Entry(time, server_ip_address, connection, request, timings, response, started_date_time, cache, comment)
@@ -420,13 +455,20 @@ class Entry:
     def to_dict(self) -> dict:
         result: dict = {}
         result["time"] = from_union([from_int, from_none], self.time)
-        result["serverIPAddress"] = from_union([from_str, from_none], self.server_ip_address)
-        result["connection"] = from_union([from_str, from_none], self.connection)
-        result["request"] = from_union([lambda x: to_class(Request, x), from_none], self.request)
-        result["timings"] = from_union([lambda x: to_class(Timings, x), from_none], self.timings)
-        result["response"] = from_union([lambda x: to_class(Response, x), from_none], self.response)
-        result["startedDateTime"] = from_union([lambda x: x.isoformat(), from_none], self.started_date_time)
-        result["cache"] = from_union([lambda x: to_class(Cache, x), from_none], self.cache)
+        result["serverIPAddress"] = from_union(
+            [from_str, from_none], self.server_ip_address)
+        result["connection"] = from_union(
+            [from_str, from_none], self.connection)
+        result["request"] = from_union(
+            [lambda x: to_class(Request, x), from_none], self.request)
+        result["timings"] = from_union(
+            [lambda x: to_class(Timings, x), from_none], self.timings)
+        result["response"] = from_union(
+            [lambda x: to_class(Response, x), from_none], self.response)
+        result["startedDateTime"] = from_union(
+            [lambda x: x.isoformat(), from_none], self.started_date_time)
+        result["cache"] = from_union(
+            [lambda x: to_class(Cache, x), from_none], self.cache)
         result["comment"] = from_union([from_str, from_none], self.comment)
         return result
 
@@ -448,19 +490,25 @@ class Log:
     @staticmethod
     def from_dict(obj: Any) -> 'Log':
         assert isinstance(obj, dict)
-        pages = from_union([lambda x: from_list(lambda x: x, x), from_none], obj.get("pages"))
+        pages = from_union([lambda x: from_list(
+            lambda x: x, x), from_none], obj.get("pages"))
         comment = from_union([from_str, from_none], obj.get("comment"))
-        entries = from_union([lambda x: from_list(Entry.from_dict, x), from_none], obj.get("entries"))
-        creator = from_union([Creator.from_dict, from_none], obj.get("creator"))
+        entries = from_union([lambda x: from_list(
+            Entry.from_dict, x), from_none], obj.get("entries"))
+        creator = from_union(
+            [Creator.from_dict, from_none], obj.get("creator"))
         version = from_union([from_str, from_none], obj.get("version"))
         return Log(pages, comment, entries, creator, version)
 
     def to_dict(self) -> dict:
         result: dict = {}
-        result["pages"] = from_union([lambda x: from_list(lambda x: x, x), from_none], self.pages)
+        result["pages"] = from_union(
+            [lambda x: from_list(lambda x: x, x), from_none], self.pages)
         result["comment"] = from_union([from_str, from_none], self.comment)
-        result["entries"] = from_union([lambda x: from_list(lambda x: to_class(Entry, x), x), from_none], self.entries)
-        result["creator"] = from_union([lambda x: to_class(Creator, x), from_none], self.creator)
+        result["entries"] = from_union([lambda x: from_list(
+            lambda x: to_class(Entry, x), x), from_none], self.entries)
+        result["creator"] = from_union(
+            [lambda x: to_class(Creator, x), from_none], self.creator)
         result["version"] = from_union([from_str, from_none], self.version)
         return result
 
@@ -479,7 +527,8 @@ class HarData:
 
     def to_dict(self) -> dict:
         result: dict = {}
-        result["log"] = from_union([lambda x: to_class(Log, x), from_none], self.log)
+        result["log"] = from_union(
+            [lambda x: to_class(Log, x), from_none], self.log)
         return result
 
 
